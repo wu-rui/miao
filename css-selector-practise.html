@@ -96,6 +96,12 @@
       .b ul li:nth-child(n + 35):nth-child(-n + 50) {
         color: blue;
       }
+      div.prime li:nth-child(2n):not(:nth-child(2)),
+      div.prime li:nth-child(3n):not(:nth-child(3)),
+      div.prime li:nth-child(5n):not(:nth-child(5)),
+      div.prime li:nth-child(7n):not(:nth-child(7)) {
+        color: red;
+      }
     </style>
     <div class="a">
       <p>让下面的4567元素为红色</p>
@@ -339,23 +345,24 @@
       </ul>
     </div>
     <script>
-      let li = document.querySelector(".prime").childNodes[3].children;
-      let len = li.length;
-      function makeNums(len) {
-        let set = new Set();
-        for (let i = 2; i < len / 2; i++) {
-          for (let j = 2; j < len / 2; j++) {
-            if (i * j !== 2 && i * j <= len) {
-              set.add(i * j);
-            }
-          }
-        }
-        return set;
-      }
-      let arr = [...makeNums(100)].sort((a, b) => a - b); console.log(arr);
-      for(var i = 0;i <arr.length;i++){
-        li[arr[i]-1].style.color = "red";
-      }
+      // let li = document.querySelector(".prime").childNodes[3].children;
+      // let len = li.length;
+      // function makeNums(len) {
+      //   let set = new Set();
+      //   for (let i = 2; i < len / 2; i++) {
+      //     for (let j = 2; j < len / 2; j++) {
+      //       if (i * j !== 2 && i * j <= len) {
+      //         set.add(i * j);
+      //       }
+      //     }
+      //   }
+      //   return set;
+      // }
+      // let arr = [...makeNums(100)].sort((a, b) => a - b);
+      // console.log(arr);
+      // for (var i = 0; i < arr.length; i++) {
+      //   li[arr[i] - 1].style.color = "red";
+      // }
     </script>
   </body>
 </html>
