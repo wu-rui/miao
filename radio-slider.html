@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>JS Bin</title>
+    <style>
+      ul {
+        list-style: none;
+      }
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+      .slider {
+        width: 1226px;
+        height: 460px;
+        position: relative;
+      }
+      .slider img {
+        width: 1226px;
+        height: 460px;
+        position: absolute;
+				opacity: 0;
+				transition: opacity .5s ease;
+      }
+      .slider input {
+        display: none;
+      }
+			.slider input:checked + img {
+				
+				opacity: 1;
+			}
+			.slider input:nth-of-type(1):checked ~ .label > label:nth-child(1),
+			.slider input:nth-of-type(2):checked ~ .label > label:nth-child(2),
+			.slider input:nth-of-type(3):checked ~ .label > label:nth-child(3),
+			.slider input:nth-of-type(4):checked ~ .label > label:nth-child(4), 
+			.slider input:nth-of-type(5):checked ~ .label > label:nth-child(5) {
+			background-color:rgba(255, 255, 255, 0.4);
+				border: 2px solid rgba(0, 0, 0, 0.4); 
+			}
+			.label {
+				position: absolute;
+				bottom: 25px;
+				right: 34px;
+			}
+      .label label {
+				display: block;
+				float: left;
+        height: 10px;
+        width: 10px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        border: 2px solid rgba(255, 255, 255, 0.3);    
+        background-color: rgba(0, 0, 0, 0.4);
+        margin-left: 10px;
+				transition: all .2s;
+      }
+			.label label:hover {
+				
+				background-color:rgba(255, 255, 255, 0.4);
+				border: 2px solid rgba(0, 0, 0, 0.4); 
+			}
+    </style>
+  </head>
+  <body>
+    <div class="slider">
+      <input checked type="radio" name="img" id="i1" />
+      <img
+        src="https://i1.mifile.cn/a4/xmad_15566146318197_mAghl.jpg"
+        alt="#"
+      />
+      <input type="radio" name="img" id="i2" />
+      <img
+        src="https://i1.mifile.cn/a4/xmad_15529884424562_HKYaG.jpg"
+        alt="#"
+      />
+      <input type="radio" name="img" id="i3" />
+      <img
+        src="https://i1.mifile.cn/a4/xmad_15579184778872_ECdvK.jpg"
+        alt="#"
+      />
+      <input type="radio" name="img" id="i4" />
+      <img
+        src="https://i1.mifile.cn/a4/xmad_15548066591437_Stxlj.jpg"
+        alt="#"
+      />
+      <input type="radio" name="img" id="i5" />
+      <img
+        src="https://i1.mifile.cn/a4/xmad_15476942061027_STEvM.jpg"
+        alt="#"
+      />
+      <div class="label">
+        <label for="i1"></label>
+        <label for="i2"></label>
+        <label for="i3"></label>
+        <label for="i4"></label>
+        <label for="i5"></label>
+      </div>
+    </div>
+  </body>
+</html>
