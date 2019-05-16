@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>ios-checkbox</title>
+    <style>
+      * {
+        /* background-color: rgba(0,0,0,0.08); */
+        margin: 0px;
+        padding: 0px;
+      }
+      input {
+        display: none;
+      }
+
+      div {
+        margin: 10px;
+        height: 94px;
+        width: 154px;
+        box-sizing: border-box;
+        background-color: white;
+        border: 6px solid rgb(221, 221, 221);
+        border-radius: 47px;
+        position: relative;
+      }
+      div::after {
+        content: "";
+        width: 82px;
+        height: 82px;
+        border-radius: 41px;
+        display: block;
+        background-color: white;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        box-sizing: border-box;
+        border: 1px solid rgb(240, 240, 240);
+        box-shadow: 1px 9px 8px rgba(0, 0, 0, 0.2);
+      }
+      input:checked + label > div::after {
+        left: calc(100% - 88px);
+        top: 5px;
+        box-shadow: -1px 9px 8px rgba(0, 0, 0, 0.2);
+      }
+      input:checked + label > div {
+        border: none;
+        background-color: rgb(118, 214, 114);
+      }
+    </style>
+  </head>
+  <body>
+    <input type="checkbox" name="click" id="click" />
+    <label for="click"><div></div></label>
+  </body>
+</html>
