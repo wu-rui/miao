@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>JS Bin</title>
+    <style>
+      * {
+        background-color: rgba(0, 0, 0, 0.08);
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style-type: none;
+      }
+      .menu li {
+        transition: 1s;
+        position: relative;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid;
+        box-sizing: border-box;
+        border-bottom: none;
+        text-align: center;
+      }
+      .submenu {
+        transition: .5s;
+        position: absolute;
+        right: -100px;
+        top: -1px;
+
+        /* display: none; */
+        opacity: 0;
+        pointer-events: none;
+      }
+      li:hover {
+        background-color: red;
+      }
+      li:hover > ul {
+        /* display: block; */
+        pointer-events: auto;
+        opacity: 1;
+      }
+      .sub {
+        position: relative;
+      }
+      .sub::after {
+        content: ">";
+        position: absolute;
+        right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="menu">
+      <li class="sub">
+        文件
+        <ul class="submenu">
+          <li class="sub">
+            打开
+            <ul class="submenu">
+              <li>文件1</li>
+              <li>文件2</li>
+              <li>文件3</li>
+            </ul>
+          </li>
+
+          <li class="sub">
+            新建
+            <ul class="submenu">
+              <li>格式1</li>
+              <li>格式2</li>
+              <li>格式3</li>
+            </ul>
+          </li>
+          <li>保存</li>
+        </ul>
+      </li>
+      <li class="sub">
+        编辑
+        <ul class="submenu">
+          <li>删除</li>
+          <li>删除</li>
+          <li>删除</li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>
