@@ -1,0 +1,14 @@
+.position .wrapper {
+  position: relative;
+}
+
+.position .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* margin-top: - height / 2 
+      margin-left: - width / 2
+      不够灵活 需要指定center box 的 高度和宽度
+  */
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>JS Bin</title>
+    <style>
+      * {
+        background-color: rgba(0, 0, 0, 0.08);
+        padding: 0;
+        margin: 0;
+      }
+      ul {
+        list-style: none;
+      }
+      ul ul {
+        visibility: hidden;
+        opacity: 0;
+        transition: 1s;
+      }
+      /* 结合使用visibility 和 opacity 的特性 */
+      li {
+        position: relative;
+        white-space: nowrap;
+      }
+      ul {
+        position: absolute;
+      }
+      ul ul {
+        left: 100%;
+        top: 0;
+      }
+      ul li:hover > ul {
+        visibility: visible;
+        opacity: 1;
+        transition: all 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li>
+        文件
+        <ul>
+          <li>
+            打开
+            <ul>
+              <li>
+                文件1
+                <ul>
+                  <li>位置1</li>
+                  <li>位置2</li>
+                </ul>
+              </li>
+              <li>文件2</li>
+              <li>文件3</li>
+            </ul>
+          </li>
+          <li>
+            保存
+            <ul>
+              <li>格式1</li>
+              <li>格式2</li>
+              <li>格式3</li>
+            </ul>
+          </li>
+          <li>删除</li>
+        </ul>
+      </li>
+      <li>编辑</li>
+    </ul>
+  </body>
+</html>
