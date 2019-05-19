@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>oald-layout-position</title>
+    <style>
+      * {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        position: relative;
+      }
+      .p1,
+      .p2,
+      .p3,
+      .p4 {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        box-sizing: border-box;
+        border: 1px solid;
+      }
+      .p1 {
+        left: 0;
+        right: 80%;
+      }
+      .p2 {
+        left: 20%;
+        right: 40%;
+      }
+      .p2 .top {
+        position: absolute;
+        top: 0;
+        bottom: 80%;
+        width: 100%;
+        border-bottom: 2px solid;
+      }
+      .p2 .content {
+        position: absolute;
+        top: 20%;
+        bottom: 0;
+        width: 100%;
+        overflow-y: auto;
+        font-size: 30px;
+      }
+      .p3 {
+        left: 60%;
+        right: 20%;
+      }
+      .p4 {
+        left: 80%;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="p1">1111</div>
+
+    <div class="p2">
+      <div class="top"></div>
+      <div class="content">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
+        pariatur explicabo recusandae mollitia laborum, quis laudantium
+        cupiditate distinctio alias fugit quia? Numquam ducimus maxime debitis
+        fuga reiciendis doloremque iste quidem.
+      </div>
+    </div>
+
+    <div class="p3"></div>
+    <div class="p4"></div>
+  </body>
+</html>
