@@ -1,0 +1,16 @@
+.margin .wrapper {
+  position: relative;
+}
+
+.margin .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 40px;
+  /* 需要指定宽高 */
+  margin-top:  calc( -40px / 2); 
+  margin-left:  calc( -100px / 2);
+      /* 不够灵活 需要指定center box 的 高度和宽度 */
+ 
+}
