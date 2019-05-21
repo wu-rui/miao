@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>9-grid</title>
+    <style type="text/less">
+      * {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+      /*方法一·盒子阴影*/
+      .a {
+        table {
+          border-spacing: 5px;
+          background-color: blue;
+        }
+        td {
+          padding: 30px;
+          background-color: white;
+        }
+        td:hover {
+          box-shadow: 0 0 0 5px red;
+        }
+      }
+
+      /* 方法二·边框层叠优先级 */
+      .b {
+        table {
+          border-collapse: collapse;
+        }
+        td {
+          padding: 30px;
+        }
+        tr {
+          border: 5px solid blue;
+        }
+        col {
+          border: 5px solid blue;
+        }
+        td:hover {
+          border: 5px solid red;
+        }
+      }
+
+      /* 方法三·伪元素1 */
+      .c {
+        table {
+          background-color: blue;
+          border-spacing: 5px;
+        }
+        td {
+          background-color: white;
+          padding: 30px;
+          position: relative;
+        }
+        td:hover::before {
+          content: "";
+          position: absolute;
+          top: -5px;
+          bottom: -5px;
+          left: -5px;
+          right: -5px;
+          border: 5px solid red;
+        }
+      }
+      /* 方法三·伪元素2 */
+      .d {
+        table {
+          border-collapse: collapse;
+        }
+        td {
+          padding: 30px;
+          border: 5px solid blue;
+          position: relative;
+        }
+        td:hover::before {
+          content: "";
+          position: absolute;
+          top: -5px;
+          bottom: -5px;
+          left: -5px;
+          right: -5px;
+          border: 5px solid red;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="a">
+      <h2>方法一·盒子阴影</h2>
+      <table>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr />
+    <h2>方法二·边框层叠优先级</h2>
+    <div class="b">
+      <table>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr />
+    <div class="c">
+      <h2>方法三·伪元素1</h2>
+      <table>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr />
+    <div class="d">
+      <h2>方法三·伪元素2</h2>
+      <table>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="e">
+      <h2>方法二·盒子阴影2</h2>
+      <table>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="less.js"></script>
+  </body>
+</html>
