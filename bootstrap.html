@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by huntye1 (http://jsbin.com/jotiqof/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style type="text/less">
+/* * {
+  background-color: rgba(0,0,0,0.08);
+} */
+
+ html,body {
+  width: 100%;
+  height: 100%;
+  margin:0;
+}
+div {
+  margin:50px auto;
+}
+
+
+/* 表格格式化 */
+.table {
+  caption{
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    color: #6c757d;
+    text-align: left;
+    caption-side: bottom;
+  }
+  td {
+    box-sizing:border-box;
+  }
+  width:100%;
+  border-collapse:collapse;
+  th,td {
+    text-align: left;
+    border-top:1px solid #dee2e6;
+    padding:12px;
+    /* text-align: center; */
+   
+  }
+   thead th {
+      border-bottom:2px solid #dee2e6;
+  }
+}
+
+/* 黑化表格 */
+.table-dark {
+  color:white;
+  background-color: #343a40;
+/*   th,td {
+    border-top:1px solid #454d55;
+  } */
+/*  thead th {
+      border-bottom:2px solid #454d55;
+  } */
+  .table-striped {
+  tbody tr:nth-of-type(odd) {
+    background-color: rgba(255,255,255,.05);
+    }}
+  thead tr th{
+      border-color:#454d55;
+  }
+  tbody tr {
+    td,th{
+      border-color:#454d55;
+    }
+  }
+
+
+}
+/* 黑化thead */
+.thead-dark {
+  color:white;
+  background-color: #343a40;
+}
+/* 高亮thead */
+.thead-light {
+     background-color: #c6c8ca;
+    color:#495057;
+   th {
+    border-color:#dee2e6;
+  }
+}
+.table-striped {
+  tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,0.05);
+  }
+}
+.table-bordered {
+  
+  th,td {
+   border:1px solid #dee2e6;
+  }
+}
+.border-less {
+  th,td{
+    border:none;
+  }
+  thead th {
+    border:none;
+  }
+}
+.table-hover {
+  tbody tr:hover {
+    background-color: rgba(0,0,0,.075);
+  }
+}
+.table-hover.table-dark{
+  tobody tr:hover{
+    background-color: rgba(255,255,255,.075);
+  }
+}
+.table-sm  {
+  th,td{
+    padding:6px;
+  }
+
+}
+.table-success {
+  td,th {
+    background-color:#c3e6cb ;
+    border-color:#8fd19e;
+  }
+}
+.table-danger {
+  td,th {
+    background-color:#f5c6cb;
+    border-color:#ed969e;
+  }  
+}
+.bg-success {
+    background-color:#28a745!important ;
+}
+.table-responsive {
+  overflow-x:auto;
+  table {
+    min-width:400px;
+  }
+}
+
+
+
+
+</style>
+</head>
+<body>
+  <div>
+    <table class="table table-dark table-hover">
+      <thead class="">
+        <tr>
+          <th>#1</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+     </tbody>
+
+    </table>
+    <hr>
+     <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>#2</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+     </tbody>
+    </table>
+    <hr>
+     <hr>
+     <table class="table table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th>#3</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-success">
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr class="table-danger">
+          <th>2</th>
+          <td>jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+     </tbody>
+    </table>
+    
+    <hr>
+    
+     <table class="table table-dark table-striped">
+      <thead class="">
+        <tr>
+          <th>#4</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-success">
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+     </tbody>
+    </table>
+    
+    <hr>
+    
+     <table class="table  table-striped">
+      <thead class="">
+        <tr>
+          <th>#5</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+     </tbody>
+    </table>
+    <hr>
+    
+     <table class="table table-dark table-bordered">
+      <thead >
+        <tr>
+          <th>#5</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+     </tbody>
+    </table>    
+    <hr>
+    
+     <table class="table table-dark ">
+      <thead >
+        <tr>
+          <th>#6</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+     </tbody>
+    </table>    
+  </div>
+<script src="less.js"></script>
+</body>
+</html>
