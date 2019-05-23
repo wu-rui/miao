@@ -16,6 +16,9 @@
         height: 100%;
         margin: 0;
       }
+      body {
+        overflow: hidden;
+      }
       fieldset {
         width: 45%;
         height: 20%;
@@ -23,7 +26,7 @@
       }
       fieldset .wrapper {
         width: 100%;
-        height: 100%;
+        height: 90%;
         text-align: center;
       }
 
@@ -43,7 +46,6 @@
       /* position实现------------------------------------------------------- */
       .position .wrapper {
         position: relative;
-        height: 100%;
       }
 
       .position .content {
@@ -88,37 +90,55 @@
         margin-top:  calc( -40px / 2); 
         margin-left:  calc( -100px / 2);
             /* 不够灵活 需要指定center box 的 高度和宽度 */
-      
+      }
+      /* .table-cell ------------------------------------- */
+        .table-cell .wrapper {
+          display: table;
+        }
+        .table-cell .content {
+          display: table-cell;
+          text-align: center;
+          vertical-align: middle;
+        }
       }      
     </style>
   </head>
   <body>
     <h1 style="text-align: center">绝对居中</h1>
+    <!-- inline-block------------------------------------------ -->
     <fieldset class="inline-block">
       <legend>inline-block实现</legend>
       <div class="wrapper">
         <div class="content">some content</div>
       </div>
     </fieldset>
-
+    <!-- translate-------------------------------------------- -->
     <fieldset class="translate">
       <legend>translate</legend>
       <div class="wrapper">
         <div class="content">some content</div>
       </div>
     </fieldset>
-
+    <!-- margin----------------------------- -->
     <fieldset class="margin">
       <legend>负margin</legend>
       <div class="wrapper">
         <div class="content">some content</div>
       </div>
     </fieldset>
-
+    <!-- position实现------------------------------------------------------- -->
     <fieldset class="position">
       <legend>纯position实现</legend>
       <div class="wrapper">
         <div class="content">some content</div>
+      </div>
+    </fieldset>
+    <!-- table-cell实现----------------------------------------- -->
+
+    <fieldset class="table-cell">
+      <legend>纯position实现</legend>
+      <div class="wrapper">
+       <div class="content"> some content</div>
       </div>
     </fieldset>
   </body>
