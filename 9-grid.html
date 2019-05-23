@@ -86,6 +86,68 @@
           border: 5px solid red;
         }
       }
+      /* 方法四 inline-block */
+      .e {
+        * {
+            background-color: rgba(0,0,0,0.08);
+          }
+        ul {
+          list-style-type: none;
+          padding:0;
+          font-size: 0;
+          width:195px;
+          text-align: center;
+        }
+        ul * {
+          font-size: initial;
+        }
+        li {
+          line-height: 60px;
+          display: inline-block;
+          width: 60px;
+          height: 60px;
+          border: 5px solid blue;
+          margin-bottom:-5px;
+          margin-right:-5px;
+        }
+        li:hover {
+          border-color:red;
+          position:relative;
+          /* z-index:1; */
+        }
+      }
+      .f {
+        * {
+            background-color: rgba(0,0,0,0.08);
+          }
+        ul {
+          list-style-type: none;
+          padding:0;
+          font-size: 0;
+          width:195px;
+          text-align: center;
+          overflow: hidden;
+          padding-bottom: 5px;
+          padding-right: 5px;
+        }
+        ul * {
+          font-size: initial;
+        }
+        li {
+          line-height: 60px;
+          width: 60px;
+          height: 60px;
+          float: left;
+          border: 5px solid blue;
+          margin-bottom:-5px;
+          margin-right:-5px;
+        }
+        li:hover {
+          border-color:red;
+          position:relative;
+          /* z-index:1; */
+        }
+      }
     </style>
   </head>
   <body>
@@ -201,31 +263,32 @@
       </table>
     </div>
     <div class="e">
-      <h2>方法二·盒子阴影2</h2>
-      <table>
-        <colgroup>
-          <col />
-          <col />
-          <col />
-        </colgroup>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>方法四~行内块</h2>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+      </ul>
+    </div>
+    <div class="f">
+      <h2>方法五~浮动实现</h2>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+      </ul>
     </div>
     <script src="less.js"></script>
   </body>
