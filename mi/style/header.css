@@ -1,0 +1,127 @@
+/* header stylesheet */
+
+header {
+  height: 40px;
+  background-color: rgb(51, 51, 51);
+  color: #b0b0b0;
+  font-size: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 左边导航栏部分------------------------ */
+
+header .nav {
+  float: left;
+  line-height: 40px;
+  word-spacing: 0;
+}
+
+header .nav {
+  font-size: 0;
+}
+
+header .nav * {
+  font-size: 12px;
+}
+
+header .nav a {
+  display: inline-block;
+}
+
+header .nav a:hover {
+  color: white;
+}
+
+header .nav span {
+  margin: 0 .5em;
+  font-family: sans-serif;
+  color: #424242;
+}
+
+/* 左边导航栏部分----------------------- */
+
+/* 右边购物车部分------------------------ */
+
+header .shoppingcar {
+  position: relative;
+  float: right;
+}
+
+header .shoppingcar i {
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: bold;
+  vertical-align: -4px;
+  margin-right: 2px;
+  margin-right: -2px;
+}
+
+header .shoppingcar a {
+  float: right;
+  height: 40px;
+  width: 117px;
+  background-color: #424242;
+  text-align: center;
+  line-height: 40px;
+  padding-right: 3px;
+  display: block;
+}
+
+header .shoppingcar a:hover {
+  background-color: white;
+  color: #ff6700;
+}
+
+header .shoppingcar .shopping-list {
+  text-align: center;
+  height: 0;
+  width: 320px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  font-size: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  z-index: -1;
+  transition: height .3s, line-height .3s;
+  color: #424242;
+  overflow: hidden;
+}
+
+header .shoppingcar:hover .shopping-list {
+  height: 100px;
+  font-size: 12px;
+  line-height: 100px;
+}
+
+/* 右边购物车部分------------------------end */
+
+/* 用户信息部分-------------------------- */
+
+header .userinfo {
+  float: right;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 14px;
+  vertical-align: bottom;
+}
+
+header .userinfo a {
+  display: inline-block;
+  padding: 0 2px;
+}
+
+header .userinfo a:last-child {
+  padding: 0 6px;
+}
+
+header .userinfo a:hover {
+  color: white;
+}
+
+header .userinfo span {
+  color: #424242;
+  font-family: sans-serif;
+}
+
+/* 用户信息部分------------------------- */
