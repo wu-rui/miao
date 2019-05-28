@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.hero {
+  height: 760px;
+  width: 100%;
+  background-image: url(https://mobike.com/cn/assets/themes/moby/img/landing/hero-bg-6.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (max-width:1160px) {
+  .hero {
+    height: 590px;
+  }
+  [class^="section-"] {}
+}
+
+.sections {
+  width: 100%;
+}
+
+[class^="section-"] {
+  width: 25%;
+  height: 260px;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #fff;
+  float: left;
+  background-size: cover;
+}
+
+.section-1 {
+  background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-01.jpg);
+}
+
+.section-2 {
+  background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-02.jpg);
+}
+
+.section-3 {
+  background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-03.jpg);
+}
+
+.section-4 {
+  background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-04.jpg);
+}
+
+.metalinks {
+  margin: 0 auto;
+  max-width: 1160px;
+}
+
+[class^="meta-link"] {
+  float: left;
+  width: 33%;
+  padding: 45px 0;
+}
+
+.icon {
+  height: 50px;
+  width: 50px;
+  background-image: url(https://mobike.com/cn/assets/themes/moby/img/icon-wechat.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: left;
+  margin-right: 5px;
+}
+
+.footer {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.main-links {
+  height: 155px;
+  border: 1px solid red;
+  float: left;
+  width: 30%;
+  min-width: 300px;
+  ;
+}
+
+.list-links {
+  float: left;
+  width: 70%;
+  height: 155px;
+  min-width: 580px;
+}
+
+dl {
+  text-align: center;
+  float: right;
+  width: 200px
+}
+
+@media (max-width:1160px) {
+  .hero {
+    height: 600px;
+  }
+  [class^="section-"] {
+    width: 50%;
+  }
+  dl {
+    width: 25%;
+  }
+}
+
+@media (max-width:620px) {
+  [class^="section-"] {
+    width: 100%;
+  }
+  dl {
+    width: 25%;
+  }
+  .list-links {
+    min-width: 0;
+    width: 260px;
+    float: right;
+  }
+  dl {
+    width: 50%;
+  }
+  [class^="meta-link"] {
+    width: 50%;
+  }
+}
+
+@media (max-width:580px) {
+  .list-links {
+    width: 100%;
+    min-width: 0;
+  }
+  dl {
+    width:50%;
+  }
+}
+
+@media (max-width:230px) {
+  dl {
+    width: 100%;
+  }
+  [class^="meta-link"] {
+    width: 100%;
+  }
+}
