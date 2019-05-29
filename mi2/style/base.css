@@ -1,0 +1,43 @@
+/* 引入字体 */
+
+@font-face {
+  font-family: 'iconfont';
+  /* project id 1217976 */
+  src: url('//at.alicdn.com/t/font_1217976_minfj68l6h.eot');
+  src: url('//at.alicdn.com/t/font_1217976_minfj68l6h.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1217976_minfj68l6h.woff2') format('woff2'), url('//at.alicdn.com/t/font_1217976_minfj68l6h.woff') format('woff'), url('//at.alicdn.com/t/font_1217976_minfj68l6h.ttf') format('truetype'), url('//at.alicdn.com/t/font_1217976_minfj68l6h.svg#iconfont') format('svg');
+}
+
+body {
+  margin: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+ul, li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.container {
+  width: 1226px;
+  margin: 0 auto;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+a {
+  text-decoration: none;
+  color: #757575;
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-style: normal;
+}

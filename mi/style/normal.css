@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -28,14 +29,25 @@ a {
   text-decoration: none;
 }
 
+
 @font-face {
   font-family: 'iconfont';
   /* project id 1210020 */
-  src: url('//at.alicdn.com/t/font_1210020_m1duu6uhxzg.eot');
-  src: url('//at.alicdn.com/t/font_1210020_m1duu6uhxzg.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1210020_m1duu6uhxzg.woff2') format('woff2'), url('//at.alicdn.com/t/font_1210020_m1duu6uhxzg.woff') format('woff'), url('//at.alicdn.com/t/font_1210020_m1duu6uhxzg.ttf') format('truetype'), url('//at.alicdn.com/t/font_1210020_m1duu6uhxzg.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1210020_bfb2rgqsiyh.eot');
+  src: url('//at.alicdn.com/t/font_1210020_bfb2rgqsiyh.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1210020_bfb2rgqsiyh.woff2') format('woff2'), url('//at.alicdn.com/t/font_1210020_bfb2rgqsiyh.woff') format('woff'), url('//at.alicdn.com/t/font_1210020_bfb2rgqsiyh.ttf') format('truetype'), url('//at.alicdn.com/t/font_1210020_bfb2rgqsiyh.svg#iconfont') format('svg');
 }
+
 /* 字体图标通用类 */
+
 .iconfont {
   font-family: "iconfont" !important;
   font-style: normal;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  /* height: 0;
+   line-height: 0; */ 
+  clear: both;
 }
