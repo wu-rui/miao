@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>qq-mail-html</title>
+  <style>
+  html,body {
+    margin: 0;
+    height: 100%
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  div:nth-child(1) {
+    background-color: red;
+    flex-basis:200px;
+  }
+  div:nth-child(2) {
+    background-color:aqua;
+    flex: 1;
+    display: flex;
+  }
+  section:nth-child(1) {
+    flex-basis: 200px;
+    background-color: blue;
+  }
+  section:nth-child(2) {
+    flex: 1;
+    background-color: rgba(0,0,0,.3);
+  }
+  </style>
+</head>
+<body>
+  <main>
+    <div></div>
+    <div>
+      <section></section>
+      <section></section>
+  </div>
+  </main>
+</body>
+</html>
