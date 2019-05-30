@@ -1,3 +1,6 @@
+.homehero {
+  position: relative;
+}
 .homehero .slider {
   width: 1226px;
   height: 460px;
@@ -138,4 +141,50 @@
 
 .homehero .slider input:nth-of-type(5):checked ~ .arrow-R >  label:nth-child(1) {
   z-index: 999;
+}
+
+/* 导航栏部分 */
+.homehero .home-nav {
+  position: absolute;
+  top:0;
+  left: 0;
+  bottom: 0;
+  width: 234px;
+  padding: 20px 0;
+  background-color: rgba(0,0,0,.6);
+}
+.homehero .home-nav> ul > li > a  {
+  font-size: 14px;
+  line-height: 42px;
+  color: #fff;
+}
+.homehero .home-nav > ul > li > a  i,
+.homehero .home-nav> ul > li > a span{
+  vertical-align: top;
+}
+.homehero .home-nav> ul > li {
+  padding:0 14px;
+}
+.homehero .home-nav> ul > li span {
+  float: left;
+}
+.homehero .home-nav> ul > li > a i {
+  float: right;
+  font-size: 20px;
+  color: rgba(255,255,255,0.5);
+  font-weight: bold;
+}
+.homehero .home-nav> ul > li:hover {
+  background-color: #ff6700;
+}
+.homehero .home-nav .children-list {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width:993px;
+  box-shadow:3px 0 5px rgba(0, 0, 0, 0.1);
+  border:1px solid #c0c0c0;
+  background-color: #fff;
+  border-left: none;
 }
