@@ -100,7 +100,20 @@
           text-align: center;
           vertical-align: middle;
         }
-      }      
+        /* table-cell 如果外层没有table-cell，必须指定宽度为确定大小，不能为百分数
+        为了是实现调整效果，在外层加上table-cell */
+
+        /* flex实现-------------------------------- */
+        .flex .wrapper {
+         display: flex;
+         /* align-items: center;
+         text-justify: center; */
+        /* 两种方法 */
+        }
+      .flex .content {
+         margin: auto;
+      }
+      
     </style>
   </head>
   <body>
@@ -136,10 +149,20 @@
     <!-- table-cell实现----------------------------------------- -->
 
     <fieldset class="table-cell">
-      <legend>纯position实现</legend>
+      <legend>table-cell实现</legend>
       <div class="wrapper">
        <div class="content"> some content</div>
       </div>
     </fieldset>
+
+    <!-- flex实现---------------------------------------- -->
+    <fieldset class="flex">
+      <legend>flex</legend>
+      <div class="wrapper">
+       <div class="content"> some content</div>
+      </div>
+    </fieldset>
+
+    
   </body>
 </html>
