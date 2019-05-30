@@ -1,5 +1,7 @@
 .site-header {
   height: 100px;
+  position: relative;
+  z-index: 10;
 }
 
 .site-header .container {
@@ -21,7 +23,7 @@
   position: absolute;
   right: 0;
   top: 25px;
-  /*  */
+
 }
 
 .site-header form {
@@ -116,6 +118,7 @@
   border: 1px solid #ff6700;
   display: none;
   background-color: #fff;
+  z-index: 999;
 }
 
 .site-header .header-search .search-list li {

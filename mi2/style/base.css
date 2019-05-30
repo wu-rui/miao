@@ -10,7 +10,7 @@
 body {
   margin: 0;
   min-width: 1226px;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 *, *::before, *::after {

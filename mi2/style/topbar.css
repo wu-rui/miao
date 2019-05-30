@@ -2,6 +2,8 @@
   line-height: 40px;
   font-size: 12px;
   background-color: rgb(51, 51, 51);
+  position: relative;
+  z-index: 999;
 }
 
 .topbar .topbar-nav ul {
