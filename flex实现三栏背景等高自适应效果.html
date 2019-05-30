@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>flex三栏登高自适应
+  </title>
+  <style>
+    body {
+      margin: 0;
+    }
+    main {
+      display: flex;
+    }
+    div:nth-child(1) { 
+      background-color: red;
+      width: 300px;
+
+    }
+    div:nth-child(2) {
+      background-color: blue;
+      flex: 1;
+    }
+    div:nth-child(3) {
+      background-color: aqua;
+      flex-basis: 300px
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis itaque dolor explicabo aperiam laborum, architecto magnam accusantium. Maiores architecto adipisci laudantium, blanditiis soluta debitis expedita laborum est, dignissimos voluptates corporis.</div>
+    <div>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatibus amet molestiae officia cupiditate nihil totam dolor? Porro sit iusto aperiam architecto iste, explicabo alias necessitatibus cum voluptates animi? Sequ Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum, similique eum officiis cum molestiae error at vitae soluta iste rerum eligendi? Repellendus soluta obcaecati saepe dolorum assumenda harum, iste blanditiis? i, voluptas.
+    </div>
+    <div>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur sequi cupiditate maxime. Nobis quos cum deserunt omnis quis nisi quas corrupti iusto voluptatibus, numquam asperiores officia magni dolores at ipsam?</div>
+  </main>
+</body>
+</html>
