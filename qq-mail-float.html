@@ -36,10 +36,12 @@ aside {
   background-color: pink;
 }
 main {
-  float: left;
-  width:calc(100% - 100px);
-  height:calc(100% - 100px);
-  background-color: lightblue;
+    /* 不使用calc */
+    /* float: left; */
+    /* width:calc(100% - 100px); */
+    height: calc(100% - 100px); 
+    background-color: lightblue;
+    overflow: hidden;
 }
 </style>
 </head>
