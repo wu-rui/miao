@@ -32,6 +32,8 @@
   color: #333333;
   margin-left: -62px;
   font-size: 14px;
+  z-index: 999;
+  background-color: #fff;
 }
 
 .topbar .topbar-nav .download-APP span::before {
@@ -68,55 +70,67 @@
 /* 购物车部分 */
 
 .topbar .shopping .iconfont {
-  font-size:20px;
+  font-size: 20px;
   color: #b0b0b0;
-  vertical-align:top;
+  vertical-align: top;
 }
+
 .topbar .shopping {
-    float: right;
-    width: 120px;
-    cursor: pointer;
-    background-color: rgb(66, 66, 66);
-    text-align: center;
-    position: relative;
-  }
-  .topbar .shopping span::after {
-    content: "(0)";
-    color: #b0b0b0;
-  }
-  .topbar .shopping:hover {
-    background-color: #fff;
-    color: #ff6700;
-  }
-  .topbar .shopping:hover a {
-    color: #ff6700;
-  }
-  .topbar .shopping:hover span::after {
-    color: #ff6700;
-  }
-  .topbar .shopping::after {
-    content: '购物车中还没有商品，赶紧选购吧！';
-    color: rgb(42, 42, 42);
-    position: absolute;
-    width: 320px;
-    height: 0;
-    line-height: 90px;
-    top: 100%;
-    right: 0;
-    overflow: hidden;
-    transition: height .3s;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-    cursor: default;
-  }
-  .topbar .shopping:hover::after {
-    height: 90px;
-  }
-  .topbar .login {
-    float: right;
-  }
-  .topbar .login li {
-    float: left;
-  }
-  .topbar .login {
-    margin-right: 26px;
-  }
+  float: right;
+  width: 120px;
+  cursor: pointer;
+  background-color: rgb(66, 66, 66);
+  text-align: center;
+  position: relative;
+}
+
+.topbar .shopping span::after {
+  content: "(0)";
+  color: #b0b0b0;
+}
+
+.topbar .shopping:hover {
+  background-color: #fff;
+  color: #ff6700;
+}
+
+.topbar .shopping:hover a {
+  color: #ff6700;
+}
+
+.topbar .shopping:hover span::after {
+  color: #ff6700;
+}
+
+.topbar .shopping::after {
+  content: '购物车中还没有商品，赶紧选购吧！';
+  color: rgb(42, 42, 42);
+  position: absolute;
+  width: 320px;
+  height: 0;
+  line-height: 90px;
+  top: 100%;
+  right: 0;
+  overflow: hidden;
+  transition: height .3s;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  cursor: default;
+  z-index: 100;
+  background: white;
+}
+
+.topbar .shopping:hover::after {
+  height: 90px;
+}
+
+.topbar .login {
+  float: right;
+}
+
+.topbar .login li {
+  float: left;
+}
+
+.topbar .login {
+  margin-right: 26px;
+}

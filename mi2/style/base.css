@@ -9,6 +9,8 @@
 
 body {
   margin: 0;
+  min-width: 1226px;
+  overflow: hidden;
 }
 
 *, *::before, *::after {
@@ -32,6 +34,14 @@ ul, li {
   clear: both;
 }
 
+.clearfix::before {
+  /* content: '';
+  display: table; */
+  content: '';
+  display: table;
+  clear: both;
+}
+
 a {
   text-decoration: none;
   color: #757575;
@@ -40,4 +50,9 @@ a {
 .iconfont {
   font-family: "iconfont" !important;
   font-style: normal;
+  font-size: 16px;
+}
+
+.l {
+  outline: 1px solid red;
 }
