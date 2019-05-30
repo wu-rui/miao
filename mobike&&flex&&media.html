@@ -16,16 +16,18 @@ Released under the MIT license: http://jsbin.mit-license.org
 <style id="jsbin-css">
 * {
   background-color:  rgba(0,0,0,.03);
+  margin: 0;
 }
 section{
   display:flex;
   height: 100px;
   justify-content:space-between;
   align-items:center;
+  align-content: space-between;
 }
 div {
   height:100px;
-  width: 20%;
+  width: calc(25% - 3px);
 }
 div:nth-child(1) {
 background-color: red;
@@ -41,11 +43,11 @@ background-color: tan;
 }
 @media(max-width:800px) {
   div {
-    width:40%;
+    width:calc(50% - 2px);
   }
   section {
     flex-wrap: wrap;
-    height: 220px
+    height: 204px;
   }
 }
 @media(max-width:600px) {
@@ -53,7 +55,7 @@ background-color: tan;
     width:100%;
   }
   section {
-    height: 440px;
+    height: 412px;
   }
 }
 </style>
