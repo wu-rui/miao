@@ -1,18 +1,10 @@
 <!DOCTYPE html>
-<!--
-Created using JS Bin
-http://jsbin.com
-
-Copyright (c) 2019 by huntye1 (http://jsbin.com/dehekip/1/edit)
-
-Released under the MIT license: http://jsbin.mit-license.org
--->
 <meta name="robots" content="noindex">
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>三栏等高自适应</title>
 <style id="jsbin-css">
 * {
   background-color: rgba(0,0,0,0.08);
@@ -21,33 +13,41 @@ Released under the MIT license: http://jsbin.mit-license.org
 }
 .container {
   overflow: hidden;
+  /* /父元素把超出去的padding内容剪切掉/ */
 }
 .center {
   background: red;
   float: left;
   margin:0 200px;
+    padding-bottom: 1000px;
+  margin-bottom: -1000px;
 }
 .left {
   float: left;
   background-color: blue;
   width:200px;
   margin-left: -100%;
+  padding-bottom: 1000px;
+  margin-bottom: -1000px;
 }
 .right{
   float: left;
   width: 200px;
   background-color: yellow;
   margin-left: -200px;
+    padding-bottom: 1000px;
+  margin-bottom: -1000px;
 }
 
 
 </style>
 </head>
 <body>
+  <h2>实现最高栏为三栏的高度</h2>
   <div class="container">
     <div class="center">
       <h2>圣杯布局</h2>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit dicta quasi reprehenderit laborum saepe. Necessitatibus nemo est magnam fugit quod modi, hic deleniti officia laborum sapiente. Culpa omnis mollitia velit.
+      Lorem ipsum dolor sit amet, con Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt iure laudantium impedit. sectetur adipisicing elit. Odit dicta quasi reprehenderit laborum saepe. Necessitatibus nemo est magnam fugit quod modi, hic deleniti officia laborum sapiente. Culpa omnis mollitia velit.
     </div>
     <div class="left">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi nesciunt corrupti ex delectus doloremque, ipsum sed quisquam quo distinctio eum ratione recusandae error ad corporis iste culpa, ipsa, fuga temporibus!</div>
     <div class="right">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta nesciunt, voluptatem illo doloremque molestiae atque dolores. Consequuntur, inventore modi asperiores aspernatur quo magni quidem eaque totam fugit vero molestiae architecto!</div>

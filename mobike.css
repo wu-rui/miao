@@ -23,7 +23,6 @@
   .hero {
     height: 590px;
   }
-  [class^="section-"] {}
 }
 
 .sections {
