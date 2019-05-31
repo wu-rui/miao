@@ -165,10 +165,11 @@
 .homehero .home-nav> ul > li {
   padding:0 14px;
 }
-.homehero .home-nav> ul > li span {
+.homehero .home-nav> ul > li > a > span {
   float: left;
+  margin-left: 10px;
 }
-.homehero .home-nav> ul > li > a i {
+.homehero .home-nav> ul > li > a > i {
   float: right;
   font-size: 20px;
   color: rgba(255,255,255,0.5);
@@ -177,14 +178,91 @@
 .homehero .home-nav> ul > li:hover {
   background-color: #ff6700;
 }
-.homehero .home-nav .children-list {
+.homehero .home-nav> ul > li:hover > .children-list {
+  display: block;
+}
+
+.homehero .home-nav .children-list{
   position: absolute;
   top: 0;
   bottom: 0;
   left: 100%;
-  width:993px;
+  /* width:993px; */
   box-shadow:3px 0 5px rgba(0, 0, 0, 0.1);
-  border:1px solid #c0c0c0;
+  border:1px solid #eeeeeefd;
   background-color: #fff;
   border-left: none;
+  /* display: none; */
+  /* xdisplay: flex;
+  flex-wrap:wrap;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: flex-start; */
+  /* padding-top: 12px; */
+  /* overflow: hidden; */
+  display: none;
+}
+
+.homehero .home-nav .children-list{
+  height: 100%;
+  padding-top: 12px;
+  float: left;
+}
+.homehero .home-nav .children-list li {
+  width: 248px;
+  height:16%;
+  /* border: 1px solid black; */
+  /* outline: 1px solid red; */
+
+}
+.homehero .home-nav .children-list li a {
+  width: 100%;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  padding-left: 20px;
+  display: flex;
+  align-items: center; 
+  font-size: 14px;
+}
+.homehero .home-nav .children-list li a:hover {
+  color: #ff6700;
+}
+.homehero .home-nav .children-list li a * {
+  vertical-align: middle;
+}
+.homehero .home-nav .children-list li a img {
+  margin-right: 10px;
+}
+.homehero .home-nav .children-list li:nth-child(n+7) {
+  margin-left: 248px;
+}
+.homehero .home-nav .children-list li:nth-child(6n+7) {
+  margin-top: -428px
+}
+.homehero .home-nav .children-list li:nth-child(n+13) {
+  margin-left: calc(248px * 2);
+}
+.homehero .home-nav .children-list li:nth-child(n+19) {
+  margin-left: calc(248px * 3);
+}
+
+
+
+/* 核心下部分 */
+
+.home-sub {
+  margin-top: 14px;
+}
+
+ .home-sub-block {
+  float: left;
+}
+ .home-sub-block .home-channel {
+  width: 234px;
+  height: 170px;
+  display: flex;
+}
+ .home-sub-block li {
+  float: left;
 }
