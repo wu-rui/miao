@@ -1,0 +1,142 @@
+.page-main {
+  margin-top:42px ;
+  background-color: #f5f5f5;
+  padding-top: 22px;
+}
+.page-main .phone {
+  position: relative;
+}
+.page-main .phone h2{
+  color: #333333;
+  font-weight: normal;
+  padding: 0;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 200;
+  line-height: 58px;
+  color: #333;
+}
+.page-main .phone .viewall a{
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 58px;
+  transition: .2s;
+  font-size: 16px;
+  color: #424242;
+}
+.page-main .phone .viewall a:hover {
+  color: #ff6700;
+}
+.page-main .phone .viewall a:hover .iconfont {
+  background-color: #ff6700;
+}
+.page-main .phone .viewall .iconfont {
+  display: inline-block;
+  background-color: #b1afad;
+  border-radius: 50%;
+  font-weight: bold;
+  width: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: white;
+  transition: .3s;
+  margin-left: 5px;
+}
+
+
+
+
+.page-main .phone .left li{ 
+  transition: all .2s linear;
+}
+.page-main .phone .left {
+  float: left;
+  margin-bottom: 14px;
+
+}
+
+.page-main .phone .right {
+  float: left;
+  width: 992px;
+}
+.page-main .phone .right li{
+  width: 234px;
+  height: 300px;
+  float: left;
+  padding:20px 0;
+  background-color: white;
+  margin-left: 14px;
+  margin-bottom: 14px;
+  transition: all .2s linear;
+  position: relative;
+}
+.page-main .phone .left li:hover{
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transform: translate3d(0, -2px, 0);  
+}
+
+.page-main .phone .right li:hover {
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transform: translate3d(0, -2px, 0);
+}
+
+.page-main .phone .right li.new::before{
+  content: "新品"; 
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  background-color: #83c44e;
+  color: #fff;
+  position:absolute;
+  width: 64px;
+  margin:0 auto;
+  left: 0;
+  right: 0;
+  line-height: 20px;
+  top: 0;
+
+  
+}
+.page-main .phone .right li.discount::before{
+  content: "享8折"; 
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  background-color: #e53935;
+  color: #fff;
+  position:absolute;
+  width: 64px;
+  margin:0 auto;
+  left: 0;
+  right: 0;
+  line-height: 20px;
+  top: 0;
+}
+
+
+.page-main .phone .right li * {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.page-main .phone .right li .name {
+  font-size: 14px;
+  color: #333333;
+  margin-top: 18px;
+}
+.page-main .phone .right li .description{
+  font-size: 12px;
+  color: #b0b0b0;
+  margin-top:1px;
+}
+.page-main .phone .right li .price {
+  font-size: 14px;
+  color: #ff6700;
+  margin-top: 10px;
+}
+.page-main .phone .right li .price .del {
+  display: inline;
+  text-decoration: line-through;
+  color: #b0b0b0;
+}
