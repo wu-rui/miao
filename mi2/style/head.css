@@ -14,7 +14,7 @@
   height: 55px;
   top: 22px;
   left: 0;
-  background-image: url(./imgages/logo.png);
+  background-image: url(../imgages/logo.png);
 }
 
 .site-header .header-search {

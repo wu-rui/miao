@@ -3,10 +3,13 @@
   background-color: #f5f5f5;
   padding-top: 22px;
 }
+
+
+/* 手机版块 */
 .page-main .phone {
   position: relative;
 }
-.page-main .phone h2{
+.page-main  h2{
   color: #333333;
   font-weight: normal;
   padding: 0;
@@ -50,13 +53,13 @@
 .page-main .phone .left li{ 
   transition: all .2s linear;
 }
-.page-main .phone .left {
+.page-main  .left {
   float: left;
   margin-bottom: 14px;
 
 }
 
-.page-main .phone .right {
+.page-main  .right {
   float: left;
   width: 992px;
 }
@@ -140,3 +143,12 @@
   text-decoration: line-through;
   color: #b0b0b0;
 }
+
+/* 第一个home-bar */
+.page-main .homebar img {
+  vertical-align: top;
+  margin-top: 28px;
+  margin-bottom: 22px;
+}
+
+/* 家电版块 */
