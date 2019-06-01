@@ -19,6 +19,14 @@
   line-height: 58px;
   color: #333;
 }
+/* 实现每个版块 h2 右边的功能盒子 */
+/* .page-main .funcbox{
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 58px;
+} */
+
 .page-main .phone .viewall a{
   position: absolute;
   right: 0;
@@ -50,20 +58,24 @@
 
 
 
-.page-main .phone .left li{ 
+.page-main  .left { 
+  width: 234px; 
+  float: left;
+}
+.page-main  .left li{
+  float: left;
   transition: all .2s linear;
-}
-.page-main  .left {
-  float: left;
   margin-bottom: 14px;
-
+  
 }
-
+.page-main  .left img{
+  vertical-align: top;
+}
 .page-main  .right {
-  float: left;
+  float: right;
   width: 992px;
 }
-.page-main .phone .right li{
+.page-main  .right li{
   width: 234px;
   height: 300px;
   float: left;
@@ -74,17 +86,17 @@
   transition: all .2s linear;
   position: relative;
 }
-.page-main .phone .left li:hover{
+.page-main  .left li:hover{
   box-shadow: 0 15px 30px rgba(0,0,0,0.1);
   transform: translate3d(0, -2px, 0);  
 }
 
-.page-main .phone .right li:hover {
+.page-main  .right li:hover {
   box-shadow: 0 15px 30px rgba(0,0,0,0.1);
   transform: translate3d(0, -2px, 0);
 }
 
-.page-main .phone .right li.new::before{
+.page-main .right li.new::before{
   content: "新品"; 
   font-size: 12px;
   text-align: center;
@@ -101,7 +113,7 @@
 
   
 }
-.page-main .phone .right li.discount::before{
+.page-main  .right li.discount::before{
   content: "享8折"; 
   font-size: 12px;
   text-align: center;
@@ -118,27 +130,27 @@
 }
 
 
-.page-main .phone .right li * {
+.page-main  .right li * {
   display: block;
   margin: 0 auto;
   text-align: center;
 }
-.page-main .phone .right li .name {
+.page-main  .right li .name {
   font-size: 14px;
   color: #333333;
   margin-top: 18px;
 }
-.page-main .phone .right li .description{
+.page-main  .right li .description{
   font-size: 12px;
   color: #b0b0b0;
   margin-top:1px;
 }
-.page-main .phone .right li .price {
+.page-main  .right li .price {
   font-size: 14px;
   color: #ff6700;
   margin-top: 10px;
 }
-.page-main .phone .right li .price .del {
+.page-main  .right li .price .del {
   display: inline;
   text-decoration: line-through;
   color: #b0b0b0;
@@ -152,3 +164,69 @@
 }
 
 /* 家电版块 */
+.homeelec {
+  position: relative;
+ 
+}
+.homeelec .nav {
+  position: absolute;
+  right: 0;
+  /* width: 300px; */
+  top: 0;
+  height: 58px;
+  font-size: 16px;
+}
+
+.homeelec .nav li {
+  float: left;
+  height: 58px;
+  margin-left: 32px;
+  margin-top: 10px;
+}
+.homeelec .nav li a {
+  /* display:  */
+  line-height: 20px;
+  display: inline-block;
+   border-bottom: 2px solid transparent;
+   color: #424242;
+  transition: color .3s, border-color .3s;
+}
+.homeelec .nav li a:hover {
+  /* display: inline-block */
+  color: #ff6700;
+  border-color: #ff6700
+  /* vertical-align: 3px; */
+}
+.homeelec .nav li a.onhover {
+  /* display: inline-block */
+  color: #ff6700;
+  border-color: #ff6700
+  /* vertical-align: 3px; */
+}
+.homeelec .right li .comment-c {
+  margin-top: 20px;
+}
+.homeelec .right li .comment {
+  height: 0;
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: #ff6700;
+  color: #fff;
+  font-size: 12px;
+  transition: all .2s linear;
+}
+
+.homeelec .right li:hover  .comment {
+  height: 78px;
+
+ 
+}
+.homeelec .right li .user span {
+  display: inline-block;
+}
+.homeelec .right li .user  {
+  color: rgba(255,255,255,.6);
+  font-size: 12px;
+}
