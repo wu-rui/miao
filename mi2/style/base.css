@@ -56,3 +56,7 @@ a {
 .l {
   outline: 1px solid red;
 }
+dl,dt,dd {
+  padding: 0;
+  margin: 0;
+}

@@ -204,12 +204,15 @@
   /* vertical-align: 3px; */
 }
 .homeelec .right li .comment-c {
-  margin-top: 20px;
+  margin: 10px 0;
+  
 }
 .homeelec .right li .comment {
   height: 0;
   overflow: hidden;
   width: 100%;
+  padding:0 20px;
+  text-align-last: left;
   position: absolute;
   bottom: 0;
   background-color: #ff6700;
@@ -230,3 +233,50 @@
   color: rgba(255,255,255,.6);
   font-size: 12px;
 }
+
+.homeelec .right li.small {
+  height: 143px;
+  padding-right: 120px;
+  padding-left: 30px;
+
+}
+.homeelec .right li.small a.name,
+.homeelec .right li.small .price {
+  text-align: left;
+}
+.homeelec .right li.small a.name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.homeelec .right li.small a.img{
+  position: absolute;
+  right: 13px;
+  top: 32px;
+}
+.homeelec .right li.viewmore {
+  height: 143px;
+  padding: 40px 26px;
+  position: relative;
+}
+
+
+.homeelec .right li.viewmore  div {
+  float: left;
+  font-size: 18px;
+  color: #333333;
+  margin-top: 10px;
+}
+.homeelec .right li.viewmore  div .items {
+  text-align: left;
+  font-size: 12px;
+  color: #757575;
+  padding-top: 5px;
+}
+.homeelec .right li.viewmore .iconfont {
+  float: right;
+  font-size: 55px;
+  color: #ff6700;
+}
+
+

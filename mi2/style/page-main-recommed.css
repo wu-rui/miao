@@ -1,0 +1,11 @@
+/* 主页之为你推荐版块 */
+.page-main .recommend input {
+  display: none;
+}
+.page-main .recommend .container {
+  position: relative;
+}
+.page-main .recommend [class^="box"] {
+  position: absolute;
+  top: 0;
+}
