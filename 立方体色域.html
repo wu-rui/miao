@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by huntye1 (http://jsbin.com/naziheb/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+section {
+  position: absolute;
+  transform-style:preserve-3d;
+  margin:500px;
+  transition:linear 10s;
+  transform-origin: center;
+  xoverflow: hidden;
+  transform: rotatex(-30deg) rotatey(30deg);
+}
+section:hover {
+    transform:rotatex(-210deg) rotatey(210deg);
+}
+div {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  position: absolute;
+  box-sizing:border-box;  
+}
+.d1 {
+  background-image: linear-gradient(to right ,rgb(0,0,0),rgb(0,0,255)),
+    linear-gradient(to top ,rgb(0,0,0),rgb(255,0,0)),
+    linear-gradient(rgb(0,255,0),rgb(0,255,0)),
+    linear-gradient(to right ,rgb(0,0,0),rgb(0,0,255));
+  background-blend-mode:lighten;
+}
+.d2 {
+  transform-origin:left;
+  transform:translate(100px) rotateY(90deg) ;
+  background-blend-mode:lighten;
+  background-image: linear-gradient(to top ,rgb(0,0,0),rgb(255,0,0)),
+    linear-gradient(to left ,rgb(0,0,0),rgb(0,255,0)),
+    linear-gradient(to right ,rgb(0,0,255),rgb(0,0,255));
+}
+.d3 {
+  transform-origin:right;
+  transform:translatez(-100px) ;
+  background-blend-mode:lighten;
+  background-image: linear-gradient(to top ,rgb(0,0,0),rgb(255,0,0)),
+    linear-gradient(to top ,rgb(0,0,0),rgb(0,0,0)),
+    linear-gradient(to right ,rgb(0,0,0),rgb(0,0,255));
+}
+.d4 {
+  transform-origin:right;
+  transform:translate(-100px) rotateY(-90deg) ;
+  background-blend-mode:lighten;
+  background-image: linear-gradient(to top ,rgb(0,0,0),rgb(255,0,0)),
+    linear-gradient(to right ,rgb(0,0,0),rgb(0,255,0)),
+    linear-gradient(to right ,rgb(0,0,0),rgb(0,0,0))
+}
+.d5 {
+  transform-origin:top;
+  transform:translatey(100px) rotatex(-90deg) ;
+  background-blend-mode:lighten;
+  background-image: linear-gradient(rgb(0,0,0),rgb(0,0,0)),
+    linear-gradient(to top ,rgb(0,0,0),rgb(0,255,0)),
+    linear-gradient(to right ,rgb(0,0,0),rgb(0,0,255));
+}
+.d6 {
+  transform-origin:bottom ; 
+  transform:translatey(-100px) rotatex(90deg);
+  background-blend-mode:lighten;
+  background-image: linear-gradient(rgb(255,0,0),rgb(255,0,0)),
+    linear-gradient(to bottom ,rgb(0,0,0),rgb(0,255,0)),
+    linear-gradient(to right ,rgb(0,0,0),rgb(0,0,255));
+}
+
+</style>
+</head>
+<body>
+<section>
+  <div class="d1">一</div>
+  <div class="d2">二</div>
+  <div class="d3">三</div>
+  <div class="d4">四</div>
+  <div class="d5">五</div>
+  <div class="d6">六</div>
+</section>
+</body>
+</html>
