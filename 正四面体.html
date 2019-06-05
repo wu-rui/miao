@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by huntye1 (http://jsbin.com/joyijul/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+x* {
+  background-color:  rgba(0,0,0,.03);
+}
+section {
+  position: absolute;
+  margin: 100px;
+  transform-style:preserve-3d;
+  transition:1s;
+  transform:perspective(1000px) rotatex(-30deg) rotatey(11deg);
+}
+section:hover {
+  transform:perspective(1000px) rotatex(-210deg) rotatey(210deg);
+}
+div { 
+  xposition: absolute;
+  border-right: 50px solid transparent;
+  border-left: 50px solid transparent;
+  border-bottom: 86.6px solid red;
+  transform-origin:50% 100%;
+  xtransition:1s;
+}
+.d2 {  
+  border-bottom-color: blue;
+  transform: rotate(-60deg)  translate(100.6px,-86px) rotatex(-110deg)  ;
+ 
+}
+.d3 {
+ border-bottom-color:  yellow;
+transform:   translate(0px,-173px) rotatex(-70deg) ;
+}
+.d4 {
+  border-bottom-color:  tan;
+ transform: rotate(60deg)  translate(-249.4px,-174px) rotatex(-110deg)  ;
+}
+.d1 {
+ border-bottom-color: red;
+}
+
+
+</style>
+</head>
+<body>
+<section>
+  <div class="d1"></div>
+  <div class="d2"></div>
+  <div class="d3"></div>
+  <div class="d4"></div>
+</section>
+</body>
+</html>
