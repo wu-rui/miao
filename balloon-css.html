@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ballo0n-css</title>
+  <link rel="stylesheet" href="balloon-base.css">
+  <link rel="stylesheet" href="balloon-css.css">
+</head>
+<body>
+  <main>
+    <div class="container">
+      <div class="logo"><img src="https://kazzkiq.github.io/balloon.css/assets/img/logo.svg" alt="" width="270px"></div>
+      <div class="position">
+        <h2>Positioning</h2>
+        <p>For positioning, use <span class="emphisize"> data-balloon-pos</span> attribute with one of the values: <span class="emphisize"> up</span>, <span class="emphisize"> down</span>, <span class="emphisize"> left</span> or <span class="emphisize"> right</span></p>
+
+        <div class="example clearfix">
+          <div class="code">
+             <span blue>&lt;button data-balloon=" </span>
+             <span red> Whats up!</span> 
+             <span blue> "data-balloon-pos="</span>
+             <span red> up</span>
+             <span blue> "&gt;</span>
+             <span black> Hover me! </span>
+             <span blue> &lt;/button&gt;</span>
+          </div>
+          <div class="button" >
+            <button data-balloon="干嘛？兄弟" data-balloon-pos="up">
+              Hover me!
+            </button>
+          </div>
+        </div>
+
+        <div class="example clearfix">
+          <div class="code">
+             <span blue>&lt;button data-balloon=" </span>
+             <span red> Whats up!</span> 
+             <span blue> "data-balloon-pos="</span>
+             <span red> left</span>
+             <span blue> "&gt;</span>
+             <span black> Hover me! </span>
+             <span blue> &lt;/button&gt;</span>
+          </div>
+          <div class="button">
+            <button data-balloon="Whats up!" data-balloon-pos="left" >
+              Hover me!
+            </button>
+          </div>
+        </div>
+
+        <div class="example clearfix">
+          <div class="code">
+             <span blue>&lt;button data-balloon=" </span>
+             <span red> Whats up!</span> 
+             <span blue> "data-balloon-pos="</span>
+             <span red> right</span>
+             <span blue> "&gt;</span>
+             <span black> Hover me! </span>
+             <span blue> &lt;/button&gt;</span>
+          </div>
+          <div class="button">
+            <button data-balloon="Whats up!" data-balloon-pos="right">
+              Hover me!
+            </button>
+          </div>
+        </div>
+
+        <div class="example clearfix">
+          <div class="code">
+             <span blue>&lt;button data-balloon=" </span>
+             <span red> Whats up!</span> 
+             <span blue> "data-balloon-pos="</span>
+             <span red> down</span>
+             <span blue> "&gt;</span>
+             <span black> Hover me! </span>
+             <span blue> &lt;/button&gt;</span>
+          </div>
+          <div class="button">
+            <button data-balloon="Whats up!" data-balloon-pos="down">
+              Hover me!
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="Length">
+          <h2>Length</h2>
+          <p>By default, tooltips will always remain single-line no matter their length. You can change this behavior by using the attribute 
+            <span class="emphisize"> data-balloon-length</span>
+             with one of the values: 
+            <span class="emphisize"> small</span>
+            , 
+            <span class="emphisize"> medium</span>
+            , 
+            <span class="emphisize"> large</span>
+             or 
+            <span class="emphisize"> fit</span>
+            .</p>
+
+
+            <div class="example clearfix">
+              <div class="code">
+                <span blue>&lt;button data-balloon-length="</span>
+                <span red> small</span> 
+                <span blue>" data-balloon="</span>
+                <span red> Hi.</span>
+                <span blue>" data-balloon-pos="</span>
+                <span red> up</span>
+                <span blue> "&gt;</span>
+                <span black> Hover me! </span>
+                <span blue> &lt;/button&gt;</span>
+              </div>
+              <div class="button">
+                <button data-balloon-length="small" data-balloon="Hi." data-balloon-pos="up">
+                  I'm a small tooltip
+                </button>
+              </div>
+            </div>
+
+            <div class="example clearfix">
+              <div class="code">
+                <span blue>&lt;button data-balloon-length="</span>
+                <span red> medium</span> 
+                <span blue>" data-balloon="</span>
+                <span red> Now that's a super big text we have over here right? Lorem ipsum dolor sit I'm done.</span>
+                <span blue>" data-balloon-pos="</span>
+                <span red> up</span>
+                <span blue> "&gt;</span>
+                <span black> I'm a medium tooltip. </span>
+                <span blue> &lt;/button&gt;</span>
+              </div>
+              <div class="button">
+                <button data-balloon-length="medium" data-balloon="Now that's a super big text we have over here right? Lorem ipsum dolor sit I'm done." data-balloon-pos="up" >
+                  I'm a medium tooltip.
+                </button>
+              </div>
+            </div>
+
+
+            <div class="example clearfix">
+              <div class="code">
+                <span blue>&lt;button data-balloon-length="</span>
+                <span red> large</span> 
+                <span blue>" data-balloon="</span>
+                <span red> What about something really big? This may surpass your window dimensions. Imagine you're on that boring class with that boring teacher and you didn't slept so well last night. Suddenly you're sleeping in class. Can you believe it?!</span>
+                <span blue>" data-balloon-pos="</span>
+                <span red> up</span>
+                <span blue> "&gt;</span>
+                <span black> I'm a large tooltip </span>
+                <span blue> &lt;/button&gt;</span>
+              </div>
+              <div class="button">
+                <button data-balloon-length="large" data-balloon="What about something really big? This may surpass your window dimensions. Imagine you're on that boring class with that boring teacher and you didn't slept so well last night. Suddenly you're sleeping in class. Can you believe it?!" data-balloon-pos="up">
+                  I'm a large tooltip
+                </button>
+              </div>
+            </div>
+
+            <div class="example clearfix">
+              <div class="code">
+                <span blue>&lt;button data-balloon-length="</span>
+                <span red> xlarge</span> 
+                <span blue>" data-balloon="</span>
+                <span red>What about something really big? This may surpass your window dimensions. Imagine you're on that boring class with that boring teacher and you didn't slept so well last night. Suddenly you're sleeping in class. Can you believe it?!</span>
+                <span blue>" data-balloon-pos="</span>
+                <span red> up</span>
+                <span blue> "&gt;</span>
+                <span black> I'm a Xlarge tooltip </span>
+                <span blue> &lt;/button&gt;</span>
+              </div>
+              <div class="button">
+                <button data-balloon-length="xlarge" data-balloon="What about something really big? This may surpass your window dimensions. Imagine you're on that boring class with that boring teacher and you didn't slept so well last night. Suddenly you're sleeping in class. Can you believe it?!" data-balloon-pos="up">
+                  I'm a Xlarge tooltip
+                </button>
+              </div>
+            </div>
+
+
+            <div class="example clearfix">
+              <div class="code">
+                <span blue>&lt;button data-balloon-length="</span>
+                <span red> fit</span> 
+                <span blue>" data-balloon="</span>
+                <span red>What about something really big? This may surpass your window dimensions. Imagine you're on that boring class with that boring teacher and you didn't slept so well last night. Suddenly you're sleeping in class. Can you believe it?!</span>
+                <span blue>" data-balloon-pos="</span>
+                <span red> up</span>
+                <span blue> "&gt;</span>
+                <span black>My width will fit to element </span>
+                <span blue> &lt;/button&gt;</span>
+              </div>
+              <div class="button">
+                <button data-balloon-length="fit" data-balloon="What about something really big? This may surpass your window dimensions. Imagine you're on that boring class with that boring teacher and you didn't slept so well last night. Suddenly you're sleeping in class. Can you believe it?!" data-balloon-pos="up">
+                  My width will fit to element
+                </button>
+              </div>
+            </div>
+            
+        </div>
+        <div class="show">
+          <h2>Showing tooltips programatically</h2>
+          <p>If you want to show tooltips even when user interaction isn't happening, you can simply use the 
+            <span class="emphisize">data-balloon-visible</span> attribute:
+            </p>
+        </div>
+            <div class="example clearfix">  
+                <div class="code">
+                <span blue>&lt;button data-balloon-visible data-balloon="</span>
+                <span red> I am always visible!</span> 
+                <span blue>" data-balloon-pos="</span>
+                <span red>up</span>
+                <span blue> "&gt;</span>
+                <span black>Always visible! </span>
+                <span blue> &lt;/button&gt;</span>
+              </div>
+              <div class="button">
+                <button data-balloon-visible data-balloon="I am always visible!" data-balloon-pos="up">
+                  Always visible!
+                </button>
+              </div>
+            </div>
+        
+      </div>
+
+    
+  </main>
+</body>
+</html>

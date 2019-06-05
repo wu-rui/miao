@@ -1,0 +1,77 @@
+[data-balloon]::before {
+  content: attr(data-balloon);
+  display: block;
+  position: absolute;
+  background-color:rgba(0,0,0,.3);
+  padding: 5px 10px;
+  white-space: nowrap;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 1s,transform 1s;
+  line-height: 1.2em;
+  font-size: 12px;
+  border-radius: 3px;
+  pointer-events: none;
+} 
+[data-balloon] {
+  position: relative;
+}
+[data-balloon-pos = "up"]::before {
+  bottom: 100%;
+  left: 50%;
+  transform:translate(-50%,100%);
+} 
+[data-balloon-pos = "up"]:hover::before {
+  opacity: 1;
+  transform: translate(-50%,-5px)
+}
+[data-balloon-pos = "up"][data-balloon-visible]::before {
+  opacity: 1;
+  transform: translate(-50%,-5px);
+  transition:none;
+}
+[data-balloon-pos = "left"]::before {
+  right: 100%;
+  top: 50%;
+  transform:translate(100%,-50%);
+} 
+[data-balloon-pos = "left"]:hover::before {
+  opacity: 1;
+  transform: translate(-5px,-50%)
+} 
+[data-balloon-pos = "right"]::before {
+  top: 50%;
+  left: 100%;
+  transform:translate(-100%,-50%);
+} 
+[data-balloon-pos = "right"]:hover::before {
+  opacity: 1;
+  transform: translate(5px,-50%)
+} 
+[data-balloon-pos = "down"]::before {
+  top: 100%;
+  left: 50%;
+  transform:translate(-50%,-100%);
+} 
+[data-balloon-pos = "down"]:hover::before {
+  opacity: 1;
+  transform: translate(-50%,5px)
+}
+[data-balloon-length]::before {
+  white-space: normal;
+}
+[data-balloon-length="small"]::before {
+  width: 80px;
+}
+[data-balloon-length="medium"]::before {
+  width: 150px;
+} 
+[data-balloon-length="large"]::before {
+  width: 260px;
+} 
+[data-balloon-length="xlarge"]::before {
+  width: 380px;
+} 
+[data-balloon-length="fit"]::before {
+  width: 100%;
+} 
