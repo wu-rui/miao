@@ -3,7 +3,7 @@
 Created using JS Bin
 http://jsbin.com
 
-Copyright (c) 2019 by huntye1 (http://jsbin.com/loxuhip/2/edit)
+Copyright (c) 2019 by huntye1 (http://jsbin.com/loxuhip/6/edit)
 
 Released under the MIT license: http://jsbin.mit-license.org
 -->
@@ -15,11 +15,23 @@ Released under the MIT license: http://jsbin.mit-license.org
   <title>JS Bin</title>
 <style id="jsbin-css">
 section {
-  --d:30deg;
-  background-color:#cdcdcd;
+  animation:start .5s forwards;
+  margin:auto;
   width: 400px;
   height: 400px;
+  padding:30px;
   position: relative;
+  background-color: white;
+  border-radius:50%;
+  box-shadow:3px 6px 6px 3px rgba(0,0,0,0.03);
+  text-shadow:1px 1px 2px  rgba(0,0,0,.8);
+  transition: 1s;
+}
+
+@keyframes start {
+  to {
+     --d:30deg;
+  }
 }
 div {
   width: 50px;
@@ -35,35 +47,94 @@ div {
   left:0;
   transition:2s;
 }
-aside {
+.middle {
+  width: 30px;
+  height: 30px;
+  border-radius:50%;
+  background-color:black;
+  z-index: 999;
+}
+
+.l{
   position: absolute;
   margin:auto;
   top:0;
   bottom: 0;
   right:0;
   left:0;
-  width: 10px;
-  background-color: black;
-  border-radius:3px;
+}
+.second .l{
+  width: 5px;
+  background-color: red;
   height: 210px;
-  xtransform-origin:50% 182px;
   transform:translatey(-45px)rotate(0deg) ;
+  border-radius: 50% 50% 0 0 /100px 100px 0 0 ;
+  animation: shake 1s 1s infinite ease;
+  transform-origin:50% 150px;
 }
 .second {
-  transform:rotate(0deg) linear ;
-  animation:second infinite 60s ;
+  transform:rotate(0deg)  ;
+  animation:rotate infinite 60s linear both;
   animation-timing-function:steps(60);
 }
-.middle {
-  border-radius:50px;
-  background-color: red;
+.minute .l{
+  width: 8px;
+  background-color: black;
+  height: 160px;
+  transform:translatey(-80px)rotate(0deg) ;
+  border-radius: 50% 50% 0 0 /50px 50px 0 0 ;
+  transform-origin:50% 160px;
 }
-@keyframes second {
+.minute {
+  transform:rotate(0deg)  ;
+  animation:rotate infinite 3600s linear both;
+  animation-timing-function:steps(60);
+}
+.hour .l{
+  width: 14px;
+  background-color: black;
+  height: 120px;
+  transform:translatey(-60px)rotate(0deg) ;
+  transform-origin:50% 120px;
+  border-radius:7px 7px 0 0;
+}
+.hour {
+  transform:rotate(0deg)  ;
+  animation:rotate infinite 43200s linear both;
+  animation-timing-function:steps(43200);
+}
+
+
+@keyframes shake {
+  0% {
+    transform:translatey(-45px)rotate(0deg);
+  }
+  15% {
+    transform:translatey(-45px)rotate(1deg)
+  }
+  20% {
+    transform:translatey(-45px)rotate(-1deg);
+  }
+  25% {
+    transform:translatey(-45px)rotate(-0.5deg);
+  }
+  30% {
+    transform:translatey(-45px)rotate(0.5deg);
+  }
+  35%  {
+    transform:translatey(-45px)rotate(0deg);
+  }
+  100% {
+    transform:translatey(-45px)rotate(0deg);
+  }
+}
+
+@keyframes rotate {
   0% {
     transform: rotate(0deg) ;
   }
   100% {
-    transform:rotate(360deg) ; 
+    transform:rotate(360deg) ;
   }
 }
 
