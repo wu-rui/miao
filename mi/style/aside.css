@@ -1,8 +1,7 @@
 .aside {
   position: fixed;
   width: 84px;
-  height: 562px;
-  bottom: 70px;
+  bottom: 170px;
   right: 0;
   z-index: 99999;
 }
@@ -32,6 +31,41 @@
   padding-bottom: 10px;
 }
 .aside .go-top {
-  margin-top:14px;
+  width: 100%;
+  position: absolute;
+  top:calc(100% + 20px);
   display: none;
+}
+@media(max-height:634px) {
+  .aside {
+    bottom: auto;
+    top:40px;
+  }
+}
+@media(max-width:1420px) {
+  .aside {
+    right: calc((100% - 1226px) / 2);
+    width:28px ;
+    transform: translate(100%);
+    bottom: 126px;
+    top:auto;
+  }
+  .aside span {
+    display: none;
+  }
+  .aside a {
+    height: 40px;
+  }
+  .aside li i{
+    font-size: 20px;
+  }
+}
+@media(max-height:450px) and (max-width:1420px) {
+  .aside{
+    bottom:auto;
+    top: 140px;
+  }
+  .go-top {
+    
+  }
 }
