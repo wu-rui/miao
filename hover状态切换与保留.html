@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by huntye1 (http://jsbin.com/bukajul/11/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+
+main {
+  width: 408px;
+  margin:100px auto;
+  display: flow-root;
+  position: relative;
+}
+main:hover {
+  background-color: aqua;
+}
+div.d:hover {
+  color:red;
+}
+div {
+  line-height: 100px;
+  text-align: center;
+  font-size: 40px;
+  float: left;
+  width: 100px;
+  height: 100px;
+  border: 1px solid red;
+  transition:color 0s 10s;/*延迟时间可以无限大*/
+}
+section {
+  position: absolute;
+  top:100%;
+  width: 100%;
+  height: 200px;
+  font-size: 80px;
+  line-height: 200px;
+  text-align: center;
+  z-index: -1;
+  background-color: white;
+  transition:z-index 0s 10s;/*延迟时间可设无限大*/
+}
+/*再次hover时取消延迟效果*/
+main:hover  section {
+  transition:none;
+}
+
+main:hover div{
+  transition:none;
+}
+
+/*页面刷新的初始状态···············*/
+.d:first-child {
+  animation:foo .1s backwards;
+  animation-play-state:paused;
+}
+main:hover .d {
+  animation-play-state:running;
+}
+@keyframes foo {
+  from {
+    color:red;
+  }
+  to {
+    color:black
+  }
+}
+section:nth-of-type(1) {
+  z-index:1;
+}
+/*初始状态···············*/
+
+/* 切换状态 */
+div:nth-of-type(2):hover ~ section:nth-of-type(2) {
+  z-index:2;
+}
+div:nth-of-type(3):hover ~ section:nth-of-type(3) {
+  z-index:2;
+}
+div:nth-of-type(4):hover ~ section:nth-of-type(4) {
+  z-index:2;
+}
+section:nth-of-type(1):hover {
+  z-index:2;
+}
+section:nth-of-type(2):hover {
+  z-index:2;
+}
+section:nth-of-type(3):hover {
+  z-index:2;
+}
+section:nth-of-type(4):hover {
+  z-index:2;
+}
+
+
+
+</style>
+</head>
+<body>
+  <h1>通过延迟实现hover状态切换与保留</h1>
+  <h1>通过动画实现默认的初始状态</h1>
+  <main>
+      <div class="d">1</div>
+      <div class="d">2</div>
+      <div class="d">3</div>
+      <div class="d">4</div>
+      <section>111</section>
+      <section>222</section>
+      <section>333</section>
+      <section>444</section>
+  </main>
+</body>
+</html>
