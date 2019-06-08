@@ -1,0 +1,314 @@
+body {
+  background-color: gray;
+}
+.page-main  h2{
+  color: #333333;
+  font-weight: normal;
+  padding: 0;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 200;
+  line-height: 58px;
+  color: #333;
+}
+
+.page-main  .left { 
+  width: 234px; 
+  float: left;
+}
+.page-main  .left li{
+  float: left;
+  transition: all .2s linear;
+  margin-bottom: 14px;
+  
+}
+.page-main  .left li:hover{
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transform: translate3d(0, -2px, 0);  
+}
+.page-main  .left img{
+  vertical-align: top;
+}
+.page-main  .right > li > ul > li:hover {
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transform: translate3d(0, -2px, 0);
+}
+
+
+.page-main .right {
+  float:right;
+  position: relative;
+}
+.page-main .right > li {
+  float: left;
+  
+  
+}
+.page-main .right * {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.page-main .right > li:last-child span {
+  padding-right:0px;
+}
+.page-main .right > li {
+  height: 58px;
+}
+
+.page-main .right > li > ul {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 992px;
+}
+.page-main .right > li > ul >li {
+  float: left;
+  width: 234px;
+  height: 300px;
+  float: left;
+  padding:20px 0;
+  background-color: white;
+  margin-left: 14px;
+  margin-bottom: 14px;
+  transition: all .2s linear;
+  position: relative;
+}
+
+.homeelec .right li.small {
+  height: 143px;
+  padding-right: 120px;
+  padding-left: 30px;
+
+}
+.homeelec .right li.small a.name,
+.homeelec .right li.small .price {
+  text-align: left;
+}
+.homeelec .right li.small a.name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.homeelec .right li.small a.img{
+  position: absolute;
+  right: 13px;
+  top: 32px;
+}
+.homeelec .right li.viewmore {
+  height: 143px;
+  padding: 40px 26px;
+  position: relative;
+}
+
+
+.homeelec .right li.viewmore  div {
+  float: left;
+  font-size: 18px;
+  color: #333333;
+  margin-top: 10px;
+}
+.homeelec .right li.viewmore  div .items {
+  display: block;
+  text-align: left;
+  font-size: 12px;
+  color: #757575;
+  padding-top: 5px;
+}
+.homeelec .right li.viewmore .iconfont {
+  float: right;
+  font-size: 55px;
+  color: #ff6700;
+}
+.page-main  .right li .price {
+  font-size: 14px;
+  color: #ff6700;
+  margin-top: 10px;
+}
+.page-main  .right li .price .del {
+  display: inline;
+  text-decoration: line-through;
+  color: #b0b0b0;
+}
+.page-main  .right li .description{
+  font-size: 12px;
+  color: #b0b0b0;
+  margin-top:1px;
+}
+.page-main  .right li .name {
+  font-size: 14px;
+  color: #333333;
+  margin-top: 18px;
+}
+.homeelec .right li .comment-c {
+  margin: 10px 0;
+  
+}
+.homeelec .right li .comment {
+  height: 0;
+  overflow: hidden;
+  width: 100%;
+  padding:0 20px;
+  text-align-last: left;
+  position: absolute;
+  bottom: 0;
+  background-color: #ff6700;
+  color: #fff;
+  font-size: 12px;
+  transition: all .2s linear;
+}
+
+.homeelec .right>li>ul>li:hover  .comment {
+  height: 78px;
+}
+.homeelec .right li .user span {
+  display: inline-block;
+}
+.homeelec .right li .user  {
+  color: rgba(255,255,255,.6);
+  font-size: 12px;
+}
+
+/* hover */
+.page-main .right > li > span {
+  vertical-align: middle;
+  font-size: 16px;
+  line-height: 58px;
+  padding-right:12px;
+  padding-left:12px;
+  display: inline-block;
+  cursor: pointer;
+  transition: color .3s 10s, border-color .3s 10s;
+  position: relative;
+}
+
+.page-main .right > li > span::after {
+  content: "";
+  width:calc(100% - 24px);
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  height: 2px;
+  display: block;
+  background-color:transparent;
+  position: absolute;
+  top: 68%;
+  transition: all .3s 10s;
+}
+.page-main .right > li:last-child > span::after { 
+  width:calc(100% - 12px);
+  right: 0;
+  left: auto;
+}
+.page-main .right > li:first-child >span::after {
+  animation: init1 .000001s backwards;
+  animation-play-state: paused;
+}
+
+@keyframes init1 {
+  from {
+    background-color: #ff6700;
+  }
+  to {
+    background-color:transparent;
+  }
+}
+ 
+
+.homeelec .right > li {
+  color: #333333;
+}
+
+.homeelec .right > li:first-child {
+  animation: init2 .00001s backwards;
+  animation-play-state: paused;
+}
+@keyframes init2{
+  from {
+    color: #ff6700;
+  }
+  to {
+    color: #333333;
+  }
+}
+.homeelec .right > li:hover {
+    color: #ff6700;
+}
+.homeelec .right:hover > li {
+  animation-play-state: running;
+}
+.homeelec .right > li {
+  animation: defaultout 0s ;
+}
+.homeelec .right:hover > li span::after {
+  animation-play-state:running;
+}
+.homeelec .right > li:hover span::after {
+
+    background-color: currentColor;
+}
+
+.homeelec .right:hover > li >span {
+  transition: none;
+}
+.homeelec .right:hover > li >span::after {
+  transition: none;
+}
+
+
+
+
+
+
+/* 子列表延迟效果 */
+.homeelec .right:hover >li >ul {
+  transition: none;
+}
+.homeelec .right > li > ul {
+  z-index: 0;
+}
+.homeelec .right > li:first-child > ul {
+  z-index: 1;
+}
+.homeelec .right > li > ul {
+  transition:z-index 0s 10s;
+}
+.homeelec .right > li:hover > ul {
+  z-index: 10;
+}
+
+
+
+
+.page-main .right li.new::before{
+  content: "新品"; 
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  background-color: #83c44e;
+  color: #fff;
+  position:absolute;
+  width: 64px;
+  margin:0 auto;
+  left: 0;
+  right: 0;
+  line-height: 20px;
+  top: 0;
+
+  
+}
+.page-main  .right li.discount::before{
+  content: "享8折"; 
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  background-color: #e53935;
+  color: #fff;
+  position:absolute;
+  width: 64px;
+  margin:0 auto;
+  left: 0;
+  right: 0;
+  line-height: 20px;
+  top: 0;
+}
