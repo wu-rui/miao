@@ -1,7 +1,5 @@
-body {
-  background-color: gray;
-}
-.page-main  h2{
+
+ .new-homeelec  h2{
   color: #333333;
   font-weight: normal;
   padding: 0;
@@ -12,57 +10,57 @@ body {
   color: #333;
 }
 
-.page-main  .left { 
+ .new-homeelec .left { 
   width: 234px; 
   float: left;
 }
-.page-main  .left li{
+ .new-homeelec .left li{
   float: left;
   transition: all .2s linear;
   margin-bottom: 14px;
   
 }
-.page-main  .left li:hover{
+ .new-homeelec .left li:hover{
   box-shadow: 0 15px 30px rgba(0,0,0,0.1);
   transform: translate3d(0, -2px, 0);  
 }
-.page-main  .left img{
+ .new-homeelec .left img{
   vertical-align: top;
 }
-.page-main  .right > li > ul > li:hover {
+ .new-homeelec .right > li > ul > li:hover {
   box-shadow: 0 15px 30px rgba(0,0,0,0.1);
   transform: translate3d(0, -2px, 0);
 }
 
 
-.page-main .right {
+ .new-homeelec .right {
   float:right;
   position: relative;
 }
-.page-main .right > li {
+ .new-homeelec .right > li {
   float: left;
   
   
 }
-.page-main .right * {
+ .new-homeelec .right * {
   display: block;
   margin: 0 auto;
   text-align: center;
 }
-.page-main .right > li:last-child span {
+ .new-homeelec .right > li:last-child span {
   padding-right:0px;
 }
-.page-main .right > li {
+ .new-homeelec .right > li {
   height: 58px;
 }
 
-.page-main .right > li > ul {
+ .new-homeelec .right > li > ul {
   position: absolute;
   right: 0;
   top: 100%;
   width: 992px;
 }
-.page-main .right > li > ul >li {
+ .new-homeelec .right > li > ul >li {
   float: left;
   width: 234px;
   height: 300px;
@@ -75,76 +73,76 @@ body {
   position: relative;
 }
 
-.homeelec .right li.small {
+.new-homeelec .right li.small {
   height: 143px;
   padding-right: 120px;
   padding-left: 30px;
 
 }
-.homeelec .right li.small a.name,
-.homeelec .right li.small .price {
+.new-homeelec .right li.small a.name,
+.new-homeelec .right li.small .price {
   text-align: left;
 }
-.homeelec .right li.small a.name {
+.new-homeelec .right li.small a.name {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-.homeelec .right li.small a.img{
+.new-homeelec .right li.small a.img{
   position: absolute;
   right: 13px;
   top: 32px;
 }
-.homeelec .right li.viewmore {
+.new-homeelec .right li.viewmore {
   height: 143px;
   padding: 40px 26px;
   position: relative;
 }
 
 
-.homeelec .right li.viewmore  div {
+.new-homeelec .right li.viewmore  div {
   float: left;
   font-size: 18px;
   color: #333333;
   margin-top: 10px;
 }
-.homeelec .right li.viewmore  div .items {
+.new-homeelec .right li.viewmore  div .items {
   display: block;
   text-align: left;
   font-size: 12px;
   color: #757575;
   padding-top: 5px;
 }
-.homeelec .right li.viewmore .iconfont {
+.new-homeelec .right li.viewmore .iconfont {
   float: right;
   font-size: 55px;
   color: #ff6700;
 }
-.page-main  .right li .price {
+.new-homeelec  .right li .price {
   font-size: 14px;
   color: #ff6700;
   margin-top: 10px;
 }
-.page-main  .right li .price .del {
+.new-homeelec  .right li .price .del {
   display: inline;
   text-decoration: line-through;
   color: #b0b0b0;
 }
-.page-main  .right li .description{
+.new-homeelec  .right li .description{
   font-size: 12px;
   color: #b0b0b0;
   margin-top:1px;
 }
-.page-main  .right li .name {
+.new-homeelec  .right li .name {
   font-size: 14px;
   color: #333333;
   margin-top: 18px;
 }
-.homeelec .right li .comment-c {
+.new-homeelec .right li .comment-c {
   margin: 10px 0;
   
 }
-.homeelec .right li .comment {
+.new-homeelec .right li .comment {
   height: 0;
   overflow: hidden;
   width: 100%;
@@ -158,19 +156,19 @@ body {
   transition: all .2s linear;
 }
 
-.homeelec .right>li>ul>li:hover  .comment {
+.new-homeelec .right>li>ul>li:hover  .comment {
   height: 78px;
 }
-.homeelec .right li .user span {
+.new-homeelec .right li .user span {
   display: inline-block;
 }
-.homeelec .right li .user  {
+.new-homeelec .right li .user  {
   color: rgba(255,255,255,.6);
   font-size: 12px;
 }
 
 /* hover */
-.page-main .right > li > span {
+.new-homeelec .right > li > span {
   vertical-align: middle;
   font-size: 16px;
   line-height: 58px;
@@ -182,7 +180,7 @@ body {
   position: relative;
 }
 
-.page-main .right > li > span::after {
+.new-homeelec .right > li > span::after {
   content: "";
   width:calc(100% - 24px);
   left: 0px;
@@ -195,12 +193,12 @@ body {
   top: 68%;
   transition: all .3s 10s;
 }
-.page-main .right > li:last-child > span::after { 
+.new-homeelec .right > li:last-child > span::after { 
   width:calc(100% - 12px);
   right: 0;
   left: auto;
 }
-.page-main .right > li:first-child >span::after {
+.new-homeelec .right > li:first-child >span::after {
   animation: init1 .000001s backwards;
   animation-play-state: paused;
 }
@@ -215,11 +213,11 @@ body {
 }
  
 
-.homeelec .right > li {
+.new-homeelec .right > li {
   color: #333333;
 }
 
-.homeelec .right > li:first-child {
+.new-homeelec .right > li:first-child {
   animation: init2 .00001s backwards;
   animation-play-state: paused;
 }
@@ -231,27 +229,27 @@ body {
     color: #333333;
   }
 }
-.homeelec .right > li:hover {
+.new-homeelec .right > li:hover {
     color: #ff6700;
 }
-.homeelec .right:hover > li {
+.new-homeelec .right:hover > li {
   animation-play-state: running;
 }
-.homeelec .right > li {
+.new-homeelec .right > li {
   animation: defaultout 0s ;
 }
-.homeelec .right:hover > li span::after {
+.new-homeelec .right:hover > li span::after {
   animation-play-state:running;
 }
-.homeelec .right > li:hover span::after {
+.new-homeelec .right > li:hover span::after {
 
     background-color: currentColor;
 }
 
-.homeelec .right:hover > li >span {
+.new-homeelec .right:hover > li >span {
   transition: none;
 }
-.homeelec .right:hover > li >span::after {
+.new-homeelec .right:hover > li >span::after {
   transition: none;
 }
 
@@ -261,26 +259,26 @@ body {
 
 
 /* 子列表延迟效果 */
-.homeelec .right:hover >li >ul {
+.new-homeelec .right:hover >li >ul {
   transition: none;
 }
-.homeelec .right > li > ul {
+.new-homeelec .right > li > ul {
   z-index: 0;
 }
-.homeelec .right > li:first-child > ul {
+.new-homeelec .right > li:first-child > ul {
   z-index: 1;
 }
-.homeelec .right > li > ul {
+.new-homeelec .right > li > ul {
   transition:z-index 0s 10s;
 }
-.homeelec .right > li:hover > ul {
+.new-homeelec .right > li:hover > ul {
   z-index: 10;
 }
 
 
 
 
-.page-main .right li.new::before{
+.new-homeelec .right li.new::before{
   content: "新品"; 
   font-size: 12px;
   text-align: center;
@@ -297,7 +295,7 @@ body {
 
   
 }
-.page-main  .right li.discount::before{
+.new-homeelec  .right li.discount::before{
   content: "享8折"; 
   font-size: 12px;
   text-align: center;
