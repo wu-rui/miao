@@ -23,7 +23,7 @@
   position: absolute;
   right: 0;
   top: 25px;
-
+  z-index: 1;
 }
 
 .site-header form {
