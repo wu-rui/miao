@@ -1,6 +1,6 @@
 /* 引入字体 */
 
-/* @font-face {
+@font-face {
   font-family: 'iconfont';
   src: url('../font/iconfont.eot');
   src: url('../font/?#iefix') format('embedded-opentype'),
@@ -8,16 +8,16 @@
       url('../font/iconfont.woff') format('woff'),
       url('../font/iconfont.ttf') format('truetype'),
       url('../font/iconfont.svg#iconfont') format('svg');
-} */
-@font-face {
-  font-family: 'iconfont';  /* project id 1217976 */
+}
+/* @font-face {
+  font-family: 'iconfont';  
   src: url('//at.alicdn.com/t/font_1217976_560pks3x04.eot');
   src: url('//at.alicdn.com/t/font_1217976_560pks3x04.eot?#iefix') format('embedded-opentype'),
   url('//at.alicdn.com/t/font_1217976_560pks3x04.woff2') format('woff2'),
   url('//at.alicdn.com/t/font_1217976_560pks3x04.woff') format('woff'),
   url('//at.alicdn.com/t/font_1217976_560pks3x04.ttf') format('truetype'),
   url('//at.alicdn.com/t/font_1217976_560pks3x04.svg#iconfont') format('svg');
-}
+} */
 body {
   margin: 0;
   min-width: 1226px;
