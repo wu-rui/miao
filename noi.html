@@ -441,11 +441,12 @@
 
   if(delta === 0) {
     var x = -b / 2 / a
-    console.log(x)
+    console.log("x1=x2=" + x)
   }else if(delta > 0) {
     var x1 = (-b + s_delta) / 2 / a
     var x2 = (-b - s_delta) / 2 / a
-    console.log(x1,x2)
+    console.log("x1=" + x1)
+    console.log("x2=" + x2)
   }else {
     var i_delta = Math.sqrt(-delta)
     if(a > 0) {
