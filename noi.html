@@ -17,7 +17,7 @@
   var b = +prompt()
   var c = +prompt()
 
-  console.log((a + b) / c)
+  console.log(((a + b) / c) | 0)
 </script>
 
 <script id="ch0103/04" type="x">
@@ -40,7 +40,7 @@
   var a = +prompt()
   var b = +prompt()
 
-  console.log((b / a).toFixed(3) + "%")
+  console.log((b / a * 100).toFixed(3) + "%")
 </script>
 
 <script id="ch0103/07" type="x">
@@ -64,7 +64,7 @@
   var r = +prompt()
   var d = 2 * r
   var c = d * Math.PI;
-  var s = 2 * Math.PI * r * r
+  var s = Math.PI * r * r
   console.log(d.toFixed(4))
   console.log(c.toFixed(4))
   console.log(s.toFixed(4))
@@ -87,7 +87,7 @@
 <!-- 球的体积 -->
 <script id="ch0103/12" type="x">
   var r = +prompt()
-  var v = 4 / (3 * Math.PI * r ** 3)
+  var v = 4 / 3 * (  3.14 * r ** 3)
   console.log(v.toFixed(2))
 </script>
 <!-- 反向输出三位数 -->
@@ -117,6 +117,7 @@
   var y = +prompt()
 
   var r = n - ((y / x) | 0 + 1)
+  console.log(r)
 </script>
 <!-- 线段长度 -->
 <script id="ch0103/16" type="x">
@@ -125,7 +126,7 @@
   var c = +prompt()
   var d = +prompt()
 
-  var l = Math.sqrt((a - c) ** 2  + (c + d)  ** 2 )
+  var l = Math.sqrt((a - c) * (a - c)  + (b - d) * (b - d) )
   console.log(l.toFixed(3))
   </script>
 
@@ -137,9 +138,9 @@
   var y2 = +prompt()
   var x3 = +prompt()
   var y3 = +prompt()
-  var a =Math.sqrt( (x1 - x2 )**2 + (y1 - y2) **2 )
-  var b =Math.sqrt( (x2 - x3 )**2 + (y2 - y3) **2 )
-  var c =Math.sqrt( (x3 - x1 )**2 + (y3 - y1) **2 )
+  var a =Math.sqrt( (x1 - x2 )*(x1 - x2 ) + (y1 - y2) *(y1 - y2) )
+  var b =Math.sqrt( (x2 - x3 )*(x2 - x3 ) + (y2 - y3) *(y2 - y3) )
+  var c =Math.sqrt( (x3 - x1 )*(x3 - x1 ) + (y3 - y1) *(y3 - y1) )
   var p =( a + b + c )/2  
   var s = Math.sqrt(p* (p - a)* (p - b) * (p - c))
   console.log(s.toFixed(2))
