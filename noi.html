@@ -1,0 +1,168 @@
+<script id="ch0103/01" type="x">
+  var a = +prompt()
+  var b = +prompt()
+  console.log(a + b)
+</script>
+
+<script id="ch0103/02" type="x">
+  var a = +prompt()
+  var b = +prompt()
+  var c = +prompt()
+
+  console.log((a + b) * c)
+</script>
+
+<script id="ch0103/03" type="x">
+  var a = +prompt()
+  var b = +prompt()
+  var c = +prompt()
+
+  console.log((a + b) / c)
+</script>
+
+<script id="ch0103/04" type="x">
+  var a = +prompt()
+  var b = +prompt()
+  var r = (a / b) | 0
+  console.log(r)
+  console.log(a % b)
+
+</script>
+
+<script id="ch0103/05" type="x">
+  var a = +prompt()
+  var b = +prompt()
+
+  console.log((a/b).toFixed(9))
+</script>
+
+<script id="ch0103/06" type="x">
+  var a = +prompt()
+  var b = +prompt()
+
+  console.log((b / a).toFixed(3) + "%")
+</script>
+
+<script id="ch0103/07" type="x">
+  var x = +prompt()
+  var a = +prompt()
+  var b = +prompt()
+  var c = +prompt()
+  var d = +prompt()
+
+  var r = a * x * x * x + b * x * x + c * x + d;
+  console.log(r.toFixed(7))
+</script>
+
+<script id="ch0103/08" type="x">
+  var f = +prompt()
+  var c = 5 * (f - 32) / 9
+  console.log(c.toFixed(5))
+</script>
+
+<script id="ch0103/09" type="x">
+  var r = +prompt()
+  var d = 2 * r
+  var c = d * Math.PI;
+  var s = 2 * Math.PI * r * r
+  console.log(d.toFixed(4))
+  console.log(c.toFixed(4))
+  console.log(s.toFixed(4))
+</script>
+<!-- 计算并联电阻的阻值 -->
+<script id="ch0103/10" type="x">
+  var r1 = +prompt()
+  var r2 = +prompt()
+  var r = 1 / (1 / r1 + 1 / r2)
+
+  console.log(r.toFixed(2))
+</script>
+<!-- 浮点数的余数 -->
+<script id="ch0103/11" type="x">
+  var a = +prompt()
+  var b = +prompt()
+
+  console.log((a % b).toFixed(4))
+</script>
+<!-- 球的体积 -->
+<script id="ch0103/12" type="x">
+  var r = +prompt()
+  var v = 4 / (3 * Math.PI * r ** 3)
+  console.log(v.toFixed(2))
+</script>
+<!-- 反向输出三位数 -->
+<script id="ch0103/13" type="x">
+  var n = +prompt()
+  var a = n % 10 //个位数
+
+  var b =( n - a ) % 100 / 10 // 十位数
+  var c = (n - a - b * 10 ) / 100 // 百位数
+  console.log(a + "" + b + "" + c + "");
+</script>
+<!-- 大象喝水 -->
+<script id="ch0103/14" type="x">
+  var h = +prompt()
+  var r = +prompt()
+  var s = Math.PI * r * r
+  var v = s * h / 1000
+  var n = 20 / v | 0 + 1
+  console.log(n)
+</script>
+
+
+<!-- 苹果和虫子 -->
+<script id="ch0103/15" type="x">
+  var n = +prompt()
+  var x = +prompt()
+  var y = +prompt()
+
+  var r = n - ((y / x) | 0 + 1)
+</script>
+<!-- 线段长度 -->
+<script id="ch0103/16" type="x">
+  var a = +prompt()
+  var b = +prompt()
+  var c = +prompt()
+  var d = +prompt()
+
+  var l = Math.sqrt((a - c) ** 2  + (c + d)  ** 2 )
+  console.log(l.toFixed(3))
+  </script>
+
+<!-- 三角形面积 -->
+<script id="ch0103/17" type="x">
+  var x1 = +prompt()
+  var y1 = +prompt()
+  var x2 = +prompt()
+  var y2 = +prompt()
+  var x3 = +prompt()
+  var y3 = +prompt()
+  var a =Math.sqrt( (x1 - x2 )**2 + (y1 - y2) **2 )
+  var b =Math.sqrt( (x2 - x3 )**2 + (y2 - y3) **2 )
+  var c =Math.sqrt( (x3 - x1 )**2 + (y3 - y1) **2 )
+  var p =( a + b + c )/2  
+  var s = Math.sqrt(p* (p - a)* (p - b) * (p - c))
+  console.log(s.toFixed(2))
+</script>
+<!-- 等差数列 -->
+<script id="ch0103/18" type="x">
+  var a1 = +prompt()
+  var a2 = +prompt()
+  var n = +prompt()
+  
+  var k = a2 - a1 
+  var an = a1 +( n - 1 ) * k
+  console.log(an)
+</script>
+
+<script id="ch0103/19" type="x">
+  var a = +prompt()
+  var b = +prompt()
+  console.log(a * b)
+</script>
+
+<script id="ch0103/20" type="x">
+  var n = +prompt()
+  console.log(2**n)
+</script>
+
