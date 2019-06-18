@@ -1258,7 +1258,7 @@
 </script>
 
 
-<script id="7" xtype="x">
+<script id="7" type="x">
   var n = +prompt();
   if(n % 7 === 0 ){
     console.log("YES");
@@ -1393,6 +1393,7 @@
 <script id="prime" type="x">
   var n = +prompt();
   var flag = 1;
+  if( n === 1) flag--;
   for(var i = 2; i <= Math.sqrt(n) ; i++) {
     if(n % i === 0) {
       flag--;
