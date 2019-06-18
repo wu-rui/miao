@@ -1283,7 +1283,7 @@
 </script>
 
 
-<script id="narcissistic" xtype="x">
+<script id="narcissistic" type="x">
   var n = +prompt();
   var b = 10;
   var r = 0;
@@ -1295,5 +1295,19 @@
     console.log("YES");
   }else {
     console.log("NO");
+  }
+</script>
+
+
+<script id="narcissistics" xtype="x">
+  for(var i = 1;i < 1000;i++) {
+    var len = i.toString().length;
+    var r = 0;
+    for(var j = 1; j <= len; j++) {
+      r  +=  Math.floor((i / 10 ** (j - 1) ) % 10) ** len;
+    } 
+    if (r === i) {
+      console.log(i);
+    }
   }
 </script>
