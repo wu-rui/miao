@@ -1285,7 +1285,6 @@
 
 <script id="narcissistic" type="x">
   var n = +prompt();
-  var b = 10;
   var r = 0;
   var len = n.toString().length;
   for(var i = 1; i <= len; i++) {
@@ -1299,7 +1298,7 @@
 </script>
 
 
-<script id="narcissistics" xtype="x">
+<script id="narcissistics" type="x">
   for(var i = 0;i < 1000;i++) {
     var len = i.toString().length;
     var r = 0;
@@ -1309,5 +1308,20 @@
     if (r === i) {
       console.log(i);
     }
+  }
+</script>
+
+<script id="palindrom" type="x">
+  var n = +prompt();
+  var r = "";
+  var len = n.toString().length;
+  for(var i = 1; i <= len; i++) {
+    var m =  Math.floor((n / (10 ** (i - 1)) ) % 10) ;
+    r  +=  m;
+  } 
+  if (r == n) {
+    console.log("YES");
+  }else {
+    console.log("NO");
   }
 </script>
