@@ -1166,6 +1166,7 @@
   var s = prompt();
   var e = +prompt();
   var str ;
+  var sts = ""
   for(var i = 1; i <= h; i++) {
     str = ""
     for(var j = 1; j <= w; j++) {
@@ -1184,8 +1185,14 @@
         }
       }
     }
-    console.log(str);
+    if(i !== h) {
+      sts += str + "\n";
+    }else {
+      sts += str ;
+
+    }
   }
+  console.log(sts);
 
 
 </script>
