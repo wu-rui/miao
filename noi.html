@@ -1283,17 +1283,17 @@
 </script>
 
 
-<script id="sort" type="x">
-  var arr = [];
-  arr.push( +prompt());
-  arr.push( +prompt());
-  arr.push( +prompt());
-  arr.sort((x, y) => {
-    if (x > y) {
-      return 1;
-    }else {
-      return -1;
-    }
-  });
-  console.log(arr.join(" "));
+<script id="narcissistic" xtype="x">
+  var n = +prompt();
+  var b = 10;
+  var r = 0;
+  var len = n.toString().length;
+  for(var i = 1; i <= len; i++) {
+    r  +=  Math.floor((n / 10 ** (i - 1) ) % 10) ** len;
+  } 
+  if (r === n) {
+    console.log("YES");
+  }else {
+    console.log("NO");
+  }
 </script>
