@@ -1480,3 +1480,31 @@
   }
   console.log(k.toFixed(3));
 </script>
+<!-- 输出任意数五进制形式 -->
+<script type="x">
+var n = +prompt();
+var str = "";
+while(1) {
+  if (n === 0) {
+    console.log(str);
+    break;
+  }
+  str = n % 5  + str;
+  n = Math.floor(n / 5); 
+}
+</script>
+
+<!-- fazzbazz -->
+<script type="x">
+  for(var i = 1;i <= 100;i++){
+    if (i % 3 === 0 && i % 5 === 0){
+      console.log("fz");
+    }else if(i % 3 === 0) {
+      console.log("f");
+    }else if (i % 5 === 0){
+      console.log("b");
+    }else {
+      console.log(i);
+    }
+  }
+</script>
