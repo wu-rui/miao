@@ -1258,11 +1258,28 @@
 </script>
 
 
-<script id="7" type="x">
+<script id="7" xtype="x">
   var n = +prompt();
-  if(n % 7 === 0 || n % 10 === 7 ) {
+  if(n % 7 === 0 ){
     console.log("YES");
-  }else {console.log("NO")};
+  }else {
+    var b = 0;
+    var flag = 1;
+    while(1) {
+      if( Math.floor( n / (10 ** b) % 10 )===0) {
+        break;
+      }  
+      if( Math.floor( n / (10 ** b) % 10 )=== 7 ){
+        console.log("YES");
+        flag = 0;
+        break;
+      }
+      b++;
+    }
+    if(flag) {
+      console.log("NO");
+    }
+  };
 
 </script>
 
@@ -1324,4 +1341,136 @@
   }else {
     console.log("NO");
   }
+</script>
+
+<script id="weekday" type="x">
+  var year = +prompt();
+  var m = +prompt();
+  var y = year % 100;
+  var c = (year - y) / 100;
+  var d = 1;
+
+  var cc = 2 * (3 - c % 4);
+  var yy = Math.floor((y % 28 + y % 28 / 4) % 7);
+  var mm =Math.floor( (3.4 + (m - 3 ) % 12 * 2.6) % 7);
+  var dd = d % 7;
+  console.log(( cc + mm + yy + dd) % 7);
+</script>
+
+<script id="complete-number" type="x">
+  var n = +prompt();
+  var sum = 0;
+  for(var j = 1; j <= n /2 ;j++){
+    if(n % j ===0){
+      sum += j;
+    }
+  }
+  if (sum === n) {
+    console.log("YES");
+  }else {
+    console.log("NO");
+  }
+
+</script>
+
+
+
+<script id="complete-numbers" type="x">
+  var n = 1000;
+  for(var i = 1;i <= n ; i++){
+    var sum = 0;
+    for(var j = 1; j <= i/2 ;j++){
+      if(i % j ===0){
+        sum += j;
+      }
+    }
+    if (sum === i) {
+      console.log(i);
+    }
+  }
+</script>
+
+<script id="prime" type="x">
+  var n = +prompt();
+  var flag = 1;
+  for(var i = 2; i <= Math.sqrt(n) ; i++) {
+    if(n % i === 0) {
+      flag--;
+      break
+    }
+  }
+  if(flag) {
+    console.log("YES");
+  }else {
+    console.log("NO");
+  }
+</script>
+<script id="primes" type="x">
+  for(var n = 2; n < 100; n++){
+
+
+    var flag = 1;
+    for(var i = 2; i <= Math.sqrt(n) ; i++) {
+      if(n % i === 0) {
+        flag--;
+        break
+      }
+    }
+  
+  if(flag) {
+    console.log(n);
+  }
+}
+</script>
+
+<script id="itob" type="x">
+  var n = +prompt();
+  var r = "";
+  var b = 0;
+  while(1) {
+
+     if (Math.floor((n /( 10 ** b )))% 10 === 0 ){
+        console.log(r);
+        break;
+      }
+    r = Math.floor((n /( 10 ** b )))% 10 + r;
+    b++;
+   
+  }
+</script>
+
+<script id="lcf&lcm" type="x">
+  
+  var m = +prompt();
+  var n = +prompt();
+  var max = n;
+  var min = m;
+  if( m  > n) {
+    max = m ;
+    min = n;
+  }
+  for(var i = min; i >= 1 ; i-- ){
+    if( m % i === 0 && n % i === 0 ){
+      console.log(i);
+      break;
+    }
+  }
+  for(var i = max;; i++ ){
+    if( i % m === 0 && i % n === 0 ){
+      console.log(i);
+      break;
+    }
+  }
+
+
+</script>
+
+
+<script id="sqrt" type="x">
+  var n = +prompt();
+  var k = 1;
+  while(Math.abs( k * k - n) > 1e-9){
+    k = (k + n / k ) / 2;
+  }
+  console.log(k.toFixed(5));
 </script>
