@@ -837,18 +837,18 @@
 <script id="ch0105/25" type="x">
   var n7;
   var n9;
-  for (var x = 1;x <= 9;x++) {
-    for(var y = 1;y <= 9;y++) {
-      for(var z= 1;z <= 9;z++) {
-        if(x !== y && x !== z && y !== z) {
-          n7 = x*49 + y*7 + z;
-          n9 = z*81 + y*9 + x;
-          if(n7 === n9 && n9 > 100) {
-            console.log(n7);
-            console.log("" + x + y + z);
-            console.log("" + z + y + x);
-          }  
-        }
+  for (var x = 1;x <= 6;x++) {
+    for(var y = 0;y <= 6;y++) {
+      for(var z= 1;z <= 6;z++) {
+  
+        n7 = x*49 + y*7 + z;
+        n9 = z*81 + y*9 + x;
+        if(n7 === n9 ) {
+          console.log(n7);
+          console.log("" + x + y + z);
+          console.log("" + z + y + x);
+        }  
+        
       }
     }
   }
