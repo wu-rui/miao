@@ -1428,10 +1428,15 @@
   var n = +prompt();
   var r = "";
   var b = 0;
+  var sign = "";
+  if(n < 0) {
+    n = -n;
+    sign = "-";
+  }
   while(1) {
 
      if (Math.floor((n /( 10 ** b )))% 10 === 0 ){
-        console.log(r);
+        console.log(sign + r);
         break;
       }
     r = Math.floor((n /( 10 ** b )))% 10 + r;
@@ -1473,5 +1478,5 @@
   while(Math.abs( k * k - n) > 1e-9){
     k = (k + n / k ) / 2;
   }
-  console.log(k.toFixed(5));
+  console.log(k.toFixed(3));
 </script>
