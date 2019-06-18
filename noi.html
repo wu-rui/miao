@@ -1089,19 +1089,24 @@
 
 
 <script id="ch0105/38" type="x">
-  var n = +prompt();
-  var m;
-  var arr = [];
-  for(var i = n; i >= 0 ; i--) {
-    m = +prompt();
-    if (i){
-    arr.push(m * i);
+  var p = +prompt();
+
+  for(var j = 0; j < p; j ++){
+    
+    var n = +prompt();
+    var m;
+    var arr = [];
+    for(var i = n; i >= 0 ; i--) {
+      m = +prompt();
+      if (i){
+      arr.push(m * i);
+      }
     }
-  }
-  if(arr.every(x => x === 0)){
-    console.log(0);
-  }else{
-  console.log(arr.join(" "));
+    if(arr.every(x => x === 0)){
+      console.log(0);
+    }else{
+    console.log(arr.join(" "));
+    }
   }
 
 
