@@ -33,5 +33,16 @@ var huntye1 = {
   dropRight: function dropRight(arr, num = 1) {
     return arr.slice(0,-num);
   }
-  
+
+  , fill: function fill(ary,...arg) { 
+    return ary.fill(...arg);
+  }
+
+  , find: function find(ary, ...arg) { 
+    return ary.find(...arg);
+  }
+
+   ,findindex: function findindex(ary, ...arg) {
+    return ary.findindex(...arg);
+  }
 }
