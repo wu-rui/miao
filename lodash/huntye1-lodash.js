@@ -20,7 +20,10 @@ var huntye1 = {
       }
     }
     return res;
-  }
+  },
 
+  difference: function difference(arr, ...ex) { 
+    return arr.filter(item => ex.every(val => !val.includes(item)));
+  },
 
 }
