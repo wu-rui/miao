@@ -26,4 +26,12 @@ var huntye1 = {
     return arr.filter(item => ex.every(val => !val.includes(item)));
   },
 
+  drop: function drop(arr, num = 1) { 
+    return arr.slice(num);
+  },
+
+  dropRight: function dropRight(arr, num = 1) {
+    return arr.slice(0,-num);
+  }
+  
 }
