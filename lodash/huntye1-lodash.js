@@ -3,7 +3,7 @@ var huntye1 = {
     return arr.filter(item => item);
   },
 
-  chunk: function chunck (arr,size = 1) { 
+  chunk: function chunk (arr,size = 1) { 
     let res = [];
     for (let i = 0; i < arr.length; ) { 
       if (i + size - 1 < arr.length && size > 1) {
@@ -15,7 +15,7 @@ var huntye1 = {
         }
         res.push(temp)
       } else { 
-        res.push(arr[i]);
+        res.push([arr[i]]);
         i++
       }
     }
