@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content:space-around;
+    }
+
+    caption {
+     background-color: rgba(0,0,0,.3);
+    }
+    table {
+      background-color: rgba(0,0,0,.3);
+      text-align: center;
+      caption-side:top;
+      font-size: 20px;
+      cursor: default;
+      margin-top: 30px;
+      float: left;
+      height: 260px;
+    }
+    td{
+      width: 40px;
+      height: 30px;
+      color: #fff;
+      transition: .1s;
+    }
+    td:hover {
+      background-color: #333;
+    }
+    th {
+      color: white;
+    }
+    td[empty] {
+      pointer-events:none;
+    }
+    div {
+      width: 310px;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <section>
+
+  <script>
+    function getMonthDays(m, isleep) {
+      switch (m) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+          return 31;
+        case 2:
+          if (isleep) {
+            return 29;
+          }
+          else {
+            return 28;
+          }
+        default:
+          return 30;
+      }
+    }
+
+    function getWeekday(year, month) {
+      var y = year - 1
+      var days = y * 365 + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400)
+      var isleep = getIsLeep(year);
+      for (var m = 1; m < month; m++) {
+        days += getMonthDays(m, isleep)
+      }
+      return (days + 1) % 7
+    }
+
+    function getIsLeep(year) {
+      if (year % 400 === 0) return true;
+      if (year % 100 === 0) return false;
+      if (year % 4 === 0) return true;
+      return false;
+    }
+
+
+    function writeCalMonth(isleep, getMonthDays, weekday) {
+      let days = 30;
+    }
+
+    function writeCalcMonth(year, month) {
+      let isleep = getIsLeep(year);
+      let days = getMonthDays(month, isleep);
+      let weekday = getWeekday(year, month);
+      let bodyStr = '';
+      console.log(year + ' 的' + month + '月1号是星期' + weekday + "  天数是：" + days);
+      let count = 0;
+      for (let i = 0; i < weekday; i++) {
+        bodyStr += "<td empty> </td>"
+        count++;
+        if (count % 7 === 0) {
+          bodyStr += "</tr> <tr>"
+        }
+      }
+      for (let i = 1; i <= days; i++) {
+        bodyStr += `<td>${i}</td>`;
+        count++;
+        if (count % 7 === 0) {
+          bodyStr += "</tr> <tr  >"
+        }
+      }
+      let r = 7 - (weekday + days) % 7;
+      for (let i = 0; i < r; i++) {
+        bodyStr += "<td empty></td>"
+      }
+      document.write(" <table> <caption>" + month + "月</caption> <thead> <tr> <th>日</th> <th>一</th> <th>二</th> <th>三</th> <th>四</th> <th>五</th> <th>六</th> </tr> </thead> <tbody> <tr>" + bodyStr + '</tbody> </table>')
+    }
+
+
+
+    function printYearCal() {
+      let year = prompt("请输入需要打印的年份(数字)：");
+      // let year = 2016;
+      for (let month = 1; month <= 12; month++) {
+        writeCalcMonth(year, month);
+      }
+    }
+
+    printYearCal();
+  </script>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </section>
+</body>
+
+</html>

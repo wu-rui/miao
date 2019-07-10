@@ -1508,3 +1508,112 @@ while(1) {
     }
   }
 </script>
+<!-- 
+#
+##
+### 
+-->
+<script type="x">
+var n = +prompt();
+var str = "";
+for(var i = 1;i <= n;i++){
+  for(var j = 0;j < i;j++){
+  str += "#";
+  }
+  if(i !== n ){
+    str += "\n"
+  }
+}
+console.log(str)
+</script>
+
+//chess board
+
+<script>
+  var n = +prompt();
+  var str = "";
+  for(var i = 1; i <= n ;i++){
+    for(var j = 1;j <= n;j++){
+      if((i + j )% 2){
+        str += " ";
+      }else {
+        str += "#"
+      }
+    }
+    if(i !== n ){
+    str += "\n"
+  }
+  }
+  console.log(str);
+</script>
+<!-- 二分法求平方根 -->
+<script>
+  var getSqrt = function (n) {
+    var n_square = n * n;
+    if (n > 1) {
+      var left = 1;
+      var right = n_square;
+    } else if (n < 1 && n > 0) {
+      var left = n_square;
+      var right = 1;
+    } else {
+      return console.log("invalid value");
+    }
+    do {
+      var mid = (left + right) / 2;
+      if (mid * mid > n) {
+        right = mid;
+      } else {
+        left = mid;
+      }
+    } while (Math.abs(mid * mid - n) > 0.0001)
+    return mid;
+  }
+</script>
+<!-- 数字转字符串 不适用自动转换 -->
+<script>
+
+  function getCharFromDigit(n) {
+    switch (n) {
+      case 0: return '0';
+      case 1: return '1';
+      case 2: return '2';
+      case 3: return '3';
+      case 4: return '4';
+      case 5: return '5';
+      case 6: return '6';
+      case 7: return '7';
+      case 8: return '8';
+      case 9: return '9';
+    }
+  }
+
+
+  function itob(n) {
+    var str = ''
+    while (n > 0) {
+      var digit = n % 10
+      str =  getCharFromDigit(digit) + str
+      n = (n - digit) / 10
+    }
+    return str
+  }
+
+</script>
+
+<!-- 优化power的n次方算法 -->
+<script>
+  function getPowerQuick(a, n) {
+    var product = a;
+    var num = 1;
+    while(n > 0) {
+     var digit = n % 2;
+     if(digit){
+     num *= product;
+     }
+     n = (n - digit ) / 2;
+     product = product * product; 
+   }
+   return num; 
+  }
+</script>
