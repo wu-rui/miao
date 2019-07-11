@@ -31,7 +31,7 @@ var huntye1 = {
   },
 
   dropRight: function dropRight(arr, num = 1) {
-    return arr.slice(0,-num);
+    return arr.slice(0, num <= 0 ? num.length: -num);
   }
 
   , fill: function fill(ary,...arg) { 
@@ -42,7 +42,12 @@ var huntye1 = {
     return ary.find(...arg);
   }
 
-   ,findindex: function findindex(ary, ...arg) {
+   ,findIndex: function findIndex(ary, ...arg) {
     return ary.findindex(...arg);
+  }
+  , findLastIndex: function findLastIndex(ary, predicate, fromIndex) { 
+    for (let i = fromIndex; i >= 0; i--) { 
+      
+    }
   }
 }
