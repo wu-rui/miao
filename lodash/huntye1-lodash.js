@@ -113,4 +113,10 @@ var huntye1 = {
 
     }
   }
+  , curry: function curry(f) {
+    if (f.length == 0) return f();
+    return function (...arg) {
+      return curry(f.bind(null, ...arg));
+    }
+  }
 }
