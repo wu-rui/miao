@@ -1,8 +1,8 @@
 var huntye1 = function {
   return {
-    compact,chunk,difference,drop,dropRight,findLastIndex,flattenDepth,flatten,flattenDeep,reverse,join,some,every,forEach,countBy,filter,find,curry,spread,negate,flip,before,after,ary,unary,memerize,keyBy,property,
+    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property,
   }
-  
+
   function compact(arr) {
     return arr.filter(item => item);
   }
@@ -193,4 +193,4 @@ var huntye1 = function {
       return obj[propname];
     }
   } // property => propname => obj => obj[propname];
-}
+}();
