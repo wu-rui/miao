@@ -1,8 +1,12 @@
-var huntye1 = {
-  compact: function compact(arr) {
+var huntye1 = function {
+  return {
+    compact,chunk,difference,drop,dropRight,findLastIndex,flattenDepth,flatten,flattenDeep,reverse,join,some,every,forEach,countBy,filter,find,curry,spread,negate,flip,before,after,ary,unary,memerize,keyBy,property,
+  }
+  
+  function compact(arr) {
     return arr.filter(item => item);
   }
-  , chunk: function chunk(arr, size = 1) {
+  function chunk(arr, size = 1) {
     let res = [];
     for (let i = 0; i < arr.length;) {
       if (i + size - 1 < arr.length && size > 1) {
@@ -21,26 +25,26 @@ var huntye1 = {
     return res;
   }
 
-  , difference: function difference(arr, ...ex) {
+  function difference(arr, ...ex) {
     return arr.filter(item => ex.every(val => !val.includes(item)));
   }
 
-  , drop: function drop(arr, num = 1) {
+  function drop(arr, num = 1) {
     return arr.slice(num > 0 ? num : 0);
   }
 
-  , dropRight: function dropRight(arr, num = 1) {
+  function dropRight(arr, num = 1) {
     return arr.slice(0, num <= 0 ? num.length : -num);
   }
 
-  , findLastIndex: function findLastIndex(ary, predicate, fromIndex = -1) {
+  function findLastIndex(ary, predicate, fromIndex = -1) {
     for (let i = fromIndex; i >= 0; i--) {
       if (predicate(ary[i])) {
-        return;
+        return i;
       }
     }
   }
-  , flattenDepth: function flattenDepth(arr, depth = 1) {
+  function flattenDepth(arr, depth = 1) {
     if (depth == 0) return arr.slice();
     let res = [];
     arr.forEach(it => {
@@ -52,43 +56,43 @@ var huntye1 = {
     })
     return res;
   }
-  , flatten: function flatten(arr) {
-    return huntye1.flattenDepth(arr, 1);
+  function flatten(arr) {
+    return flattenDepth(arr, 1);
   }
-  , flattenDeep: function flattenDeep(arr) {
-    return huntye1.flattenDepth(arr, Infinity);
+  function flattenDeep(arr) {
+    return flattenDepth(arr, Infinity);
   }
-  , reverse: function reverse(arr) {
+  function reverse(arr) {
     let res = [];
     for (let i = 0; i < arr.length; i++) {
       res[arr.length - 1 - i] = arr[i];
     }
     return res;
   }
-  , join: function join(arr, symbol) {
+  function join(arr, symbol) {
     return arr.reduce((res, item) => res + item + symbol, "").slice(0, -1);
   }
-  , some: function some(arr, predicate) {
+  function some(arr, predicate) {
     return arr.reduce(function (res, item) {
       return res || predicate(item);
     }, false)
   }
-  , every: function every(arr, predicate) {
-    return !huntye1.some(arr, function (it) {
+  function every(arr, predicate) {
+    return !some(arr, function (it) {
       return !predicate(it);
     })
   }
 
-  , forEach: function forEach(obj, action) {
+  function forEach(obj, action) {
     for (let key in obj) {
       if (action(obj[key], key, obj) == false) {
         break;
       }
     }
   }
-  , countBy: function countBy(obj, f) {
+  function countBy(obj, f) {
     let map = {};
-    huntye1.forEach(obj, function (val) {
+    forEach(obj, function (val) {
       let key = f(val);
       if (key in map) {
         map[key]++;
@@ -98,25 +102,95 @@ var huntye1 = {
     })
     return map;
   }
-  , filter: function filter(obj, f) {
+  function filter(obj, f) {
     let res = [];
-    huntye1.forEach(obj, function (val, key, obj) {
+    forEach(obj, function (val, key, obj) {
       if (f(val, key, obj)) {
         res.push(val);
       }
-    }
-    )
+    })
     return res;
   }
-  , find: function find(arr, f, from = 0) {
+  function find(arr, f, from = 0) {
     for (let i = from; i < arr.length; i++) {
 
     }
   }
-  , curry: function curry(f) {
+  function curry(f) {
     if (f.length == 0) return f();
     return function (...arg) {
       return curry(f.bind(null, ...arg));
     }
   }
+  function spread(f) {
+    return function (arr) {
+      f.apply(null, arr)
+    }
+  }
+  function negate(f) {
+    return function (...arg) {
+      return !f(...arg);
+    }
+  }
+  function flip(f) {
+    return function (...arg) {
+      return f(...arg.reverse());
+    }
+  }
+  function before(n, f) {
+    let result;
+    let times = 0;
+    return function (...arg) {
+      if (times < n) {
+        return result = f(...arg);
+      } else {
+        return result;
+      }
+    }
+  }
+  function after(n, ...arg) {
+    let times = 0;
+    return function (...arg) {
+      if (times < n) {
+        return
+      } else {
+        return f(...arg);
+      }
+    }
+  }
+  function ary(f, n = f.length) {
+    return function (...arg) {
+      return f(...arg.slice(0, n));
+    }
+  }
+  function unary(f) {
+    return ary(f, 1);
+  }
+  function memerize(f) {
+    let cashe = {};
+    return function (...arg) {
+      if (arg in cashe) {
+        return cashe[arg];
+      } else {
+        return cashe[arg] = f(...arg);
+      }
+    }
+  }
+  function keyBy(collec, identity) {
+    let map = {};
+    for (let key in collec) {
+      let item = collec[key];
+      if (typeof identity == "String") {
+        map[item[identity]] = item;
+      } else {
+        map[identity(item)] = item;
+      }
+    }
+    return map;
+  }
+  function property(propname) {
+    return function (obj) {
+      return obj[propname];
+    }
+  } // property => propname => obj => obj[propname];
 }
