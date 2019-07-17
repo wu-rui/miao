@@ -1,11 +1,11 @@
-var huntye1 = function {
+var huntye1 = function() {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property,
   }
-
   function compact(arr) {
     return arr.filter(item => item);
   }
+
   function chunk(arr, size = 1) {
     let res = [];
     for (let i = 0; i < arr.length;) {
@@ -44,6 +44,7 @@ var huntye1 = function {
       }
     }
   }
+
   function flattenDepth(arr, depth = 1) {
     if (depth == 0) return arr.slice();
     let res = [];
