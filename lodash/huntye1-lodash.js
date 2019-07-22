@@ -1,7 +1,10 @@
 var huntye1 = function () {
   return {
-    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN,
-    isNunmber, isNull, isNil, isObject
+    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNunmber, isNull, isNil, isObject, isUndefined,
+    
+  }
+  function isUndefined(val) { 
+    return val === undefined;
   }
   function isString(val) { 
     return typeof val == "string";
@@ -24,7 +27,7 @@ var huntye1 = function () {
     return val == undefined;
   }
   function isNaN(val) { 
-    return Number.isNaN(val)
+    return val.toString() === "NaN";
   }
   function isFinite(val) { 
     return Number.isFinite(+val);
