@@ -26,9 +26,11 @@ var huntye1 = function () {
   function isNil(val) { 
     return val == undefined;
   }
+ 
   function isNaN(val) { 
-    return val.toString() === "NaN";
+    return val !== val &&  Object.prototype.toString.apply(val) == "NaN";
   }
+
   function isFinite(val) { 
     return Number.isFinite(+val);
   }
