@@ -1,7 +1,56 @@
-var huntye1 = function() {
+var huntye1 = function () {
   return {
-    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property,
+    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN,
+    isNunmber, isNull, isNil, isObject
   }
+  function isString(val) { 
+    return typeof val == "string";
+  }
+
+  function isObject(val) { 
+    return Object.prototype.toString.apply(val) == "[object Object]"
+  }
+  
+  function isNunmber(val) { 
+    return Object.prototype.toString.apply(val) == "[object Number]"
+  }
+  
+
+  function isNull(val) { 
+    return val === null;
+  }
+
+  function isNil(val) { 
+    return val == undefined;
+  }
+  function isNaN(val) { 
+    return Number.isNaN(val)
+  }
+  function isFinite(val) { 
+    return Number.isFinite(+val);
+  }
+
+  function isFunction(val) { 
+    Object.prototype.toString.apply(val) == "[object Function]"
+  }
+
+  function isBoolean(val) { 
+    return typeof val == "boolean"
+  }
+
+  function isArray(val) {
+    return Array.isArray(+val);
+  }
+
+  function forOwn(obj, iterator) {
+    let hasOwn = Object.prototype.hasOwnProperty;
+    for (let key in iterator) {
+      if (hasOwn.call(obj, key)) {
+        iterator(obj[key], key, obj);
+      }
+    }
+  }
+
   function compact(arr) {
     return arr.filter(item => item);
   }
@@ -125,7 +174,7 @@ var huntye1 = function() {
   }
   function spread(f) {
     return function (arr) {
-      f.apply(null, arr)
+      return f(...arr);
     }
   }
   function negate(f) {
