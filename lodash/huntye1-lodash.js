@@ -1,7 +1,7 @@
 var huntye1 = function () {
   return {
-    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNunmber, isNull, isNil, isObject, isUndefined,
-
+    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
+    isString
   }
   function isUndefined(val) {
     return val === undefined;
@@ -15,9 +15,8 @@ var huntye1 = function () {
   }
 
   function isNumber(val) {
-    return Object.prototype.toString.apply(val) == "[object Number]"
+    return typeof val === "number"
   }
-
 
   function isNull(val) {
     return val === null;
