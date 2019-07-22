@@ -1,50 +1,50 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNunmber, isNull, isNil, isObject, isUndefined,
-    
+
   }
-  function isUndefined(val) { 
+  function isUndefined(val) {
     return val === undefined;
   }
-  function isString(val) { 
+  function isString(val) {
     return typeof val == "string";
   }
 
-  function isObject(val) { 
-    return Object.prototype.toString.apply(val) == "[object Object]"
+  function isObject(val) {
+    return typeof val == "object" || typeof val ==  "function"  && val != null
   }
-  
-  function isNunmber(val) { 
+
+  function isNumber(val) {
     return Object.prototype.toString.apply(val) == "[object Number]"
   }
-  
 
-  function isNull(val) { 
+
+  function isNull(val) {
     return val === null;
   }
 
-  function isNil(val) { 
+  function isNil(val) {
     return val == undefined;
   }
- 
-  function isNaN(val) { 
-    return val !== val &&  val.toString() == "NaN";
+
+  function isNaN(val) {
+    return isNumber(val) && val !== +val;
   }
 
-  function isFinite(val) { 
-    return Number.isFinite(+val);
+  function isFinite(val) {
+    return Number.isFinite(val);
   }
 
-  function isFunction(val) { 
-    Object.prototype.toString.apply(val) == "[object Function]"
+  function isFunction(val) {
+    return typeof val == "function"
   }
 
-  function isBoolean(val) { 
+  function isBoolean(val) {
     return typeof val == "boolean"
   }
 
   function isArray(val) {
-    return Array.isArray(+val);
+    return Array.isArray(val);
   }
 
   function forOwn(obj, iterator) {
