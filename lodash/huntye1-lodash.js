@@ -28,7 +28,7 @@ var huntye1 = function () {
   }
  
   function isNaN(val) { 
-    return val !== val &&  Object.prototype.toString.apply(val) == "NaN";
+    return val !== val &&  val.toString() == "NaN";
   }
 
   function isFinite(val) { 
