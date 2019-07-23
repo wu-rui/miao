@@ -1,9 +1,49 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet,isMap
   }
 
+  /**
+   * check if the val is set object
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}   return true if the val is set object else false
+   */
+  function isSet(val) {
+    return isObjectLike(val) && nativeToString(val) == "[object Set]";
+  }
+  /**
+   * check if the val is map object
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}   return true if the val is map object else false
+   */
+  function isMap(val) {
+    return isObjectLike(val) && nativeToString(val) == "[object Map]";
+  }
+  /**
+   * return true if the val is integer
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}       return true if the val is integer
+   */
+  function isInteger(val) {
+    return Number.isInteger(val);
+  }
+  /**
+   * return true if the val is type of error
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}       return true if the val is type of error
+   */
+  function isError(val) {
+    return val instanceof Error;
+  }
   function isEqualWith(val, other, customizer) {
     if (customizer == undefined) {
       return isEqual(val, other);
@@ -11,8 +51,8 @@ var huntye1 = function () {
     let res = customizer(val, other);
     if (res == undefined) {
       for (let k in val) {
-        if (customizer(val[k], other[k])) { 
-          return true;
+        if (customizer(val[k], other[k])) {
+          return true; // 不是很懂 not exacly clear
         }
       }
       return false;
