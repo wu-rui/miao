@@ -10,7 +10,12 @@ var huntye1 = function () {
     }
     let res = customizer(val, other);
     if (res == undefined) {
-      return isEqual(val, other,customizer);
+      for (let k in val) {
+        if (!customizer(val[k], other[k])) { 
+          return false;
+        }
+      }
+      return true;
     }
     return res;
   }
