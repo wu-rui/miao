@@ -1,9 +1,30 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet,isMap
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch
   }
-
+  /**
+   * performs a partial deep comparison between object and source to determin if object contains equivalent property values
+   *
+   * @param   {object}  obj  The object to inspect.
+   * @param   {object}  src  The object of property values to match.
+   *
+   * @return  {[type]}      Returns true if object is a match, else false.
+   */
+  function isMatch(obj, src) {
+    if (isEqual(obj, src)) {
+      return true;
+    }
+    for (let k in obj) {
+      if (isEqual(obj[k], obj)) {
+        return true;
+      }
+      if (isObjectLike(obj[k]) && isMatch(obj[k], src)) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * check if the val is set object
    *
