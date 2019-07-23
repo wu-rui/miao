@@ -1,8 +1,35 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength
   }
+
+  function isMatchWith(obj, src, customizer) {
+    
+    for (let k in src) {
+      if (k in obj) {
+        return customizer(obj[k], src[k]);
+      }
+    }
+    for (let k in obj) {
+      if (isObjectLike(obj[k]) && isMatch(obj[k], src)) {
+        return true
+      }
+    }
+    return false;
+  }
+
+  /**
+   * check the val is a invalid array length
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}       return tre if the val is valid length of array else false
+   */
+  function isLength(val) {
+    return val <= Number.MAX_SAFE_INTEGER && val >= 0
+  }
+
   /**
    * performs a partial deep comparison between object and source to determin if object contains equivalent property values
    *
@@ -27,6 +54,7 @@ var huntye1 = function () {
     }
     return false;
   }
+
   /**
    * check if the val is set object
    *
@@ -127,7 +155,7 @@ var huntye1 = function () {
       return true;
     }
     let tag = nativeToString(val);
-    if (tag == `[object Set]` || tag == `[object Set]`) {
+    if (tag == `[object Set]` || tag == `[object Map]`) {
       return !val.size;
     }
     for (let key in val) {
@@ -189,7 +217,7 @@ var huntye1 = function () {
      * @return  {boolean}   return true if the the `val` is `arraylikeObject` else return false;
      */
   function isArrayLikeObject(val) {
-    return !isNil(val) && val.length <= Number.MAX_SAFE_INTEGER && val.length >= 0 && !isFunction(val) && isObjectLike(val);
+    return !isNil(val) && isLength(val.length) && !isFunction(val) && isObjectLike(val);
   }
 
   /**
@@ -200,7 +228,7 @@ var huntye1 = function () {
    * @return  {boolean}   return true if the the `val` is `arraylike` else return false;
    */
   function isArrayLike(val) {
-    return !isNil(val) && val.length <= Number.MAX_SAFE_INTEGER && val.length >= 0 && !isFunction(val);
+    return !isNil(val) && isLength(val.length) && !isFunction(val);
   }
 
   /**
