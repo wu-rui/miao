@@ -1,16 +1,122 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectlike
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty
   }
-  
-  function isObjectlike(val) {
+
+  function isEmpty(val) {
+    if (val == null) { 
+      return true;
+    }
+    if (isArrayLike(val) && val.length == 0) {
+      return true;
+    }
+    let tag = nativeToString(val);
+    if (tag == `[object Set]` || tag == `[object Set]`) {
+      return !val.size;
+    }
+    for (let key in val) {
+      if (val.hasOwnProperty(key)) { 
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * check the val is `DOM element`
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}       return true if the val is `DOM element` else false
+   */
+  function isElement(val) {
+    return isObjectLike(val) && val.nodeType == 1 && isPlainObject(val);
+  }
+
+  /**
+   * check the val is `plain object` whitch means that an object created by the Object constructor or one with a [[Prototype]] of null.
+   *
+   * @param   {*}  val  the val to check 
+   *
+   * @return  {boolean}    return true if the val is `plain object` else false;
+   */
+  function isPlainObject(val) {
+    let proto = Object.getPrototypeOf(val)
+    return proto == null || proto.constructor == Object;
+  }
+  /**
+   * @private
+   * use native `toString` method to `val`
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {string}       return string eg: [object String]
+   */
+  function nativeToString(val) {
+    return Object.prototype.toString.call(val);
+  }
+  /**
+   * to check the `val` is `Date` object
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}       return true if the `val` is `Date` object else false
+   */
+  function isDate(val) {
+    return isObjectLike(val) && nativeToString(val) == "[object Date]";
+  }
+
+  /**
+     * to check the `val` is `arraylike`  and the val is  an object
+     *
+     * @param   {*}  val  the val to check
+     *
+     * @return  {boolean}   return true if the the `val` is `arraylikeObject` else return false;
+     */
+  function isArrayLikeObject(val) {
+    return !isNil(val) && val.length <= Number.MAX_SAFE_INTEGER && val.length >= 0 && !isFunction(val) && isObjectLike(val);
+  }
+
+  /**
+   * to check the `val` is `arraylike`
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}   return true if the the `val` is `arraylike` else return false;
+   */
+  function isArrayLike(val) {
+    return !isNil(val) && val.length <= Number.MAX_SAFE_INTEGER && val.length >= 0 && !isFunction(val);
+  }
+
+  /**
+   * to check the `val` is like the `arguments` object
+   *
+   * @param   {*}  val the val to check
+   *
+   * @return  {boolean}  return true if the `val` is an `arguments` object else false
+   */
+  function isArguments(val) {
+    return isObjectLike(val) && nativeToString(val) == `[object Arguments]`;
+  }
+
+  /**
+   * to check the `val` is an `ArrayBuffer` object 
+   *
+   * @param   {*}  val  the  val to check
+   *
+   * @return  {boolean} return true if the `val` is an `ArrayBuffer` object else false
+   */
+  function isArrayBuffer(val) {
+    return isObjectLike(val) && nativeToString(val) == `[object ArrayBuffer]`
+  }
+
+  function isObjectLike(val) {
     return typeof val == "object" && val !== null;
-   }
+  }
 
   function isObject(val) {
     let type = typeof val;
-    return (type == "object" || type ==  "function") && val != null
+    return (type == "object" || type == "function") && val != null
   }
 
   function isUndefined(val) {
@@ -22,18 +128,18 @@ var huntye1 = function () {
   }
 
   function isString(val) {
-    return typeof val == "string" || (isObjectlike(val) && Object.prototype.toString.call(val) == "[object String]");
+    return typeof val == "string" || (isObjectLike(val) && nativeToString(val) == "[object String]");
   }
 
 
   function isNumber(val) {
-    return typeof val == "number" || (isObjectlike(val) && Object.prototype.toString.call(val) == "[object Number]");
+    return typeof val == "number" || (isObjectLike(val) && nativeToString(val) == "[object Number]");
   }
 
   function isBoolean(val) {
-    return typeof val == "boolean" || (isObjectlike(val) && Object.prototype.toString.call(val) == "[object Boolean]");
+    return typeof val == "boolean" || (isObjectLike(val) && nativeToString(val) == "[object Boolean]");
   }
-  
+
   function isFunction(val) {
     return typeof val == "function"
   }
@@ -56,7 +162,7 @@ var huntye1 = function () {
 
 
 
-  
+
   function forOwn(obj, iterator) {
     let hasOwn = Object.prototype.hasOwnProperty;
     for (let key in iterator) {
