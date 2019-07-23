@@ -11,11 +11,11 @@ var huntye1 = function () {
     let res = customizer(val, other);
     if (res == undefined) {
       for (let k in val) {
-        if (!customizer(val[k], other[k])) { 
-          return false;
+        if (customizer(val[k], other[k])) { 
+          return true;
         }
       }
-      return true;
+      return false;
     }
     return res;
   }
