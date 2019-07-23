@@ -1,25 +1,45 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString
+    isString, isBoolean, isObjectlike
   }
-  function isUndefined(val) {
-    return val === undefined;
-  }
-  function isString(val) {
-    return typeof val == "string";
-  }
+  
+  function isObjectlike(val) {
+    return typeof val == "object" && val !== null;
+   }
 
   function isObject(val) {
-    return typeof val == "object" || typeof val ==  "function"  && val != null
+    let type = typeof val;
+    return (type == "object" || type ==  "function") && val != null
   }
 
-  function isNumber(val) {
-    return typeof val === "number"
+  function isUndefined(val) {
+    return val === undefined;
   }
 
   function isNull(val) {
     return val === null;
+  }
+
+  function isString(val) {
+    return typeof val == "string" || (isObjectlike(val) && Object.prototype.toString.call(val) == "[object String]");
+  }
+
+
+  function isNumber(val) {
+    return typeof val == "number" || (isObjectlike(val) && Object.prototype.toString.call(val) == "[object Number]");
+  }
+
+  function isBoolean(val) {
+    return typeof val == "boolean" || (isObjectlike(val) && Object.prototype.toString.call(val) == "[object Boolean]");
+  }
+  
+  function isFunction(val) {
+    return typeof val == "function"
+  }
+
+  function isArray(val) {
+    return Array.isArray(val);
   }
 
   function isNil(val) {
@@ -34,18 +54,9 @@ var huntye1 = function () {
     return Number.isFinite(val);
   }
 
-  function isFunction(val) {
-    return typeof val == "function"
-  }
 
-  function isBoolean(val) {
-    return typeof val == "boolean"
-  }
 
-  function isArray(val) {
-    return Array.isArray(val);
-  }
-
+  
   function forOwn(obj, iterator) {
     let hasOwn = Object.prototype.hasOwnProperty;
     for (let key in iterator) {
