@@ -15,12 +15,14 @@ var huntye1 = function () {
     if (isEqual(obj, src)) {
       return true;
     }
-    for (let k in obj) {
-      if (isEqual(obj[k], obj)) {
-        return true;
+    for (let k in src) {
+      if (k in obj) {
+        return isEqual(obj[k], src[k]);
       }
+    }
+    for (let k in obj) {
       if (isObjectLike(obj[k]) && isMatch(obj[k], src)) {
-        return true;
+        return true
       }
     }
     return false;
