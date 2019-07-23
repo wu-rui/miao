@@ -54,8 +54,8 @@ var huntye1 = function () {
    * @return  {boolean}       return tre if the val is valid length of array else false
    */
   function isLength(val) {
-    if (isNumber(val)) { 
-      return val <= Number.MAX_SAFE_INTEGER && val >= 0
+    if (isNumber(val)) {
+      return val <= Number.MAX_SAFE_INTEGER && val >= 0 && isInteger(val);
     }
     return false;
   }
@@ -463,8 +463,8 @@ var huntye1 = function () {
   function curry(f) {
     if (f.length == 0) return f();
     return function (...arg) {
-      arg = arg.filter(it => isFunction(it));
-      arg = arg.filter(it => it != "_"); // 占位符？？就是这么难受
+      arg = arg.filter(it => !isFunction(it));
+      arg = arg.filter(it => it != "_"); 
       return curry(f.bind(null, ...arg));
     }
   }
