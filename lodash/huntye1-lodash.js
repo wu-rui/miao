@@ -1,16 +1,27 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith
   }
-/**
- * deepcompare `val` and  `ohter` is equal. [无法判断包装类型且只能深对比类对象]
- *
- * @param   {*}  val    the val to compare
- * @param   {*}  other  the other val to compare
- *
- * @return  {boolean}   return true is two vals are deepEqual else false;
- */
+
+  function isEqualWith(val, other, customizer) {
+    if (customizer == undefined) {
+      return isEqual(val, other);
+    }
+    let res = customizer(val, other);
+    if (res == undefined) {
+      return isEqual(val, other,customizer);
+    }
+    return res;
+  }
+  /**
+   * deepcompare `val` and  `ohter` is equal. 无法判断包装类型且只能深对比类对象
+   *
+   * @param   {*}  val    the val to compare
+   * @param   {*}  other  the other val to compare
+   *
+   * @return  {boolean}   return true if two vals are deepEqual else false;
+   */
   function isEqual(val, other) {
     if (val === other) {
       return true // 无法判断包装类型；
@@ -19,19 +30,19 @@ var huntye1 = function () {
       return true;
     }
     // deepcompare
-    if (isObjectLike(val) && isObjectLike(other)) { 
+    if (isObjectLike(val) && isObjectLike(other)) {
       let k1 = 0, k2 = 0;
-      for (let k in val) { 
+      for (let k in val) {
         k1++;
       }
       for (let k in other) {
         k2++;
       }
-      if (k1 !== k2) { 
+      if (k1 !== k2) {
         return false;
       }
-      for (let k in val) { 
-        if (!isEqual(val[k], other[k])) { 
+      for (let k in val) {
+        if (!isEqual(val[k], other[k])) {
           return false;
         }
       }
