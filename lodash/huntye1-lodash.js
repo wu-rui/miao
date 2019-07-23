@@ -1,14 +1,41 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap
+  }
+  function isWeakSet(val) {
+    return isObjectLike(val) && nativeToString(val) == `[object WeakSet]`
+  }
+  function isWeakMap(val) {
+    return isObjectLike(val) && nativeToString(val) == `[object WeakMap]`
+  }
+
+  function isSymbol(val) {
+    return typeof val == "symbol";
+  }
+
+  function isSafeInteger(val) {
+    return Number.isSafeInteger(val);
+  }
+  /**
+   * check the val is RegExp type
+   *
+   * @param   {*}  val  the val to check
+   *
+   * @return  {boolean}       return true if the val is RegExp type else false
+   */
+  function isRegExp(val) {
+    return isObjectLike(val) && nativeToString(val) == `[object RegExp]`;
   }
 
   function isMatchWith(obj, src, customizer) {
-    
+
     for (let k in src) {
       if (k in obj) {
-        return customizer(obj[k], src[k]);
+        let res = customizer(obj[k], src[k]);
+        if (res !== undefined) {
+          return res;
+        }
       }
     }
     for (let k in obj) {
@@ -433,6 +460,8 @@ var huntye1 = function () {
   function curry(f) {
     if (f.length == 0) return f();
     return function (...arg) {
+      // arg = arg.filter(it => isFunction(it));
+      arg = arg.filter(it => it != "_"); // 占位符不知道怎么实现
       return curry(f.bind(null, ...arg));
     }
   }
