@@ -1,7 +1,18 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy
+  }
+  
+  function differenceBy(array, ...arg) {
+    let f = arg.pop();
+    let compare = flattenDeep(arg);
+    if (isFunction(f)) {
+      return array.filter(it => !compare.some(item => f(item) == f(it)));
+    }
+    if (isString(f)) {
+      return array.filter(it => !compare.some(item => item[f] == it[f]));
+    }
   }
   function isWeakSet(val) {
     return isObjectLike(val) && nativeToString(val) == `[object WeakSet]`
@@ -464,7 +475,7 @@ var huntye1 = function () {
     if (f.length == 0) return f();
     return function (...arg) {
       arg = arg.filter(it => !isFunction(it));
-      arg = arg.filter(it => it != "_"); 
+      arg = arg.filter(it => it != "_");
       return curry(f.bind(null, ...arg));
     }
   }
