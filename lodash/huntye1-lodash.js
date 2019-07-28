@@ -4,6 +4,18 @@ var huntye1 = function () {
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy
   }
 
+  function differenceWith(array, ...arg) {
+    let f = arg.pop();
+    if (isArray(f)) {
+      arg.push(f);
+      return difference(array, ...arg)
+    }
+    let compare = flattenDeep(arg);
+    if (isFunction(f)) {
+      return array.filter(it => !compare.some(item => f(it,item)));
+    }
+  }
+
   function differenceBy(array, ...arg) {
     let f = arg.pop();
     if (isArray(f)) {
