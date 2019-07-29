@@ -1,7 +1,62 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range,dropRightWhile
+  }
+
+  function dropRightWhile(array, predicate) {
+    let res = array.slice();
+    for (let i = array.length - 1; i >= 0; i--) {
+      if (shorthand(predicate, array[i], i, array)) {
+        res.pop()
+      } else {
+        return res;
+      }
+    }
+  }
+
+  function shorthand(predicate, item, idx, array) {
+    if (isFunction(predicate)) { 
+      return predicate(item, idx, array);
+    }
+    if (isArray(predicate)) { // matchesProperty
+      return item[predicate[0]] == predicate[1];
+    }
+    if (isObjectLike(predicate)) { //matches
+      return isEqual(item, predicate)
+    }
+    if (isString(predicate)) { //property
+      return item[predicate];
+    }
+  }
+
+  function range(start, end, step = 1) {
+    let res = [];
+    if (end == undefined) {
+      end = start;
+      start = 0;
+      step = end < 0 ? -1 : 1;
+    }
+    let gap = Math.abs(start - end);
+    while (compare(start, end, step)) {
+      res.push(start);
+      start += step;
+    }
+    return res;
+    function compare(start, end, step) {
+      if (step > 0) {
+        return start < end;
+      } else if (step < 0) {
+        return start > end;
+      } else {
+        return gap--;
+      }
+    }
+  }
+
+  function bindAll(obj, methodNames) {
+    methodNames.forEach(methodName =>
+      obj[methodName] = obj[methodName].bind(obj));
   }
 
   function differenceWith(array, ...arg) {
@@ -12,7 +67,7 @@ var huntye1 = function () {
     }
     let compare = flattenDeep(arg);
     if (isFunction(f)) {
-      return array.filter(it => !compare.some(item => f(it,item)));
+      return array.filter(it => !compare.some(item => f(it, item)));
     }
   }
 
