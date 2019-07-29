@@ -1,22 +1,34 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range,dropRightWhile
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach
   }
 
-  function dropRightWhile(array, predicate) {
+  function dropWhile(array, predicate) {
     let res = array.slice();
-    for (let i = array.length - 1; i >= 0; i--) {
-      if (shorthand(predicate, array[i], i, array)) {
-        res.pop()
+    forEach(array, (item, idx, array) => {
+      if (shorthand(predicate, item, idx, array)) {
+        res.pop();
       } else {
-        return res;
+        return false;
+      }
+    })
+    return res;
+  }
+
+  function forEach(array, action) {
+    for (let i = 0; i < array.length; i++) {
+      if (!action(array[i], i, array)) {
+        break;
       }
     }
   }
+  function dropRightWhile(array, predicate) {
+    return dropWhile(array.reverse(), predicate).reverse();
+  }
 
   function shorthand(predicate, item, idx, array) {
-    if (isFunction(predicate)) { 
+    if (isFunction(predicate)) {
       return predicate(item, idx, array);
     }
     if (isArray(predicate)) { // matchesProperty
