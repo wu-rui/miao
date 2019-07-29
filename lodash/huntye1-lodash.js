@@ -1,7 +1,31 @@
 var huntye1 = function () {
   return {
-    compact, chunk, difference, drop, dropRight, findLastIndex, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, find, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach
+    compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findlastIndex
+  }
+
+  function findlastIndex(arr, predicate = identity, start = arr.length - 1) {
+    return arr.length - findIndex(arr.reverse(), predicate, arr.length - start - 1) - 1;
+  }
+
+  function findIndex(arr, predicate = identity, start = 0) {
+    for (let i = start; i < arr.length; i++){
+      if (shorthand(predicate, arr[i], i, arr)) { 
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function identity(...arg) {
+    return arg[0];
+  }
+
+  function fill(array, val, start = 0, end = array.length) {
+    for (let i = start; i < end; i++) {
+      array[start] = val;
+    }
+    return array;
   }
 
   function dropWhile(array, predicate) {
@@ -40,6 +64,7 @@ var huntye1 = function () {
     if (isString(predicate)) { //property
       return item[predicate];
     }
+    return predicate;
   }
 
   function range(start, end, step = 1) {
@@ -474,13 +499,6 @@ var huntye1 = function () {
     return arr.slice(0, num <= 0 ? num.length : -num);
   }
 
-  function findLastIndex(ary, predicate, fromIndex = -1) {
-    for (let i = fromIndex; i >= 0; i--) {
-      if (predicate(ary[i])) {
-        return i;
-      }
-    }
-  }
 
   function flattenDepth(arr, depth = 1) {
     if (depth == 0) return arr.slice();
@@ -548,11 +566,6 @@ var huntye1 = function () {
       }
     })
     return res;
-  }
-  function find(arr, f, from = 0) {
-    for (let i = from; i < arr.length; i++) {
-
-    }
   }
   function curry(f) {
     if (f.length == 0) return f();
