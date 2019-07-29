@@ -8,7 +8,7 @@ var huntye1 = function () {
     let res = array.slice();
     forEach(array, (item, idx, array) => {
       if (shorthand(predicate, item, idx, array)) {
-        res.pop();
+        res.shift();
       } else {
         return false;
       }
