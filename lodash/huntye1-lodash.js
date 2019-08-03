@@ -1,7 +1,97 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith
+  }
+
+  /**
+ * 数组中的简写（支持  _.matchsProperty,   _.matches,  _property 以及正常的indentity）
+ *
+ * @param   {Function}  predicate  identity或shorthand
+ * @param   {any}  item       比较的对象
+ * @param   {number}  idx        比较值在原数组中的索引
+ * @param   {array}  array      比较的值所在的数组
+ *
+ * @return  {any}    返回结果
+ */
+  function shorthand(predicate, item, idx, array) {
+    if (isFunction(predicate)) {
+      return predicate(item, idx, array);
+    }
+    if (isArray(predicate)) { // matchesProperty
+      return item[predicate[0]] == predicate[1];
+    }
+    if (isObjectLike(predicate)) { //matches
+      return isEqual(item, predicate)
+    }
+    if (isString(predicate)) { //property
+      return item[predicate];
+    }
+    return predicate;
+  }
+
+  function intersectionWith(arr, ...args) {
+    let inspect = flatten(args.slice(0, -1));
+    let comparator = args[args.length - 1];
+    let res = [];
+    arr.forEach(it => {
+      inspect.forEach(ele => {
+        if (comparator(it, ele)) {
+          res.push(it);
+        }
+      })
+    })
+    return res;
+  }
+
+  function intersectionBy(arr, ...args) {
+    let inspect = flatten(args.slice(0, -1));
+    let identity = args[args.length - 1];
+    let res = [];
+    arr.forEach(it => {
+      inspect.forEach(ele => {
+        if (isEqual(shorthand(identity, it), shorthand(identity, ele))) {
+          res.push(it);
+        }
+      })
+    })
+    return res;
+  }
+
+  function intersection(arr, ...inspect) {
+    return intersectionBy(arr, ...inspect, it => it);
+  }
+
+  function initial(arr) {
+    return arr.length > 1 ? arr.slice(0, -1) : [];
+  }
+
+  function indexOf(array, val, from = 0) {
+    from = from >= 0 ? from : array.length + from;
+    for (let i = from; i < array.length; i++) {
+      if (val === array[i]) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function head(arr) {
+    return arr.length ? arr[0] : undefined;
+  }
+  function fromPairs(pairs) {
+    let obj = {};
+    for (let [key, val] of pairs) {
+      obj[key] = val;
+    }
+    return obj;
+  }
+  function toPairs(obj) {
+    let res = [];
+    for (let [key, val] of Object.entries(obj)) {
+      res.push([key, val]);
+    }
+    return res;
   }
 
   function findLastIndex(arr, predicate = identity, start = arr.length - 1) {
@@ -9,8 +99,8 @@ var huntye1 = function () {
   }
 
   function findIndex(arr, predicate = identity, start = 0) {
-    for (let i = start; i < arr.length; i++){
-      if (shorthand(predicate, arr[i], i, arr)) { 
+    for (let i = start; i < arr.length; i++) {
+      if (shorthand(predicate, arr[i], i, arr)) {
         return i;
       }
     }
@@ -51,21 +141,7 @@ var huntye1 = function () {
     return dropWhile(array.reverse(), predicate).reverse();
   }
 
-  function shorthand(predicate, item, idx, array) {
-    if (isFunction(predicate)) {
-      return predicate(item, idx, array);
-    }
-    if (isArray(predicate)) { // matchesProperty
-      return item[predicate[0]] == predicate[1];
-    }
-    if (isObjectLike(predicate)) { //matches
-      return isEqual(item, predicate)
-    }
-    if (isString(predicate)) { //property
-      return item[predicate];
-    }
-    return predicate;
-  }
+
 
   function range(start, end, step = 1) {
     let res = [];
