@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    em {
+      min-width: 1px;
+      background-color: rgba(250,0,0,.3);
+      height: 1em;
+      margin-left: -1px;
+      display: inline-block;
+      font-style: normal;
+
+    }
+    textarea {
+      font-size: 16px;
+      font-family: "微软雅黑";
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" id="pattern" onkeyup="process()"><br>
+  <textarea name="" id="string" cols="30" rows="10">foo bar baz foa</textarea>
+  <div id="div"></div>
+  <script>
+    function process() {
+      let pattern = document.getElementById("pattern").value;
+      let string = document.getElementById("string").value;
+      let div = document.getElementById("div");
+      let res = matcher(pattern, string);
+      div.innerHTML = res;
+    }
+    function matcher(pattern, string) { //相当于replace的功能
+      if (!pattern) return string;
+      let res = "";
+      try{
+        var reg = new RegExp(pattern, "g");
+      }catch(e){
+        if( e instanceof  SyntaxError){
+          return e;
+        }else{
+          throw e;
+        }
+      }
+      let lastIdx = 0;
+      while (matchinfo = reg.exec(string)) {
+        res += string.slice(lastIdx, matchinfo.index);
+        lastIdx = reg.lastIndex;
+        if (matchinfo[0].length == 0) {
+          reg.lastIndex++;
+        }
+        res += `<em>${matchinfo[0]}</em>`;
+      }
+      res += string.slice(lastIdx);
+      return res;
+    }
+  </script>
+</body>
+
+</html>

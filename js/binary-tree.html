@@ -1,0 +1,1411 @@
+<script>
+  function arr2tree(arr, pos = 0) {
+    if (arr[pos] == null) return null;
+    return {
+      val: arr[pos],
+      left: arr[pos * 2 + 1],
+      right: arr[pos * 2 + 2],
+    }
+  }
+
+  //二叉链表表达的树返回数组
+  //根节点返回pos位置
+  function tree2arr(root, pos = 0, ressult = []) {
+    if (root != null) {
+      res[pos] = root.val;
+      tree2arr(root.left, pos * 2 + 1, ressult);
+      tree2arr(root.right, pos * 2 + 2, ressult);
+    }
+    return ressult;
+  }
+
+  function lcary2tree(ary) {
+    if (ary.length == 0) return null
+    var root = {
+      val: ary[0],
+      left: null,
+      right: null,
+    }
+    var nodes = [root]
+    //数组nodes取一个节点，每次循环取两个做左右子树
+    for (var i = 1; i < ary.length; i++) {
+      var curr = nodes.shift()
+      //清空用过的节点
+
+      if (ary[i] != null) {
+        //undefined。。。。。
+        var node = {
+          val: ary[i],
+          left: null,
+          right: null,
+        }
+        curr.left = node
+        nodes.push(node)
+        //右边进去左边出来，保存上一个节点。不管是node还是null，都挂上去
+      } else {
+        //如果取出来不是node,是undefined或者null
+        curr.left = null
+      }
+
+      i++
+      //若i已经跑到数组外面，结束循环
+      if (i >= ary.length) {
+        break
+      }
+
+      if (ary[i] != null) {
+        //undefined。。。。。
+        var node = {
+          val: ary[i],
+          left: null,
+          right: null,
+        }
+        curr.right = node
+        nodes.push(node)
+      } else {
+        //如果取出来不是node,是undefined或者null
+        curr.right = null
+      }
+    }
+    return root
+
+  }
+
+
+  var minDepth = function (root, count = 1) {
+    if (root == null) return 0;
+    if (root.left == null && root.right == null) {
+      return count;
+    } else if (root.left == null) {
+      return minDepth(root.right, ++count);
+    } else if (root.right == null) {
+      return minDepth(root.left, ++count);
+    } else {
+      return Math.min(minDepth(root.left, ++count), minDepth(root.right, ++count));
+    }
+  };
+
+  var tree2str = function (t, res = "") {
+    if (t == null) return "";
+    res += `${t.val}`;
+    if (t.left == null && t.right == null) return res;
+    if (t.left) {
+      res += `(${tree2str(t.left)})`;
+    } else {
+      res += `()`;
+    }
+    if (t.right) {
+      res += `(${tree2str(t.right)})`;
+    }
+    return res;
+  };
+  var isSameTree = function (p, q) {
+    if (p == null && q == null) return true;
+    if (p == null || q == null) return false;
+    if (
+      p.val == q.val &&
+      isSameTree(q.left, p.left) &&
+      isSameTree(q.right, p.right)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  var maxDepth = function (root, count = 0) {
+    if (root == null) return 0;
+    if (root.left !== null && root.right !== null) {
+      return Math.max(maxDepth(root.left, ++count), maxDepth(root.right, count));
+    } else if (root.left == null && root.right == null) {
+      return count;
+    } else if (root.left == null) {
+      return maxDepth(root.right, ++count);
+    } else if (root.right == null) {
+      return maxDepth(root.left, ++count);
+    }
+  };
+
+  var hasPathSum = function (root, sum) {
+    if (root == null) return false;
+    sum -= root.val;
+    if (sum == 0 && root.left == null && root.right == null) return true;
+    if (sum < 0) return false;
+    return (root.left !== null ? hasPathSum(root.left, sum) : false) || (root.right !== null ? hasPathSum(root.right, sum) : false);
+  };
+
+
+  function preOrderTraverse(root, action) {
+    if (root) {
+      action(root.val, root);
+      preOrderTraverse(root.left, action)
+      preOrderTraverse(right.left, action)
+    }
+  }
+  function inOrderTraverse(root, action) {
+    if (root) {
+      preOrderTraverse(root.left, action)
+      action(root.val);
+      preOrderTraverse(root.left, action)
+    }
+  }
+  function postOrderTraverse(root) {
+    if (root) {
+      postOrderTraverse(root.left, action)
+      postOrderTraverse(right.left, action)
+      action(root.val, root);
+    }
+  }
+
+  var invertTree = function (root) {
+    if (root == null) return null;
+    let left = invertTree(root.left);
+    let right = invertTree(root.right);
+    root.left = right;
+    root.right = left;
+    return root;
+  };
+
+
+  var mergeTrees = function (t1, t2) {
+    if (t1 && t2) {
+      let node = new TreeNode(t1.val + t2.val);
+      node.left = mergeTrees(t1.left, t2.left);
+      node.right = mergeTrees(t1.right, t2.right);
+      return node;
+    } else if (t1) {
+      return t1;
+    } else if (t2) {
+      return t2;
+    } else {
+      return null;
+    }
+  };
+
+  var isSymmetric = function (root) {
+    if (root == null) return false;
+    return isMirror(root.left, root.right);
+
+    function isMirror(left, right) {
+      if (left == null && right == null) {
+        return true
+      } else if (left && right) {
+        if (left.val == right.val) {
+          return isMirror(left.left, right.right) && isMirror(left.right, right.left);
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+  };
+  function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+  }
+  var buildTree = function (inorder, postorder) {
+    if (inorder.length == 0) return null;
+    let node = new TreeNode(postorder[postorder.length - 1]);
+    if (inorder.length == 1) return node;
+    for (var i = 0; i < inorder.length; i++) {
+      if (inorder[i] == node.val) {
+        break;
+      }
+    }
+    node.left = buildTree(inorder.slice(0, i), postorder.slice(0, i));
+    node.right = buildTree(inorder.slice(i + 1), postorder.slice(i, inorder.length - 1));
+    return node;
+  };
+
+  var buildTree = function (preorder, inorder) {
+    if (inorder.length == 0) return null;
+    let node = new TreeNode(preorder[0]);
+    if (inorder.length == 1) return node;
+    for (var i = 0; i < inorder.length; i++) {
+      if (inorder[i] == node.val) {
+        break;
+      }
+    }
+    node.left = buildTree(preorder.slice(1, i + 1), inorder.slice(0, i));
+    node.right = buildTree(preorder.slice(i + 1), inorder.slice(i + 1));
+    return node;
+  };
+  //时间复杂度o(n*n) 空间复杂度（1）
+  //选择排序
+  function selectSort(arr) {
+    for (let i = 0; i < arr.length - 1; i++) {
+      let minidx = i;
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[j] < arr[minidx]) {
+          minidx = j;
+        }
+      }
+      arr[i] = arr[minidx] ^ arr[i];
+      arr[minidx] = arr[minidx] ^ arr[i];
+      arr[i] = arr[minidx] ^ arr[i];
+    }
+  }
+
+  function insertSort(arr) {
+    // 优化为二叉树排序
+  }
+
+  var constructFromPrePost = function (pre, post) {
+    if (pre.length == 0) return null;
+    let node = new TreeNode(pre[0]);
+    if (pre.length == 1) return node;
+    for (var i = 0; i < post.length - 1; i++) {
+      if (post[i] == pre[1]) break;
+    }
+    node.left = constructFromPrePost(pre.slice(1, i + 2), post.slice(0, i + 1));
+    node.right = constructFromPrePost(pre.slice(i + 2), post.slice(i + 1, post.length - 1));
+    return node;
+  };
+
+  var levelOrder = function (root) {
+    if (root == null) return [];
+    let levelNodes = [root];
+    let res = [];
+    while (levelNodes.length) {
+      let nextlevelNodes = [];
+      let levelArr = [];
+      while (levelNodes.length) {
+        let node = levelNodes.shift();
+        levelArr.push(node.val);
+        if (node.left) {
+          nextlevelNodes.push(node.left);
+        }
+        if (node.right) {
+          nextlevelNodes.push(node.right);
+        }
+      }
+      levelNodes = nextlevelNodes;
+      res.push(levelArr)
+    }
+    return res;
+  };
+  var maxDepth = function (root) {
+    if (root == null) return 0;
+    return 1 + Math.max(...root.children.map(child => maxDepth(child)));
+  };
+  var sumOfLeftLeaves = function (root) {
+    if (root == null) return 0;
+    let sum = 0;
+    function findLeftLeaf(root) {
+      if (root.left) {
+        if (root.left.left == null && root.left.right == null) {
+          sum += root.left.val;
+        } else {
+          findLeftLeaf(root.left);
+        }
+      }
+      if (root.right) {
+        findLeftLeaf(root.right);
+      }
+    }
+    findLeftLeaf(root);
+    return sum;
+  };
+
+  var serialize = function (t, res = "") {
+    if (t == null) return "";
+    res += `${t.val}`;
+    if (t.left == null && t.right == null) return res;
+    if (t.left) {
+      res += `(${serialize(t.left)})`;
+    } else {
+      res += `()`;
+    }
+    if (t.right) {
+      res += `(${serialize(t.right)})`;
+    }
+    return res;
+  };
+  var deserialize = function (data) {
+    if (data == "") return null;
+    numInfo = getNum(data);
+    let node = new TreeNode(numInfo.num);
+    if (data.length == numInfo) return node;
+    let count = 0;
+    for (var i = numInfo.index; i < data.length; i++) {
+      if (data[i] == "(") {
+        count++;
+      }
+      if (data[i] == ")") {
+        count--;
+      }
+      if (count == 0) {
+        break;
+      }
+    }
+    node.left = deserialize(data.slice(numInfo.index + 1, i));
+    node.right = deserialize(data.slice(i + 2, data.length - 1));
+    return node;
+    function getNum(data) {
+      let num = "";
+      for (var i = 0; i < data.length; i++) {
+        if (data[i] == "(") break;
+        if (data[i] == "-" || typeof (+data[i]) == "number") num += data[i];
+      }
+      return {
+        num: Number(num),
+        index: i
+      };
+    }
+  };
+  var preorderTraversal = function (root, res = []) {
+    if (root) {
+      res.push(root.val);
+      res.push(...preorderTraversal(root.left));
+      res.push(...preorderTraversal(root.right));
+    }
+    return res;
+  };
+
+  var insertIntoBST = function (root, val) {
+    if (val < root.val) {
+      if (root.left) {
+        insertIntoBST(root.left, val)
+      } else {
+        root.left = new TreeNode(val)
+      }
+    } else {
+      if (val > root.val) {
+        if (root.right) {
+          insertIntoBST(root.right, val)
+        } else {
+          root.right = new TreeNode(val)
+        }
+      }
+    }
+    return root;
+  };
+
+  var deleteNode = function (root, key, or = root) {
+    if (root == null) return null;
+    let delnode = searchNode(root, key);
+    if (delnode == undefined) return root;
+    if (delnode.left == null && delnode.right == null) {
+      if (delnode == root) {
+        return null;
+      } else {
+        let fatherinfo = searchFather(or, delnode)
+        let father = fatherinfo[0];
+        let dir = fatherinfo[1];
+        father[dir] = null
+        return root;
+      }
+    } else if (delnode.right) {
+      if (delnode.right.left) {
+        let node = delnode.right.left;
+        while (node.left) {
+          node = node.left;
+        }
+        delnode.val = node.val
+        deleteNode(node, node.val, or);
+        return root;
+      } else {
+        let node = delnode.right;
+        delnode.val = node.val;
+        delnode.right = node.right;
+        return root;
+      }
+    } else {
+      if (delnode.left.right) {
+        let node = delnode.left.right;
+        while (node.right) {
+          node = node.right;
+        }
+        delnode.val = node.val;
+        deleteNode(node, node.val, or);
+        return root;
+      } else {
+        let node = delnode.left;
+        delnode.val = node.val;
+        delnode.left = node.left;
+        return root;
+      }
+    }
+    function searchFather(root, node, res) {
+      if (root.left == node) {
+        res = [root, "left"]
+      } else if (root.right == node) {
+        res = [root, "right"]
+      }
+      if (root.left && res == undefined) {
+        res = searchFather(root.left, node);
+      }
+      if (root.right && res == undefined) {
+        res = searchFather(root.right, node);
+      }
+
+      return res;
+    }
+    function searchNode(root, key, res) {
+      if (root.val == key) {
+        res = root;
+      }
+      if (root.left && res == undefined) {
+        res = searchNode(root.left, key);
+      }
+      if (root.right && res == undefined) {
+        res = searchNode(root.right, key);
+      }
+      return res;
+    }
+  }
+
+  var numTrees = function (n) {
+    let count = Array(n + 1).fill(0);
+    count[1] = 1;
+    count[0] = 1;
+    for (let i = 2; i <= n; i++) {
+      for (let j = 0; j <= i - 1; j++) {
+        count[i] += count[j] * count[i - j - 1];
+      }
+    }
+    return count[n];
+  };
+  var generateTrees = function (n) {
+    if (n == 0) return null;
+    return genTreeList(1, n);
+    function genTreeList(start, end) {
+      let res = [];
+      if (start > end) {
+        res.push(null);
+        return res;
+      }
+      for (let i = start; i <= end; i++) {
+        let left = genTreeList(start, i - 1);
+        let right = genTreeList(i + 1, end);
+        for (let j = 0; j < left.length; j++) {
+          for (let k = 0; k < right.length; k++) {
+            let root = new TreeNode(i);
+            root.left = left[j];
+            root.right = right[k];
+            res.push(root);
+          }
+        }
+      }
+      return res;
+    }
+  };
+  var constructMaximumBinaryTree = function (nums) {
+    if (nums.length == 0) return null;
+
+    let maxidx = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i] > maxidx) {
+        maxidx = i;
+      }
+    }
+    let root = new TreeNode(nums[maxidx]);
+    root.left = constructMaximumBinaryTree(nums.slice(0, maxidx));
+    root.right = constructMaximumBinaryTree(nums.slice(maxidx + 1));
+    return root;
+  };
+
+
+  var insertIntoMaxTree = function (root, val) {
+    if (root == null) return new TreeNode(val);
+    if (val > root.val) {
+      let node = new TreeNode(val);
+      node.left = root;
+      return node;
+    } else {
+      root.right = insertIntoMaxTree(root.right, val);
+      return root;
+    }
+  };
+
+  var longestUnivaluePath = function (root) {
+    if (root == null) return 0;
+    let count = 0;
+    findLongest(root, root.val);
+    return count;
+    function findLongest(root, val) {
+      if (root == null) return 0;
+      let left = findLongest(root.left, root.val);
+      let right = findLongest(root.right, root.val);
+      count = Math.max(len, left + right);
+      if (root.val == val) {
+        return 1 + Math.max(left, right);
+      }
+      return 0;
+    }
+  };
+  // 删除二叉树节点
+  var deleteNode = function (root, key) {
+    if (root == null) return null;
+    if (root.val < val) {
+      root.left = deleteNode(root.left, val);
+      return root;
+    }
+    if (root.val > val) {
+      root.right = deleteNode(root.right, val);
+      return root;
+    }
+    if (root.val == val) {
+      if (root.left == null) {
+        return root.right;
+      }
+      if (root.right == null) {
+        return root.left;
+      }
+      let node = findMaxNode(root.left);
+      root.val = node.val;
+      root.left = deleteNode(root.left, node.val);
+      return root;
+    }
+    function findMaxNode(node) {
+      while (node.right) {
+        node = node.right;
+      }
+      return node;
+    }
+  };
+
+  function morrisTraverse(root) {
+    while (root) {
+      if (root.left != null) {
+        let pre = findpre(root);
+        if (pre.right == null) {
+          pre.right = root;
+          root = root.left;
+        } else if (pre.right == root) {
+          pre.right = null;
+          console.log(root.val);
+          root = root.right;
+        }
+      } else {
+        console.log(root.val);
+        root = root.right;
+      }
+    }
+
+    function findpre(node) {
+      let root = node;
+      node = node.left;
+      while (node.right && node.right != root) {
+        node = node.right;
+      }
+      return node;
+    }
+  }
+
+  var pathSum = function (root, sum) {
+    let res = [];
+    findPath(root, sum, [])
+    function findPath(root, sum, path) {
+      sum -= root.val;
+      path.push(root.val);
+      if (sum == 0) {
+        res.push(path);
+      } else {
+        if (root.left) {
+          findPath(root.left, sum, path.slice());
+        }
+        if (root.right) {
+          findPath(root.right, sum, path.slice());
+        }
+      }
+    }
+  }
+
+  var pathSum = function (root, num) {
+    let count = 0;
+    preOrderTraverse(root, findCount);
+    return count
+    function findCount(root, sum = num) {
+      sum -= root.val;
+      if (sum == 0) {
+        count++;
+      }
+      if (root.left) {
+        findCount(root.left, sum);
+      }
+      if (root.right) {
+        findCount(root.right, sum);
+      }
+    }
+
+    function preOrderTraverse(root, action) {
+      if (root) {
+        action(root);
+        preOrderTraverse(root.left, action)
+        preOrderTraverse(right.left, action)
+      }
+    }
+  };
+
+  var isValidBST = function (root, low = null, high = null) {
+    if (root == null) return true;
+    if (low !== null && root.val >= high) return false;;
+    if (low !== null && root.val <= low) return false;
+    if (!isValidBST(root.right, node.val, high)) return false;
+    if (!isValidBST(root.right, low, node.val)) return false;
+    return true;
+  };
+
+  var findMode = function (root) {
+    if (root == null) return [];
+    let maxVals = [];
+    let maxCount = -1;
+    let curCount;
+    let curval;
+    inOrderTraverse(root);
+    return maxVals;
+
+    function countMode(val) {
+      if (val !== curval) {
+        curval = val;
+        curCount = 1;
+      } else {
+        if (val == curval) {
+          curCount++;
+        }
+        if (curCount > maxCount) {
+          maxVals = [val];
+        } else if (curCount == maxCount) {
+          maxVals.push(val);
+        }
+      }
+    }
+    function inOrderTraverse(root) {
+      if (root) {
+        inOrderTraverse(root.left);
+        countMode(root.val);
+        inOrderTraverse(root.right);
+      }
+    }
+  };
+
+  var increasingBST = function (root) {
+    let dummy = new TreeNode();
+    let curnode = dummy;
+    preOrderTraverse();
+    return dummy.right;
+    function createNode(val) {
+      let node = new TreeNode(val);
+      curnode.right = node;
+      curnode = curnode.right;
+    }
+    function preOrderTraverse(node) {
+      if (node) {
+        preOrderTraverse(node.left)
+        createNode(node.val);
+        preOrderTraverse(node.right)
+      }
+    }
+  };
+
+  function transform(num, flag = true) {
+    if (n == 0) {
+      if (flag) {
+        return "0";
+      } else {
+        return ""
+      }
+    }
+    var d = n % 10;
+    var rest = (n - d) / 10;
+    return "" + d + transform(rest);
+  }
+
+
+
+
+  // 使用morris算法实现
+  var increasingBST = function (root) {
+    let dummy = root;
+    while (root) {
+      if (root.left) {
+        let pre = findpre(root)
+        if (pre.right == null) {
+          pre.right = root;
+          dummy = root;
+          root = root.left;
+        } else if (pre.right == root) {
+          root.left = null // 删除根节点的左指针；
+          let post = findpost(root);
+          let temp = root.right;
+          root.right = post;
+          dummy = root;
+          root = temp;
+        }
+      } else {
+        dummy = root;
+        root = root.right;
+      }
+    }
+    return dummy;
+    function findpost(node) {
+      node = node.right;
+      while (node.left) {
+        node = node.left;
+      }
+      return node;
+    }
+    function findpre(node) {
+      let initial = node;
+      node = node.left
+      while (node.right && node != initial) {
+        node = node.right
+      }
+      return node;
+    }
+  };
+  var isBalanced = function (root) {
+    let res = true;
+    helper(root);
+    return res;
+    function helper(root) {
+      if (root == null) return 0;
+      let left = helper(root.left);
+      let right = helper(root.right);
+      if (Math.abs(left - right) > 1) res = false;
+      return 1 + Math.max(left, right);
+    }
+  }
+  var distributeCoins = function (root) {
+    let sum = 0;
+    helper(root);
+    return sum;
+    function helper(root) {
+      if (root == null) return 0;
+      let need = root.val == 0 ? 1 : 0;
+      let left = helper(root.left);
+      let right = helper(root.right);
+      let remain = left + right - need + root.val;
+      sum += remain
+      return remain;
+    }
+    var levelOrderBottom = function (root) {
+      let res = [];
+      helper(root);
+      return res.reverse();
+      function helper(root, level = 0) {
+        if (root) {
+          res[level].push(root.val);
+          helper(left.left, level + 1);
+          helper(root.right, level + 1);
+        }
+      }
+    };
+  }
+  var sortedArrayToBST = function (nums) {
+    if (nums.length == 0) return null;
+    if (nums.length == 1) return new TreeNode(nums[0]);
+    let mid = nums.length >> 1;
+    let root = new TreeNode(nums[mid]);
+    root.left = sortedArrayToBST(nums.slice(0, mid));
+    root.right = sortedArrayToBST(nums.slice(mid + 1));
+    return root;
+  };
+
+  var sortedListToBST = function (head) {
+    if (head == null) return null;
+    if (!head.next) {
+      return new TreeNode(head.val);
+    }
+    let midPre = findMidPre(head);
+    let mid = midPre.next;
+    let midnext = mid.next;
+    midPre.next = null;
+    mid.next = null;
+    let node = new TreeNode(mid.val);
+    node.left = sortedListToBST(head);
+    node.right = sortedListToBST(mid.next);
+    return node;
+    function findMidPre(head) {
+      let fast = head;
+      let slow = head;
+      while (fast.next && fast.next.next && fast.next.next.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+      }
+      return slow;
+    }
+  };
+
+  var flatten = function (root) {
+    if (root == null) return null;
+    let dummy = new TreeNode();
+    let head = dummy;
+    traverse(root);
+    return dummy.right;
+    function traverse(root) {
+      if (root) {
+        let left = root.left;
+        let right = root.right;
+        root.left = null;
+        root.right = null;
+        head.right = root;
+        head = head.right;
+        traverse(left);
+        traverse(right);
+      }
+    }
+  };
+  var convertBST = function (root) {
+    let preVal = 0;
+    traverse(root);
+    return preVal;
+    function traverse(root) {
+      traverse(root.right)
+      root.val += preVal;
+      preVal = root.val;
+      traverse(root.left)
+    }
+  };
+  var connect = function (root) {
+    if (root == null) return null;
+    let levelnodes = [root];
+    while (levelnodes.length) {
+      let nextlevelNodes = [];
+      let pre = new TreeNode();
+      for (let i = 1; i < levelnodes.length; i++) {
+        let node = levelnodes[i];
+        pre.next = node;
+        pre = pre.next;
+        if (node.left) {
+          nextlevelNodes.push(node.left);
+        }
+        if (node.right) {
+          nextlevelNodes.push(node.right);
+        }
+      }
+      levelnodes = nextlevelNodes;
+    }
+    return root;
+  };
+  var zigzagLevelOrder = function (root) {
+    if (root == null) return [];
+    let res = [];
+    let levelNodes = [root];
+    let isEven = true;
+    while (levelNodes.length) {
+      let nextlevelNodes = [];
+      let levelres = [];
+      while (levelNodes.length) {
+        if (isEven) {
+          let node = levelNodes.shift();
+          levelres.push(node.val);
+          if (node.left) {
+            nextlevelNodes.push(node.left);
+          }
+          if (node.right) {
+            nextlevelNodes.push(node.right);
+          }
+        } else {
+          let node = levelNodes.pop();
+          levelres.push(node.val);
+          if (node.right) {
+            nextlevelNodes.unshift(node.right);
+          }
+          if (node.left) {
+            nextlevelNodes.unshift(node.left);
+          }
+        }
+      }
+      isEven = !isEven;
+      res.push(levelres);
+      levelNodes = nextlevelNodes;
+    }
+    return res;
+  };
+
+  var maxPathSum = function (root) {
+    let maxsum = 0;
+    traverse(root);
+    return maxsum;
+    function traverse(root) {
+      if (root) {
+        let left = traverse(root.left);
+        let right = traverse(root.right);
+        let sum = Math.max(left, right, left + right, 0) + root.val;
+        if (sum > maxsum) {
+          maxsum = sum;
+        }
+        return Math.max(root.val + left, root.val + right, root.val);
+      }
+      return 0;
+    }
+  };
+
+  var sumNumbers = function (root) {
+    if (root == null) return 0;
+    let sum = 0;
+    traverse(root);
+    return sum;
+    function traverse(root) {
+      if (root == null) return [];
+      if (root.left == 0 && root.right == 0) {
+        sum += root.val;
+        return [1];
+      }
+      let left = traverse(root.left);
+      let right = traverse(root.right);
+      let allDepth = left.concat(right);
+      for (let i = 0; i < allDepth.length; i++) {
+        sum += root.val * 10 ** allDepth[i];
+        allDepth[i]++;
+      }
+      return allDepth;
+    }
+  };
+  var smallestFromLeaf = function (root) {
+    let res = "";
+    traverse(root);
+    return res;
+    function traverse(root, path = "") {
+      if (root) {
+        path = String.fromCharCode(root.val) + path;
+        if (root.left == null && root.right == null) {
+          if (path < res) {
+            res = path;
+          }
+        }
+        traverse(left, path);
+        traverse(right, path);
+      }
+    };
+  }
+  var rightSideView = function (root) {
+    let res = [];
+    traverse(root);
+    return res;
+    function traverse(root, depth = 1) {
+      if (root) {
+        traverse(root.right);
+        if (!res[depth - 1]) {
+          res[depth - 1] = root.val;
+        }
+        traverse(root.left);
+      }
+    }
+  };
+  var countNodes = function (root) {
+    return traverse(root);
+    function traverse(root) {
+      if (root == null) return 0;
+      let left = traverse(left);
+      let right = traverse(right);
+      return left + right + 1
+    }
+  };
+  var kthSmallest = function (root, k) {
+    return traverse(root);
+    function traverse(root) {
+      if (root) {
+        traverse(root.left);
+        k--;
+        if (k == 0) return root.val;
+        traverse(root.right);
+      }
+    }
+  };
+
+
+  var lowestCommonAncestor = function (root, p, q) {
+    let res;
+    traverse(root);
+    return res;
+    function traverse(root) {
+      if (root) {
+        let node = root.val == q || p;
+        let left = traverse(root.left);
+        let right = traverse(root.right);
+        if (left == true && right == true) {
+          res.val = root.val;
+        }
+        if ((left == true || right == true) && node == true) {
+          res.val = root.val
+        }
+        return node || left || right;
+      }
+      return false;
+    }
+  };
+  var binaryTreePaths = function (root) {
+    let res = [];
+    traverse(root);
+    return res;
+    function traverse(root, path = "") {
+      if (root) {
+        if (root.left == null && root.right == null) {
+          path += root.val;
+          res.push(path);
+        }
+        path += root.val + "->"
+        traverse(root.left, path);
+        traverse(root.right, path);
+      }
+    }
+  };
+  var rob = function (nums) {
+    if (nums.length == 0) return 0;
+    let pre1 = 0;
+    let pre2 = 0;
+    for (let i = 0; i < nums.length; i++) {
+      let temp = pre1;
+      pre1 = Math.max(after2 + num, pre1);
+      pre2 = temp;
+    }
+    return pre1;
+  };
+
+  var rob = function (root) {
+    let initial = root;
+    let cache = new Map();
+    rob1(root);
+    return cache.get(initial);
+    function rob1(root) {
+      if (root == null) return 0;
+      if (cache.has(root)) {
+        return cache.get(root);
+      }
+      let thislevel = (root.left ? (rob1(root.left.left) + rob1(root.left.right)) : 0) +
+        (root.right ? (rob1(root.right.left) + rob1(root.right.right)) : 0) +
+        root.val;
+      let nextlevel = rob1(root.left) + rob1(root.right);
+      let max = Math.max(nextlevel, thislevel);
+      cache.set(root, max);
+      return max;
+    }
+  };
+  var findBottomLeftValue = function (root) {
+    if (root == null) return null;
+    let levelNodes = [root];
+    let res;
+    while (levelNodes.length) {
+      let nextlevelNodes = [];
+      res = levelNodes[0].val;
+      for (let i = 0; i < levelNodes.length; i++) {
+        if (levelNodes.left) {
+          nextlevelNodes.push(root.left);
+        }
+        if (levelNodes.right) {
+          nextlevelNodes.push(root.left);
+        }
+      }
+      levelnodes = nextlevelNodes;
+    }
+    return res;
+  };
+  var findFrequentTreeSum = function (root) {
+    let map = new Map();
+    traverse(root);
+    let cur = -Infinity;
+    let res = [];
+    map.forEach((val, key) => {
+      if (val > cur) {
+        cur = val;
+        res = [key]
+      } else if (val == cur) {
+        res.push(key);
+      }
+    })
+    return res;
+    function traverse(root) {
+      if (root) {
+        let left = traverse(root.left);
+        let right = traverse(root.right);
+        let sum = left + right + root.val
+        if (map.has(sum)) {
+          map.set(sum, map.get(sum) + 1)
+        } else {
+          map.set(sum, 1);
+        }
+        return sum;
+      }
+      return 0;
+    }
+  };
+  var serialize = function (root) {
+    if (root == null) return "[]";
+    let res = [];
+    traverse(root);
+    return "[" + root.val + "]" + res.toString();
+    function traverse(root) {
+      if (root) {
+        traverse(left)
+        res.push(root.val);
+        traverse(right)
+      }
+    }
+  };
+  var deserialize = function (data) {
+    let idx = data.indexOf("]");
+    let rootval = data.slice(1, idx);
+    if (root.val == "") {
+      return null;
+    } else {
+      rootval = Number(root.val);
+    }
+    data = data.slice(idx + 1);
+    arr = data.split(",");
+    let mididx = arr.length >> 1;
+  };
+  var largestValues = function (root) {
+    let res = [];
+    traverse(root, depth);
+    return res;
+    function traverse(root, depth = 0) {
+      if (root) {
+        if (res[depth] != undefined) {
+          if (res[depth] < root.val) {
+            res[depth] = root.val;
+          }
+        } else {
+          res[depth] = root.val;
+        }
+        traverse(root.left, depth + 1)
+        traverse(root.right, depth + 1)
+      }
+    }
+  };
+  var getMinimumDifference = function (root) {
+    let pre;
+    let res = Infinity;
+    traverse(root);
+    return res;
+    function traverse(root) {
+      if (root) {
+        traverse(root.left);
+        if (pre == undefined) {
+          pre = root.val;
+        } else {
+          let gap = Math.abs(pre - root.val);
+          if (gap < res) {
+            res = gap;
+          }
+          pre = root.val;
+        }
+        traverse(root.right);
+      }
+    }
+  };
+  var isSubtree = function (s, t) {
+    if (s.val == t.val && same(s, t)) {
+      return true;
+    } else {
+      return isSubtree(s.left, t) || isSubtree(s.right, t);
+    }
+    function same(s, t) {
+      if (s == null && t == null) return true;
+      if (s == null || t == null) return false;
+      if (s.val == t.val) {
+        return same(s.left, t.left) && same(s.right, t.right);
+      }
+      return false;
+    }
+  };
+  var findTilt = function (root) {
+    let res = 0;
+    return res;
+    function traverse(root) {
+      if (root) {
+        let left = traverse(root.left);
+        let right = traverse(root.right);
+        res += Math.abs(left - right);
+        return root.val;
+      }
+      return 0;
+    }
+  };
+  var averageOfLevels = function (root) {
+    let res = [];
+    traverse(root);
+    return res.map(it => {
+      return it.reduce(avg, item, idx){
+        return (avg * idx + item) / (idx + 1)
+      }
+    }, 0)
+    function traverse(root, depth = 0) {
+      if (root) {
+        if (res[depth] == undefined) {
+          res[depth] = [root.val]
+        } else {
+          res[depth].push(root.val);
+        }
+        traverse(root.left, depth + 1);
+        traverse(root.right, depth + 1);
+      }
+    }
+  };
+  var findDuplicateSubtrees = function (root) {
+    let map = {};
+    let res = [];
+    traverse(root);
+    return res;
+    function traverse(root) {
+      if (root) {
+        let left = traverse(root.left);
+        let right = traverse(root.right);
+        let series = "" + root.val + left + right
+        if (series in map) {
+          if (map[series] == 1) {
+            res.push(root)
+          } else {
+            map[series]++;
+          }
+        } else {
+          map[series] = 1;
+        }
+        return series;
+      }
+      return "";
+    }
+  };
+  var addOneRow = function (root, v, d) {
+    if (d == 1) {
+      let node = new TreeNode(v);
+      node.left = root;
+      return node;
+    } else {
+      let dummy = root;
+      let levelNodes = [root];
+      let depth = 1;
+      while (levelNodes.length) {
+        depth++;
+        let nextlevelNodes = [];
+        for (let i = 0; i < levelNodes.length; i++) {
+          let node = levelNodes[i];
+          if (depth == d) {
+            let right = node.right;
+            node.right = new TreeNode(v);
+            node.right.right = right;
+            let left = node.left;
+            node.left = new TreeNode(v);
+            node.left.left = left;
+          } else {
+            if (node.right) {
+              nextlevelNodes.push(node.right);
+            }
+            if (node.left) {
+              nextlevelNodes.push(node.left);
+            }
+          }
+        }
+        if (depth == d) {
+          return dummy;
+        }
+        levelNodes = nextlevelNodes;
+      }
+    }
+  };
+
+  var minDiffInBST = function (root) {
+    let res = Infinity;
+    let pre = Infinity;
+    traverse(root);
+    return res;
+    function traverse(root) {
+      if (root) {
+        traverse(root.left);
+        let t = Math.abs(pre - root.val);
+        if (t < res) {
+          res = t;
+        }
+        pre = root.val;
+        traverse(root.right);
+      }
+    }
+  };
+  //遍历循环方法
+  var inorderTraversal = function (node) {
+    let res = [];
+    let stack = [];
+    let cur = node;
+    while (cur !== null || stack.length) {
+      while (cur) {
+        stack.push(cur);
+        cur = cur.left;
+      }
+      cur = stack.pop();
+      res.push(cur.val);
+      cur = cur.right;
+    }
+    return res;
+  };
+  var preorderTraversal = function (root) {
+    let res = [];
+    let stack = [];
+    let cur = node;
+    while (cur !== null || stack.length) {
+      while (cur) {
+        stack.push(cur);
+        res.push(cur.val);
+        cur = cur.left;
+      }
+      cur = stack.pop();
+      cur = cur.right;
+    }
+    return res;
+  };
+
+  var postorderTraversal = function (root) {
+    let res = [];
+    let cur = root;
+    let stack = [];
+    while (stack.length || cur) {
+      while (cur) {
+        stack.push(cur);
+        res.push(cur.val);
+        cur = cur.right
+      }
+      cur = stack.pop();
+      cur = cur.left;
+    }
+  };
+
+  var levelOrder = function (root) {
+    if (root == null) return [];
+    let levelNodes = [root];
+    let res = [];
+    while (levelNodes.length) {
+      let nextlevelNodes = []
+      let levelres = []
+      for (let i = 0; i < levelNodes.length; i++) {
+        levelres.push(levelNodes[i]);
+        nextlevelNodes.push(...levelNodes[i].children);
+      }
+      res.push(levelres);
+      levelNodes = nextlevelNodes;
+    }
+    return res;
+  };
+  var isUnivalTree = function (root) {
+    let stack = [];
+    let cur = root;
+    let val = root.val;
+    while (stack.length || cur) {
+      while (cur) {
+        if (cur.val == val) {
+          return false;
+        }
+        stack.push(cur);
+        cur = cur.left;
+      }
+      cur = stack.pop();
+      cur = cur.right;
+    }
+    return true;
+  };
+  var searchBST = function (root, val) {
+    if(root == null) return null;
+    while(root){
+      if(root.val == val){
+        return root;
+      }else if(root.val > val){
+        root = root.left;
+      }else if(root.val < val){
+        root = root.right;
+      }    
+    }
+    return null;
+  }; 
+  
+  // 红黑树 avl树(二叉搜索树，选择 ) 平衡树
+</script>

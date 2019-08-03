@@ -1,0 +1,729 @@
+<script>
+  function ListNode(val) {
+    this.val = val;
+    this.next = null;
+  }
+
+  function arrTolist(arr) {
+    let dummy = new ListNode();
+    let prev = dummy;
+    for (let i = 0; i < arr.length; i++) {
+      let node = new ListNode();
+      node.val = arr[i];
+      prev.next = node;
+      prev = node;
+    }
+    return dummy.next
+  }
+
+  function listToArr(node) {
+    let res = [];
+    while (node) {
+      res.push(node.val);
+      node = node.next;
+    }
+    return res;
+  }
+
+  var addTwoNumbers1 = function (l1, l2) {
+    let dummy = new ListNode();
+    let node = dummy;
+    let carry = 0;
+    while (l1 !== null || l2 !== null) {
+      if (l1 !== null) {
+        carry += l1.val;
+        l1 = l1.next;
+      }
+      if (l2 !== null) {
+        carry += l2.val
+        l2 = l2.next;
+      }
+      node.next = new ListNode(carry % 10);
+      node = node.next;
+      carry = Math.floor(carry / 10);
+    }
+    if (carry) {
+      node.next = new ListNode(carry)
+    }
+    return dummy.next;
+  };
+
+  var removeNthFromEnd = function (head, n) {
+    let dummy = new ListNode();
+    dummy.next = head;
+    let first = dummy;
+    let second = dummy;
+    for (let i = 0; i < n + 1; i++) {
+      first = first.next;
+    }
+    while (first) {
+      first = first.next;
+      second = second.next;
+    }
+    second.next = second.next.next;
+    return dummy.next;
+  };
+
+
+  var mergeTwoLists = function (l1, l2) {
+    let dummy = new ListNode();
+    head = dummy;
+    while (l1 && l2) {
+      if (l1.val > l2.val) {
+        head.next = l2;
+        l2 = l2.next;
+      } else {
+        head.next = l1;
+        l1 = l1.next;
+      }
+      head = head.next;
+    }
+    head.next = l1 || l2;
+    return dummy.next;
+  };
+
+  var swapPairs = function (head) {
+    let dummy = new ListNode();
+    dummy.next = head
+    let first = dummy;
+    let second = head;
+    while (second) {
+      first.next = second.next;
+      second.next = first.next.next;
+      first.next.next = second;
+      first = first.next.next;
+      second = first.next;
+    }
+    return dummy.next;
+  };
+
+  var reverseKGroup = function (head, k) {
+    let dummy = new ListNode();
+    let start = dummy;
+    dummy.next = head;
+    while (1) {
+      let p = start;
+      let c;
+      let n = p;
+      start = p.next;
+      for (let i = 0; i < k && n !== null; i++) {
+        n = n.next;
+      }
+      if (n == null) {
+        break;
+      }
+      for (let i = 0; i < k - 1; i++) {
+        c = p.next;
+        p.next = c.next;
+        c.next = n.next;
+        n.next = c;
+      }
+    }
+    return dummy.next;
+  };
+
+  var rotateRight = function (head, k) {
+    let dummy = new ListNode();
+    dummy.next = head;
+    let first = dummy;
+    let second = dummy;
+    let len = 0;
+    for (let i = 0; i < k; i++) {
+      if (first == null) return rotateRight(head, k - len + 1);
+      first = first.next;
+      len++;
+    }
+    while (first.next) {
+      first = first.next;
+      second = second.next;
+    }
+    let tmp = second.next;
+    second.next = null;
+    first.next = dummy.next;
+    return tmp;
+  };
+
+  var deleteDuplicates = function (head) {
+    if (head == null) return null;
+    let dummy = new ListNode();
+    dummy.next = head;
+    let first = dummy;
+    let second = head;
+    while (second && second.next) {
+      if (second.val == second.next.val) {
+        while (second.next && second.val == second.next.val) {
+          second = second.next;
+        }
+        first.next = second.next;
+        second = first.next;
+      } else {
+        first = first.next;
+        second = first.next;
+      }
+    }
+    return dummy.next;
+  };
+
+  var partition = function (head, x) {
+    let dummy = new ListNode();
+    let before = new ListNode();
+    let beforeStart = before;
+    let after = new ListNode();
+    let afterStart = after;
+    dummy.next = head;
+    while (head) {
+      if (head.val < x) {
+        before.next = head;
+        before = before.next;
+      } else {
+        after.next = head;
+        after = after.next;
+      }
+      head = head.next;
+    }
+    before.next = afterStart.next;
+    after.next = null;
+    return beforeStart.next;
+  };
+
+  var reverseList = function (head) {
+    if (head == null) return null;
+    let pre = new ListNode();
+    pre.next = head;
+    let last = head;
+    let cur = last.next;
+    while (cur) {
+      last.next = cur.next;
+      cur.next = pre.next;
+      pre.next = cur;
+      cur = last.next;
+    }
+    return pre.next;
+  };
+
+  var reverseBetween = function (head, m, n) {
+    if (head == null) return null;
+    let dummy = new ListNode;
+    dummy.next = head;
+    let node = dummy;
+    for (let i = 0; i < m - 1; i++) {
+      node = node.next;
+    }
+    let pre = node
+    let last = node.next;
+    let cur = last.next;
+    for (let i = 0; i < n - m; i++) {
+      last.next = cur.next;
+      cur.next = pre.next;
+      pre.next = cur;
+      cur = last.next;
+    }
+    return dummy.next;
+  };
+
+  var hasCycle = function (head) {
+    let slow = head;
+    let fast = head;
+    while (slow && slow.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow == fast) return true;
+    }
+    return false;
+  };
+
+  var detectCycle = function (head) {
+    let seen = new Set();
+    while (head) {
+      if (seen.has(head)) {
+        return head;
+      }
+      seen.add(head);
+      head = head.next;
+    }
+    return null;
+  };
+
+  var detectCycle = function (head) {
+    if (head == null) return null;
+    let pre = head;
+    let fast = head;
+    let low = head;
+    while (fast && fast.next) {
+      fast = fast.next.next;
+      low = low.next
+      if (fast == low) {
+        while (1) {
+          if (pre == fast) {
+            return pre;
+          }
+          pre = pre.next;
+          fast = fast.next;
+        }
+      }
+    }
+    return null;
+  };
+
+  var reorderList = function (head) {
+    if (head == null) return null;
+    let dummy = new ListNode();
+    dummy.next = head;
+    let fast = head;
+    let slow = head;
+    while (fast.next && fast.next.next) {
+      fast = fast.next.next;
+      slow = slow.next;
+    }
+    let midpre = slow;
+    let last = midpre.next;
+    while (last.next) {
+      cur = last.next;
+      last.next = cur.next;
+      cur.next = midpre.next;
+      midpre.next = cur;
+
+    }
+    let reverseNode = midpre.next;
+    let inorderNode = dummy.next;
+    while (reverseNode && inorderNode.next !== reverseNode) {
+      midpre.next = reverseNode.next
+      reverseNode.next = inorderNode.next;
+      inorderNode.next = reverseNode;
+      reverseNode = midpre.next;
+      inorderNode = inorderNode.next.next;
+    }
+    return dummy.next;
+  };
+
+  function Node(val, next, random) {
+    this.val = val;
+    this.next = next;
+    this.random = random;
+  };
+  var copyRandomList = function (head) {
+    if (head == null) return head;
+    let node = head;
+    let map = new Map();
+    while (node) {
+      map.set(node, new Node(node.val, null, null))
+      node = node.next;
+    }
+    node = head;
+    while (node) {
+      if (node.next != null) {
+        map.get(node).next = map.get(node.next);
+      }
+      if (node.random != null) {
+        map.get(node).random = map.get(node.random);
+      }
+      node = node.next;
+    }
+    return map.get(head);
+  };
+
+  var insertionSortList = function (head) {
+    if (head == null) return null;
+    let dummy = new ListNode();
+    dummy.next = head;
+    let last = head;
+    while (last && last.next) {
+      let pre = dummy;
+      while (pre.next.val < last.next.val) {
+        pre = pre.next;
+      }
+      if (pre == last) {
+        last = last.next
+      } else {
+        let cur = last.next;
+        last.next = last.next.next;
+        cur.next = pre.next;
+        pre.next = cur;
+      }
+    }
+    return dummy.next;
+  };
+
+  var getIntersectionNode = function (headA, headB) {
+    let p1 = headA;
+    let p2 = headB;
+    let flag1 = true;
+    let flag2 = true;
+    while (p1 != p2) {
+      if (p1) {
+        p1 = p1.next
+      } else if (p1 == null && flag1) {
+        p1 = headB;
+        flag1 = false;
+      } else {
+        return null;
+      }
+
+      if (p2) {
+        p2 = p2.next
+      } else if (p2 == null && flag2) {
+        p2 = headA;
+        flag2 = false;
+      } else {
+        return null;
+      }
+    }
+    return p1;
+  };
+
+  var removeElements = function (head, val) {
+    let dummy = new ListNode();
+    dummy.next = head;
+    let node = dummy;
+    while (node && node.next) {
+      if (node.next.val == val) {
+        node.next = node.next.next;
+      }
+      node = node.next;
+    }
+    return dummy.next;
+  };
+
+  var sortList = function (head) {
+    if (head.next == null || head == null) {
+      return head;
+    }
+    let fast = head;
+    let slow = head;
+    while (fast.next && fast.next.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    let right = slow.next;
+    slow.next = null;
+    let left = head;
+    left = sortList(left);
+    right = sortList(right);
+    return mergeTwoLists(left, right);
+  };
+
+  var isPalindrome = function (head) {
+    if (head == null) return null;
+    let dummy = new ListNode;
+    dummy.next = head;
+    let fast = head;
+    let slow = head;
+    while (fast.next && fast.next.next) {
+      fast = fast.next.next;
+      slow = slow.next;
+    }
+    let mid = slow.next;
+    if (mid == null) return true;
+    let pre = slow;
+    let last = mid;
+    let cur = last.next;
+    while (cur) {
+      last.next = cur.next;
+      cur.next = pre.next;
+      pre.next = cur;
+      cur = last.next;
+    }
+    mid = pre.next;
+    head = dummy.next;
+    while (head != pre.next) {
+      if (mid == null) return true;
+      if (mid.val != head.val) {
+        return false;
+      }
+      mid = mid.next;
+      head = head.next;
+    }
+    return true;
+  };
+
+
+
+  // 冒泡排序  对于基本有序的序列比较快
+  function swap(arr, i, j) {
+    let t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = arr[i];
+  }
+  var bubbleSort = function (ary) {
+    for (let j = arr.length - 2; j >= 0; j--) {
+      let isSort = 1;
+      for (let i = 0; i <= j; i++) {
+        if (arr[i] > arr[i + 1]) { // 升序排列
+          swap(arr, i, i + 1);
+          isSort = 0;
+        }
+      }
+      if (isSort) break;
+    }
+    return arr;
+  }
+
+
+  // 归并排序
+  // 时间复杂度为o(nlog(n)) 空间复杂度为o(n)
+  var mergeSort = function (arr) {
+    if (arr.length == 1 || arr.length == 0) {
+      return arr;
+    }
+    let mididx = arr.length >> 1
+    let left = arr.slice(0, mididx);
+    let right = arr.slice(mididx)
+
+    mergeSort(left);
+    mergeSort(right);
+
+    let i = 0;
+    let j = 0;
+    let k = 0;
+
+    while (i < left.length && j < right.length) {
+      if (left[i] < right[j]) {
+        arr[k++] = left[i++];
+      } else {
+        arr[k++] = right[j++];
+      }
+    }
+    while (i < left.length) {
+      arr[k++] = left[i++];
+    }
+    while (j < right.length) {
+      arr[k++] = right[j++];
+    }
+
+    return arr;
+  }
+
+  var oddEvenList = function (head) {
+    while (head == null || head.next == null) {
+      return head;
+    }
+    let p1 = head;
+    let p2 = head.next;
+    let oddNode = new ListNode;
+    let startOdd = oddNode;
+    let evenNode = new ListNode;
+    let startEven = evenNode;
+    while (true) {
+      oddNode.next = p1;
+      evenNode.next = p2;
+      if (p2 == null || p2.next == null) {
+        break;
+      }
+      oddNode = oddNode.next;
+      evenNode = evenNode.next;
+      p1 = p1.next.next;
+      p2 = p2.next.next;
+    }
+    p1.next = startEven.next;
+    return startOdd.next;
+  };
+
+  var addTwoNumbers = function (l1, l2) {
+    let stack1 = [];
+    let stack2 = [];
+    let res = [];
+    while (l1) {
+      stack1.push(l1.val);
+      l1 = l1.next;
+    }
+    while (l2) {
+      stack2.push(l2.val);
+      l2 = l2.next;
+    }
+    let carry = 0;
+    while (stack1.length || stack2.length) {
+      if (stack1.length) {
+        carry += stack1.pop();
+      }
+      if (stack2.length) {
+        carry += stack2.pop();
+      }
+      res.push(carry % 10);
+      carry = Math.floor(carry / 10);
+    }
+    if (carry) {
+      res.push(1);
+    }
+    let hjh = new ListNode();
+    let resnode = start;
+    while (res.length) {
+      let node = new ListNode();
+      node.val = res.pop();
+      resnode.next = node;
+      resnode = resnode.next;
+    }
+    return start.next;
+  };
+
+  var flatten = function (head) {
+
+  };
+
+  var splitListToParts = function (root, k) {
+    let len = 0;
+    let res = [];
+    let start = root;
+    while (root) {
+      len++;
+      root = root.next;
+    }
+    let width = Math.floor(len / k);
+    let rem = len % k;
+    let node = start;
+    for (let i = 0; i < k; i++) {
+      start = node;
+      let w;
+      if (rem > 0) {
+        w = width + 1;
+        rem--;
+      } else {
+        w = width;
+      }
+      for (let j = 0; j < w; j++) {
+        if (node) {
+          node = node.next;
+        }
+      }
+      if (node) {
+        let temp = node.next;
+        node.next = null;
+        node = temp;
+      }
+      res[i] = start;
+    }
+    return res;
+  };
+
+  var flatten = function (head) {
+    if (head == null) return head;
+    let node = head;
+    while (!node.child) {
+      if (node.next == null) {
+        return head;
+      };
+      node = node.next;
+    }
+    let flathead = flatten(node.child);
+    let flattail = flatten(node.next);
+    node.child = null;
+    node.next = flathead;
+    flathead.prev = node;
+    while (node.next) {
+      node = node.next;
+    }
+    node.next = flattail;
+    if (flattail) {
+      flattail.prev = node;
+    }
+    return head;
+  };
+
+  var numComponents = function (head, G) {
+    let set = new Set();;
+    for (let i = 0; i < G.length; i++) {
+      set.add(G[i]);
+    }
+    let count = 0;
+    while (head) {
+      if (set.has(head.val)) {
+        while (head.next && set.has(head.next.val)) {
+          head = head.next
+        }
+        count++;
+      }
+      head = head.next;
+    }
+    return count;
+  };
+
+  var middleNode = function (head) {
+    if (head == null || head.next == null) return head;
+    let slow = head;
+    let fast = head.next;
+    let count = 0;
+    while (fast.next && fast.next.next) {
+      fast = fast.next.next;
+      slow = slow.next;
+      count++;
+    }
+    return count % 2 ? slow : slow.next;
+  };
+
+  var nextLargerNodes = function (head) {
+    let arr = [];
+    let res = [];
+    let stack = [];
+    while (head) {
+      arr.push(head.val);
+      head = head.next
+    }
+    for (let i = arr.length - 1; i >= 0; i--) {
+      res[i] = compareStack(arr[i]);
+      if (arr[i] > arr[i - 1]) {
+        stack.push((arr[i]));
+      }
+    }
+    return res;
+    function compareStack(val) {
+      let poped = 0;
+      while (stack.length) {
+        if (stack[stack.length - 1] > val) {
+          return stack[stack.length - 1]
+        } else {
+          poped = 1;
+          stack.pop();
+        }
+      }
+      if (poped) {
+        stack.push(val);
+      }
+      return 0;
+    }
+  };
+  l1 = arrTolist([2, 1, 5]);
+  var majorityElement = function (nums) {
+
+    let count = 0;
+    let ele;
+    for (let i = 0; i < nums.length; i++) {
+      if (count == 0) {
+        ele = count;
+      }
+      if (nums[i] == ele) {
+        count++;
+      } else {
+        count--;
+      }
+    }
+    return ele;
+  };
+
+  function filter(art, filter) {
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (filter(arr[i])) {
+        res.push(arr[i]);
+      }
+    }
+    return res;
+  }
+  function map(arr, map) {
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+      res.push(map(arr[i]));
+    }
+  }
+
+  var maxProfit = function (prices) {
+    let buy = Infinity;
+    let res = 0;
+    for (let i = 0; i < prices.length; i++) {
+      if (buy > prices[i]) {
+        buy = prices[i];
+      } else {
+        res = Math.max(prices[i] - buy, res);
+      }
+    }
+    return res;
+  };
+</script>

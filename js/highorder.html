@@ -1,0 +1,75 @@
+<script src="./ancestry.js"></script>
+<script>
+  var ancestry = JSON.parse(ANCESTRY_FILE);
+
+  var byName = {};
+  ancestry.forEach(function (person) {
+    byName[person.name] = person;
+  });
+
+  function reduceAncestors(person, f, defaultValue) {
+    function valueFor(person) {
+      if (person == null)
+        return defaultValue;
+      else
+        return f(person, valueFor(byName[person.mother]),
+          valueFor(byName[person.father]));
+    }
+    return valueFor(person);
+  }
+
+  function sharedDNA(person, fromMother, fromFather) {
+    if (person.name == "Pauwels van Haverbeke")
+      return 1;
+    else
+      return (fromMother + fromFather) / 2;
+  }
+
+  function average(array) {
+    function plus(a, b) { return a + b; }
+    return array.reduce(plus) / array.length;
+  }
+
+  var byName = {};
+  ancestry.forEach(function (person) {
+    byName[person.name] = person;
+  });
+
+  var difference = ancestry.filter(person => byName[person.mother] != null).map(person => person.born - byName[person.mother].born);
+  console.log(average(difference));
+
+  function groupBy(arr, f) {
+    let map = {};
+    arr.forEach(it => {
+      if (map[f(it)]) {
+        map[f(it)].push(it);
+      } else {
+        map[f(it)] = [it]
+      }
+    })
+    return map;
+  }
+  let group = groupBy(ancestry, function (person) {
+    return Math.ceil(person.died / 100);
+  })
+  for (let key in group) {
+    group[key] = average(group[key].map(person => person.died - person.born));
+  }
+  console.log(group);
+
+
+  // bind实现
+  // 面试
+  function bind(f, ...fixedArgs) {
+    return function (...args) {
+      f(...fixedArgs, args)
+    }
+  }
+  function bind(f) {
+    var fixedArgs = Array.from(arguments).slice(1);
+    return function () {
+      var args = Array.from(arguments);
+      return f.applay(null, fixedArgs.concat(args));
+    }
+  }
+</script>

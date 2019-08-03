@@ -1,0 +1,308 @@
+<script>
+  // 归并排序 
+  //时间复杂度O(nlog2(n)) 空间复杂度O(n)
+  function mergeSort(arr) {
+    if (arr.length < 2) {
+      return arr;
+    }
+    let mid = arr.length >> 1;
+    //除以二 向下取整   [0, 1, 2, 3]  [0, 1, 2, 3, 4]
+    //                       ^             ^
+    //                      mid          mid  
+    let left = mergeSort(arr.slice(0, mid));
+    let right = mergeSort(arr.slice(mid));
+    return merge(left, right);
+  }
+
+  //合并两个有序数组
+  function merge(arr1, arr2) {
+    let res = [];
+    for (var i = 0, j = 0; i < arr1.length && j < arr2.length;) {
+      if (arr1[i] < arr2[j]) {
+        res.push(arr1[i++]);
+      } else {
+        res.push(arr2[j++])
+      }
+    }
+    if (i == arr1.length) {
+      res.push(...arr2.slice(j));
+    }
+    if (j == arr2.length) {
+      res.push(...arr1.slice(i));
+    }
+    return res;
+  }
+
+  //冒泡排序
+  //时间复杂度O(n*n) 空间复杂度O(1)
+  function bubbleSort(arr) {
+    for (let end = arr.length - 1; end > 0; end--) { // 把end想成比较的下一个位置的极限位置 
+      let isSort = true;
+      for (let i = 0; i < end; i++) {
+        if (arr[i] > arr[i + 1]) {
+          swap(arr, i, i + 1);
+          isSort = false;
+        }
+      }
+      if (isSort) {
+        break;
+      }
+    }
+    return arr;
+  }
+  // 选择排序中swap内部不能使用与或运算交换，因为可能会自己交换自己得到0；
+  function swap(arr, i, j) {
+    let t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+    return arr;
+  }
+
+  // 选择排序 时间复杂度O(n * n) 空间复杂度O(1);
+  function selectSort(arr) {
+    for (let pos = 0; pos < arr.length - 1; pos++) {
+      let minidx = pos;
+      for (let i = pos + 1; i < arr.length; i++) {
+        if (arr[i] < arr[minidx]) {
+          minidx = i;
+        }
+      }
+      swap(arr, pos, minidx);
+    }
+    return arr;
+  }
+
+
+
+  // 插入排序 
+  // 时间复杂度O(n * n) 空间复杂度O(1)
+  function insertionSort(arr) {
+    for (let i = 1; i < arr.length; i++) {
+      let insertval = arr[i];
+      for (let j = i - 1; j >= 0; j--) {
+        if (arr[j] > insertval) {
+          arr[j + 1] = arr[j];
+        } else {
+          arr[j + 1] = insertval;
+          break;
+        }
+      }
+    }
+    return arr;
+  }
+  // 插入排序 ------> 优化为二叉树排序
+  // 转为二叉树时间复杂度为(n*log(n)) 空间复杂度为O(n)  遍历二叉树时间复杂度为O(n) 最差空间复杂度为O(n)
+  //   ^每一个需要log(n)需要插入n个 最差情况为n * n^
+  function treeSort(arr) {
+    let root = arr2BST(arr);
+    return inorderTraversal(root);
+  }
+
+  function TreeNode(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+
+  function insertIntoBST(root, val) {
+    if (root == null) return new TreeNode(val);
+    if (root.val > val) {
+      if (root.left == null) {
+        root.left = new TreeNode(val);
+      } else {
+        insertIntoBST(root.left, val);
+      }
+    } else {
+      if (root.right == null) {
+        root.right = new TreeNode(val);
+      } else {
+        insertIntoBST(root.right, val);
+      }
+    }
+    return root;
+  }
+
+  function arr2BST(arr) {
+    if (arr.length == 0) return null;
+    return arr.reduce(insertIntoBST, null);
+
+  }
+
+  function inorderTraversal(root, res = []) {
+    if (root) {
+      res = res.concat(inorderTraversal(root.left))
+      res.push(root.val);
+      res = res.concat(inorderTraversal(root.right))
+    }
+    return res;
+  }
+
+  // 时间复杂度 n*log(n)  [该方法递归深度为空间复杂度O(n)] 
+  function quickSort1(arr) {
+    if (arr.length < 2) return arr.slice();
+    let pivot = Math.floor(Math.random() * arr.length);
+    let left = [];
+    let right = [];
+    let middle = []
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] < arr[pivot]) {
+        left.push(arr[i])
+      } else if (arr[i] > arr[pivot]) {
+        right.push(arr[i]);
+      } else {
+        middle.push(arr[i]);
+      }
+    }
+    left = quickSort(left);
+    right = quickSort(right);
+    return [...left, ...middle, ...right];
+  }
+  //对于所有元素都相同的数组来说，性能忽退化为n*n，调用栈会退化为n层;
+  //分治 divide and conquer 
+  function quickSort2(arr, low = 0, high = arr.length - 1) {
+    if (high - low <= 0) return arr;
+    let pivotIdx = Math.floor(Math.random() * (high - low + 1) + low);// 范围随机数计算方法
+    let pivot = arr[pivotIdx];
+    swap(arr, pivotIdx, high);
+    let i = low - 1;
+    for (let j = low; j < high; j++) {
+      if (arr[j] < pivot) {
+        i++;
+        swap(arr, i, j);
+      }
+    }
+    i++
+    swap(arr, i, high);
+
+    quickSort2(arr, low, i - 1);
+    quickSort2(arr, i + 1, high);
+    return arr;
+  }
+  function swap(arr, i, j) {
+    let t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+  }
+
+
+  //compare function(a,b) a是item，b是基准，返回正值表示不需要交换，返回负值表示需要交换，（把较小的值交换到最左边）  返回（a,b) 升序可以简写为 (a, b) => a - b;
+
+  // math.random() - 0.5 可以生成乱序数组。
+
+  function quickSort3(arr, compare, low = 0, high = arr.length - 1) {
+    if (high - low <= 0) return arr;
+    let pivotIdx = Math.floor(Math.random() * (high - low + 1) + low);// 范围随机数计算方法
+    let pivot = arr[pivotIdx];
+    swap(arr, pivotIdx, high);
+    let i = low - 1;
+    for (let j = low; j < high; j++) {
+      if (compare(arr[j], pivot) < 0) {
+        i++;
+        swap(arr, i, j);
+      }
+    }
+    i++
+    swap(arr, i, high);
+    quickSort3(arr, compare, low, i - 1);
+    quickSort3(arr, compare, i + 1, high);
+    return arr;
+  }
+  //排序前后不改变元素（相同元素）的相对位置，称为稳定的排序算法，反之称为不稳定的。
+  // 不稳定的：选择，快排（就地快排）， 
+  // 稳定的：冒泡，归并，BST，插入排序
+  // 为什么要考虑稳定性：因为在对携带多个信息进行排序时，如果之后排序的是不稳定的，将会影响之前排序的信息。如果之后排序是稳定的，那么之前的排序信息将不会收到影响。
+  //                   主排序 > 次要排序1 > 次要排序2 > ...
+
+
+
+
+
+  // 堆(heap)是一种数据结构，也叫优先队列(PriorityQueue)。
+  // 此堆有别于堆内存的堆
+  //   堆内存对应的概念是栈内存，
+  //   栈空间指储存正在等待调用返回的函数的局部变量的一片内存
+  //   调用栈指函数之间相互调用及等待的逻辑概念
+  //   堆是指动态的 栈是静态的  空间
+
+  //堆排序 空间复杂度为O(1) 时间复杂度为n * log(n) 或 n  
+  // 堆排序是一颗【完全二叉树】，其中隐含了顺序：
+  //  每个节点都比他的子节点大或者小
+  // （大 就叫【最大堆】， 小 就叫【最小堆】） 根节点分别对应最大值与最小值。
+  // 在堆中，我们关心的就是这个最值。
+  // 对于堆，主要支持两种操作:
+  // 增加一个元素，
+  // 从堆里取出最值，
+  // 这两种操作都要保证堆的性质。
+
+
+  // 此实现方法空间复杂度为log(n) 递归调用；
+
+  function heapSort(arr) {
+    heapfy2(arr);
+    for (let i = arr.length - 1; i > 0; i--) {
+      swap(arr, i, 0);
+      heapdown(arr, 0, i);
+    }
+    return arr;
+  }
+
+
+  //把数组end以内（不包含end）从堆开始调整成一个正确的堆
+  // 适合在尾部添加节点，自下而上调整堆
+  function heapup(arr, curIdx, start = 0) {
+    if (curIdx > start) {
+      let parIdx = curIdx - 1 >> 1; // i - 1 / 2
+      if (arr[parIdx] < arr[curIdx]) {
+        swap(arr, parIdx, curIdx);
+        heapup(arr, parIdx, start);
+      }
+    }
+  }
+
+  function heapfy2(arr) {
+    for (let i = 1; i < arr.length; i++) {
+      heapup(arr, i, 0)  // 使用heapup自上而下进行heapfy；
+    }
+    return arr;
+  }
+  // heapdown 适合删除顶节点，把最后一个节点放在顶节点，自上而下的进行调整为堆。
+  // 不包括end
+  function heapdown(arr, curIdx, end = arr.length) {
+    let leftIdx = curIdx * 2 + 1;
+    let rightIdx = curIdx * 2 + 2;
+    let maxIdx = curIdx;
+    if (leftIdx < end && arr[leftIdx] > arr[maxIdx]) {
+      maxIdx = leftIdx;
+    }
+    if (rightIdx < end && arr[rightIdx] > arr[maxIdx]) {
+      maxIdx = rightIdx;
+    }
+    if (maxIdx != curIdx) {
+      swap(arr, maxIdx, curIdx);
+      heapdown(arr, maxIdx, end);
+    }
+  }
+
+  function heapfy(arr) {
+    let idx = arr.length - 2 >> 1; //拿到最小的非叶子节点（最后一个节点的父节点）
+    for (let i = idx; i >= 0; i--) {
+      heapdown(arr, i);
+    }
+    return arr;
+  }
+
+
+  function swap(arr, i, j) {
+    let t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+  }
+
+
+
+
+
+
+
+  var arr = Array(100).fill(0).map(it => 100 * Math.random() | 0);
+</script>
