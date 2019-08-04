@@ -2,7 +2,7 @@ var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
-    , nth, pull, pullAll
+    , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove
 
   }
 
@@ -29,7 +29,53 @@ var huntye1 = function () {
     if (isString(predicate)) { //property
       return item[predicate];
     }
-    return predicate;
+    return predicate[0];
+  }
+
+  function remove(arr, predicate = identity) {
+    let pulled = [];
+    arr.forEach(it => {
+      if (predicate(it)) {
+        pulled.push(it);
+      }
+    })
+    pullAll(arr, pulled);
+    return pulled;
+  }
+
+  function pullAt(arr, idxs) {
+    let pulled = [];
+    idxs.forEach(i => {
+      pulled.push(arr[i]);
+    })
+    pullAll(arr, pulled);
+    return pulled;
+  }
+
+  function pullAllWith(arr, vals, comparator = isEqual) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < vals.length; j++) {
+        if (comparator(arr[i], vals[j])) {
+          arr.splice(i, 1);
+          i--;
+          break;
+        }
+      }
+    }
+    return arr;
+  }
+
+  function pullAllBy(arr, vals, iteratee = identity) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < vals.length; j++) {
+        if (isEqual(shorthand(iteratee, arr[i]), shorthand(iteratee, vals[j]))) {
+          arr.splice(i, 1);
+          i--;
+          break;
+        }
+      }
+    }
+    return arr;
   }
 
   function pullAll(arr, vals) {
@@ -231,6 +277,7 @@ var huntye1 = function () {
       return array.filter(it => !compare.some(item => item[f] == it[f]));
     }
   }
+
   function isWeakSet(val) {
     return isObjectLike(val) && nativeToString(val) == `[object WeakSet]`
   }
@@ -756,3 +803,4 @@ var huntye1 = function () {
     }
   } // property => propname => obj => obj[propname];
 }();
+var _ = huntye1;
