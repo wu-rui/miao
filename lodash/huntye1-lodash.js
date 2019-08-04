@@ -98,7 +98,7 @@ var huntye1 = function () {
     let res = [];
     for (let i = arr.length - 1; i >= 0; i--) {
       if (shorthand(predicate, arr[i], i, arr)) {
-        res.push(arr[i]);
+        res.unshift(arr[i]);
       } else {
         break;
       }
@@ -150,7 +150,7 @@ var huntye1 = function () {
         while (arr[mid + 1] == val) {
           mid++;
         }
-        return mid + 1;
+        return mid;
       }
       if (arr[mid] > val) {
         end = mid - 1;
