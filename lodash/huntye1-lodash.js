@@ -1,7 +1,9 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
+    , nth, pull, pullAll
+
   }
 
   /**
@@ -28,6 +30,37 @@ var huntye1 = function () {
       return item[predicate];
     }
     return predicate;
+  }
+
+  function pullAll(arr, vals) {
+    return pull(arr, ...vals);
+  }
+
+  function pull(arr, ...vals) {
+    for (let i = 0; i < arr.length; i++) {
+      if (vals.includes(arr[i])) {
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+    return arr;
+  }
+
+  function nth(arr, n) {
+    return n >= 0 ? arr[n] : arr[arr.length + n];
+  }
+
+  function lastIndexOf(arr, val, from = arr.length - 1) {
+    for (let i = from; i >= 0; i--) {
+      if (arr[i] == val) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function last(arr) {
+    return arr[arr.length - 1];
   }
 
   function intersectionWith(arr, ...args) {
