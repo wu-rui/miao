@@ -68,7 +68,7 @@ var huntye1 = function () {
         while (arr[mid + 1] == val) {
           mid++;
         }
-        return mid;
+        return mid + 1;
       }
       if (arr[mid] > val) {
         end = mid - 1;
