@@ -32,6 +32,10 @@ var huntye1 = function () {
     return predicate[0];
   }
 
+  function slice(arr, start = 0, end = arr.length) {
+    return arr.slice(start, end);
+  }
+
   function remove(arr, predicate = identity) {
     let pulled = [];
     arr.forEach(it => {
