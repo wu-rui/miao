@@ -2,7 +2,7 @@ var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
-    , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove
+    , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex
 
   }
 
@@ -30,6 +30,32 @@ var huntye1 = function () {
       return item[predicate];
     }
     return predicate[0];
+  }
+
+  function sortedIndex(arr, val) {
+    if (arr.length == 0) { 
+      return 0;
+    }
+    let start = 0;
+    let end = arr.length - 1;
+    while (start <= end) {
+      if (val <= arr[start]) {
+        return start;
+      }
+      if (val > arr[end]) {
+        return end + 1;
+      }
+      if (end - start == 1) {
+        return end;
+      }
+      let mid = (start + end) >> 1;
+      if (arr[mid] >= val) {
+        end = mid;
+      }
+      if (arr[mid] < val) {
+        start = mid;
+      }
+    }
   }
 
   function slice(arr, start = 0, end = arr.length) {
