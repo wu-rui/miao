@@ -3,7 +3,7 @@ var huntye1 = function () {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
-    , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail
+    , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith
   }
 
   /**
@@ -32,6 +32,88 @@ var huntye1 = function () {
     return predicate[0];
   }
 
+  function unionWith(...arrs) { 
+    let comparator;
+    if (!isArray(arrs[arrs.length - 1])) {
+      comparator = arrs[arrs.length - 1];
+      arrs = arrs.slice(0, -1);
+    }
+    let res = arrs[0];
+    arrs = flatten(arrs.slice(1));
+    for (let i = 0; i < arrs.length; i++) {
+      let isFound = false;
+      for (let j = 0; j < res.length; j++) {
+        if (comparator(arrs[i],res[j])) {
+          isFound = true;
+          break;
+        }
+      }
+      if (!isFound) {
+        res.push(arrs[i]);
+      }
+    }
+    return res;
+  }
+
+  function unionBy(...arrs) {
+    let iteratee = identity;
+    if (!isArray(arrs[arrs.length - 1])) {
+      iteratee = arrs[arrs.length - 1];
+      arrs = arrs.slice(0, -1);
+    }
+    let res = arrs[0];
+    arrs = flatten(arrs.slice(1));
+    for (let i = 0; i < arrs.length; i++) {
+      let isFound = false;
+      for (let j = 0; j < res.length; j++) {
+        if (shorthand(iteratee, arrs[i], i, arrs) == shorthand(iteratee, res[j], j, res)) {
+          isFound = true;
+          break;
+        }
+      }
+      if (!isFound) {
+        res.push(arrs[i]);
+      }
+    }
+    return res;
+  }
+
+  function union(...arrs) {
+    return Array.from(new Set(flatten(arrs)));
+  }
+
+  function takeWhile(arr, predicate = identity) {
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (shorthand(predicate, arr[i], i, arr)) {
+        res.push(arr[i]);
+      } else {
+        break;
+      }
+    }
+    return res;
+  }
+
+  function takeRightWhile(arr, predicate = identity) {
+    let res = [];
+    for (let i = arr.length - 1; i >= 0; i--) {
+      if (shorthand(predicate, arr[i], i, arr)) {
+        res.push(arr[i]);
+      } else {
+        break;
+      }
+    }
+    return res;
+  }
+
+  function takeRight(arr, n = 1) {
+    if (n == 0) return [];
+    return arr.slice(-n, arr.length)
+  }
+
+  function take(arr, n = 1) {
+    return arr.slice(0, n);
+  }
 
   function tail(arr) {
     return arr.length ? arr.slice(1) : [];
