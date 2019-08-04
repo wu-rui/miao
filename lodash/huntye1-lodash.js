@@ -2,8 +2,8 @@ var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
-    , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex
-
+    , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
+    , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail
   }
 
   /**
@@ -32,8 +32,170 @@ var huntye1 = function () {
     return predicate[0];
   }
 
+
+  function tail(arr) {
+    return arr.length ? arr.slice(1) : [];
+  }
+
+  function sortedUniqBy(arr, iteratee = identity) {
+    let res = [];
+    for (let i = 0, j = -1; i < arr.length; i++) {
+      if (shorthand(iteratee, arr[i]) !== shorthand(iteratee, res[j])) {
+        res.push(arr[i]);
+        j++;
+      }
+    }
+    return res;
+  }
+
+  function sortedUniq(arr) {
+    let res = [];
+    for (let i = 0, j = -1; i < arr.length; i++) {
+      if (arr[i] !== res[j]) {
+        res.push(arr[i]);
+        j++;
+      }
+    }
+    return res;
+  }
+
+  function sortedLastIndexOf(arr, val) {
+    let start = 0;
+    let end = arr.length - 1;
+    while (start <= end) {
+      let mid = start + end >> 1;
+      if (arr[mid] == val) {
+        while (arr[mid + 1] == val) {
+          mid++;
+        }
+        return mid;
+      }
+      if (arr[mid] > val) {
+        end = mid - 1;
+      }
+      if (arr[mid] < val) {
+        start = mid + 1;
+      }
+    }
+    return -1;
+  }
+
+  function sortedLastIndexBy(arr, val, iteratee = identity) {
+    if (arr.length == 0) {
+      return 0;
+    }
+    let start = 0;
+    let end = arr.length - 1;
+    val = shorthand(iteratee, val);
+    while (start <= end) {
+      if (val < shorthand(iteratee, arr[start])) {
+        return start;
+      }
+      if (val > shorthand(iteratee, arr[end])) {
+        return end + 1;
+      }
+      if (end - start == 1) {
+        return end;
+      }
+      let mid = (start + end) >> 1;
+      if (shorthand(iteratee, arr[mid]) > val) {
+        end = mid;
+      } else if (shorthand(iteratee, arr[mid]) < val) {
+        start = mid;
+      } else {
+        while (shorthand(iteratee, arr[mid + 1]) == val) {
+          mid++;
+        }
+        return mid;
+      }
+    }
+  }
+
+  function sortedLastIndex(arr, val) {
+    if (arr.length == 0) {
+      return 0;
+    }
+    let start = 0;
+    let end = arr.length - 1;
+    while (start <= end) {
+      if (val < arr[start]) {
+        return start;
+      }
+      if (val > arr[end]) {
+        return end + 1;
+      }
+      if (end - start == 1) {
+        return end;
+      }
+      let mid = (start + end) >> 1;
+      if (arr[mid] > val) {
+        end = mid;
+      } else if (arr[mid] < val) {
+        start = mid;
+      } else {
+        while (arr[mid + 1] == val) {
+          mid++;
+        }
+        return mid;
+      }
+
+    }
+  }
+
+  function sortedIndexOf(arr, val) {
+    let start = 0;
+    let end = arr.length - 1;
+    while (start <= end) {
+      let mid = start + end >> 1;
+      if (arr[mid] == val) {
+        while (arr[mid - 1] == val) {
+          mid--;
+        }
+        return mid;
+      }
+      if (arr[mid] > val) {
+        end = mid - 1;
+      }
+      if (arr[mid] < val) {
+        start = mid + 1;
+      }
+    }
+    return -1;
+  }
+
+  function sortedIndexBy(arr, val, iteratee = identity) {
+    if (arr.length == 0) {
+      return 0;
+    }
+    let start = 0;
+    let end = arr.length - 1;
+    val = shorthand(iteratee, val);
+    while (start <= end) {
+      if (val <= shorthand(iteratee, arr[start])) {
+        return start;
+      }
+      if (val > shorthand(iteratee, arr[end])) {
+        return end + 1;
+      }
+      if (end - start == 1) {
+        return end;
+      }
+      let mid = (start + end) >> 1;
+      if (shorthand(iteratee, arr[mid]) > val) {
+        end = mid;
+      } else if (shorthand(iteratee, arr[mid]) < val) {
+        start = mid;
+      } else {
+        while (shorthand(iteratee, arr[mid - 1]) == val) {
+          mid--;
+        }
+        return mid;
+      }
+    }
+  }
+
   function sortedIndex(arr, val) {
-    if (arr.length == 0) { 
+    if (arr.length == 0) {
       return 0;
     }
     let start = 0;
@@ -49,11 +211,15 @@ var huntye1 = function () {
         return end;
       }
       let mid = (start + end) >> 1;
-      if (arr[mid] >= val) {
+      if (arr[mid] > val) {
         end = mid;
-      }
-      if (arr[mid] < val) {
+      } else if (arr[mid] < val) {
         start = mid;
+      } else {
+        while (arr[mid - 1] == val) {
+          mid--;
+        }
+        return mid;
       }
     }
   }
