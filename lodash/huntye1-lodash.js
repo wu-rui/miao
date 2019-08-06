@@ -3,36 +3,72 @@ var huntye1 = function () {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
-    , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith
+    , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
+    property, matchesProperty,
   }
 
-  /**
- * 数组中的简写（支持  _.matchsProperty,   _.matches,  _property 以及正常的indentity）
- *
- * @param   {Function}  predicate  identity或shorthand
- * @param   {any}  item       比较的对象
- * @param   {number}  idx        比较值在原数组中的索引
- * @param   {array}  array      比较的值所在的数组
- *
- * @return  {any}    返回结果
- */
-  function shorthand(predicate, item, idx, array) {
-    if (isFunction(predicate)) {
-      return predicate(item, idx, array);
+
+  // function compose(funcs) {
+  //   return function (val) {
+  //     for (let i = 0; i < funcs.length; i++) {
+  //       val = funcs[i](val);
+  //     }
+  //     return val;
+  //   }
+  // }
+
+
+
+  function matches(val) {
+    return function (obj) {
+      return isMatch(val, obj);
     }
-    if (isArray(predicate)) { // matchesProperty
-      return item[predicate[0]] == predicate[1];
-    }
-    if (isObjectLike(predicate)) { //matches
-      return isEqual(item, predicate)
-    }
-    if (isString(predicate)) { //property
-      return item[predicate];
-    }
-    return predicate[0];
   }
 
-  function unionWith(...arrs) { 
+  function matchesProperty(path, val) {
+    return function (obj) {
+      return isEqual(get(obj, path), val);
+    }
+  }
+
+  function property(path) {
+    return function (obj) {
+      return get(obj, path);
+    }
+  }
+
+  function get(obj, path, defaultVal) {
+    if (isString(path)) {
+      path = toPath(path);
+    }
+    for (let i = 0; i < path.length; i++) {
+      if (obj == undefined) {
+        return defaultVal;
+      }
+      obj = obj[path[i]];
+    }
+    return obj;
+  }
+
+  function toPath(val) {
+    return val.split(/\.|\[|\]\./g)
+  }
+
+  function iteratee(val) {
+    if (isString(val)) {
+      return property(val)
+    }
+    if (isArray(val)) {
+      return matchesProperty(val)
+    }
+    if (isObjectLike(val)) {
+      return matches(val)
+    }
+    return val
+  }
+
+
+  function unionWith(...arrs) {
     let comparator;
     if (!isArray(arrs[arrs.length - 1])) {
       comparator = arrs[arrs.length - 1];
@@ -43,7 +79,7 @@ var huntye1 = function () {
     for (let i = 0; i < arrs.length; i++) {
       let isFound = false;
       for (let j = 0; j < res.length; j++) {
-        if (comparator(arrs[i],res[j])) {
+        if (comparator(arrs[i], res[j])) {
           isFound = true;
           break;
         }
@@ -56,17 +92,18 @@ var huntye1 = function () {
   }
 
   function unionBy(...arrs) {
-    let iteratee = identity;
+    let predicate = identity;
     if (!isArray(arrs[arrs.length - 1])) {
-      iteratee = arrs[arrs.length - 1];
+      predicate = arrs[arrs.length - 1];
       arrs = arrs.slice(0, -1);
     }
     let res = arrs[0];
     arrs = flatten(arrs.slice(1));
+    predicate = iteratee(predicate);
     for (let i = 0; i < arrs.length; i++) {
       let isFound = false;
       for (let j = 0; j < res.length; j++) {
-        if (shorthand(iteratee, arrs[i], i, arrs) == shorthand(iteratee, res[j], j, res)) {
+        if (predicate(arrs[i], i, arrs) == predicate(res[j], j, res)) {
           isFound = true;
           break;
         }
@@ -84,8 +121,9 @@ var huntye1 = function () {
 
   function takeWhile(arr, predicate = identity) {
     let res = [];
+    predicate = iteratee(predicate);
     for (let i = 0; i < arr.length; i++) {
-      if (shorthand(predicate, arr[i], i, arr)) {
+      if (predicate(arr[i], i, arr)) {
         res.push(arr[i]);
       } else {
         break;
@@ -96,8 +134,9 @@ var huntye1 = function () {
 
   function takeRightWhile(arr, predicate = identity) {
     let res = [];
+    predicate = iteratee(predicate);
     for (let i = arr.length - 1; i >= 0; i--) {
-      if (shorthand(predicate, arr[i], i, arr)) {
+      if (predicate(arr[i], i, arr)) {
         res.unshift(arr[i]);
       } else {
         break;
@@ -119,10 +158,11 @@ var huntye1 = function () {
     return arr.length ? arr.slice(1) : [];
   }
 
-  function sortedUniqBy(arr, iteratee = identity) {
+  function sortedUniqBy(arr, predicate = identity) {
     let res = [];
+    predicate = iteratee(predicate);
     for (let i = 0, j = -1; i < arr.length; i++) {
-      if (shorthand(iteratee, arr[i]) !== shorthand(iteratee, res[j])) {
+      if (predicate(arr[i]) !== predicate(res[j])) {
         res.push(arr[i]);
         j++;
       }
@@ -162,30 +202,31 @@ var huntye1 = function () {
     return -1;
   }
 
-  function sortedLastIndexBy(arr, val, iteratee = identity) {
+  function sortedLastIndexBy(arr, val, predicate = identity) {
     if (arr.length == 0) {
       return 0;
     }
     let start = 0;
     let end = arr.length - 1;
-    val = shorthand(iteratee, val);
+    predicate = iteratee(predicate);
+    val = predicate(val);
     while (start <= end) {
-      if (val < shorthand(iteratee, arr[start])) {
+      if (val < predicate(arr[start])) {
         return start;
       }
-      if (val > shorthand(iteratee, arr[end])) {
+      if (val > predicate(arr[end])) {
         return end + 1;
       }
       if (end - start == 1) {
         return end;
       }
       let mid = (start + end) >> 1;
-      if (shorthand(iteratee, arr[mid]) > val) {
+      if (predicate(arr[mid]) > val) {
         end = mid;
-      } else if (shorthand(iteratee, arr[mid]) < val) {
+      } else if (predicate(arr[mid]) < val) {
         start = mid;
       } else {
-        while (shorthand(iteratee, arr[mid + 1]) == val) {
+        while (predicate(arr[mid + 1]) == val) {
           mid++;
         }
         return mid;
@@ -218,7 +259,7 @@ var huntye1 = function () {
         while (arr[mid + 1] == val) {
           mid++;
         }
-        return mid  + 1;
+        return mid + 1;
       }
 
     }
@@ -245,30 +286,31 @@ var huntye1 = function () {
     return -1;
   }
 
-  function sortedIndexBy(arr, val, iteratee = identity) {
+  function sortedIndexBy(arr, val, predicate = identity) {
     if (arr.length == 0) {
       return 0;
     }
     let start = 0;
     let end = arr.length - 1;
-    val = shorthand(iteratee, val);
+    predicate = iteratee(predicate);
+    let val = predicate(val);
     while (start <= end) {
-      if (val <= shorthand(iteratee, arr[start])) {
+      if (val <= predicate(arr[start])) {
         return start;
       }
-      if (val > shorthand(iteratee, arr[end])) {
+      if (val > predicate(arr[end])) {
         return end + 1;
       }
       if (end - start == 1) {
         return end;
       }
       let mid = (start + end) >> 1;
-      if (shorthand(iteratee, arr[mid]) > val) {
+      if (predicate(arr[mid]) > val) {
         end = mid;
-      } else if (shorthand(iteratee, arr[mid]) < val) {
+      } else if (predicate(arr[mid]) < val) {
         start = mid;
       } else {
-        while (shorthand(iteratee, arr[mid - 1]) == val) {
+        while (predicate(arr[mid - 1]) == val) {
           mid--;
         }
         return mid;
@@ -343,10 +385,11 @@ var huntye1 = function () {
     return arr;
   }
 
-  function pullAllBy(arr, vals, iteratee = identity) {
+  function pullAllBy(arr, vals, predicate = identity) {
+    predicate = iteratee(predicate);
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < vals.length; j++) {
-        if (isEqual(shorthand(iteratee, arr[i]), shorthand(iteratee, vals[j]))) {
+        if (predicate(arr[i]) === predicate(arr[j])) {
           arr.splice(i, 1);
           i--;
           break;
@@ -388,35 +431,54 @@ var huntye1 = function () {
   }
 
   function intersectionWith(arr, ...args) {
-    let inspect = flatten(args.slice(0, -1));
-    let comparator = args[args.length - 1];
+    let comparator = args.pop();
+    args = flatten(args);
     let res = [];
-    arr.forEach(it => {
-      inspect.forEach(ele => {
-        if (comparator(it, ele)) {
-          res.push(it);
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < args.length; j++) {
+        if (comparator(arr[i], args[j])) {
+          res.push(arr[i]);
+          break;
         }
-      })
-    })
+      }
+    }
     return res;
   }
 
   function intersectionBy(arr, ...args) {
-    let inspect = flatten(args.slice(0, -1));
-    let identity = args[args.length - 1];
+    let predicate;
+    if (!isArray(args[args.length - 1])) {
+      predicate = args.pop();
+    }
+    if (predicate == undefined) {
+      predicate = identity;
+    }
+    predicate = iteratee(iteratee);
+    args = flatten(args);
     let res = [];
-    arr.forEach(it => {
-      inspect.forEach(ele => {
-        if (isEqual(shorthand(identity, it), shorthand(identity, ele))) {
-          res.push(it);
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < args.length; j++) {
+        if (predicate(arr[i]) === predicate(args[j])) {
+          res.push(arr[i]);
+          break;
         }
-      })
-    })
+      }
+    }
     return res;
   }
 
-  function intersection(arr, ...inspect) {
-    return intersectionBy(arr, ...inspect, it => it);
+  function intersection(arr, ...args) {
+    args = flatten(args);
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < args.length; j++) {
+        if (arr[i] === args[j]) {
+          res.push(arr[i]);
+          break;
+        }
+      }
+    }
+    return res;
   }
 
   function initial(arr) {
@@ -452,12 +514,19 @@ var huntye1 = function () {
   }
 
   function findLastIndex(arr, predicate = identity, start = arr.length - 1) {
-    return arr.length - findIndex(arr.reverse(), predicate, arr.length - start - 1) - 1;
+    predicate = iteratee(predicate);
+    for (let i = start; i >= 0; i--) {
+      if (predicate(arr[i], i, arr)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   function findIndex(arr, predicate = identity, start = 0) {
+    predicate = iteratee(predicate);
     for (let i = start; i < arr.length; i++) {
-      if (shorthand(predicate, arr[i], i, arr)) {
+      if (predicate(arr[i], i, arr)) {
         return i;
       }
     }
@@ -475,15 +544,15 @@ var huntye1 = function () {
     return array;
   }
 
-  function dropWhile(array, predicate) {
+  function dropWhile(array, predicate = identity) {
+    predicate = iteratee(predicate);
     let res = array.slice();
-    forEach(array, (item, idx, array) => {
-      if (shorthand(predicate, item, idx, array)) {
-        res.shift();
-      } else {
-        return false;
+    for (let i = 0; i < array.length; i++) {
+      if (!predicate(array[i], i, array)) {
+        break;
       }
-    })
+      res.shift();
+    }
     return res;
   }
 
@@ -494,8 +563,17 @@ var huntye1 = function () {
       }
     }
   }
+
   function dropRightWhile(array, predicate) {
-    return dropWhile(array.reverse(), predicate).reverse();
+    predicate = iteratee(predicate);
+    let res = array.slice();
+    for (let i = array.length - 1; i >= 0; i--) {
+      if (!predicate(array[i], i, array)) {
+        break;
+      }
+      res.push();
+    }
+    return res;
   }
 
 
@@ -529,31 +607,52 @@ var huntye1 = function () {
       obj[methodName] = obj[methodName].bind(obj));
   }
 
-  function differenceWith(array, ...arg) {
-    let f = arg.pop();
-    if (isArray(f)) {
-      arg.push(f);
-      return difference(array, ...arg)
-    }
-    let compare = flattenDeep(arg);
-    if (isFunction(f)) {
-      return array.filter(it => !compare.some(item => f(it, item)));
-    }
+  function difference(arr, ...ex) {
+    return arr.filter(item => ex.every(val => !val.includes(item)));
   }
 
-  function differenceBy(array, ...arg) {
-    let f = arg.pop();
-    if (isArray(f)) {
-      arg.push(f);
-      return difference(array, ...arg)
+  function differenceWith(arr, ...vals) {
+    let comparator = iteratee(vals.pop());
+    let res = [];
+    vals = flatten(vals);
+    for (let i = 0; i < arr.length; i++) {
+      let findSame = false;
+      for (let j = 0; j < vals.length; j++) {
+        if (comparator(arr[i], vals[j])) {
+          findSame = true;
+          break;
+        }
+      }
+      if (!findSame) {
+        res.push(arr[i]);
+      }
     }
-    let compare = flattenDeep(arg);
-    if (isFunction(f)) {
-      return array.filter(it => !compare.some(item => f(item) == f(it)));
+    return res;
+  }
+
+  function differenceBy(arr, ...vals) {
+    let predicate;
+    if (!isArray(vals[vals.length - 1])) {
+      predicate = iteratee(vals.pop());
     }
-    if (isString(f)) {
-      return array.filter(it => !compare.some(item => item[f] == it[f]));
+    if (predicate == undefined) {
+      predicate = identity;
     }
+    let res = [];
+    vals = flatten(vals);
+    for (let i = 0; i < arr.length; i++) {
+      let findSame = false;
+      for (let j = 0; j < vals.length; j++) {
+        if (predicate(arr[i]) === predicate(vals[j])) {
+          findSame = true;
+          break;
+        }
+      }
+      if (!findSame) {
+        res.push(arr[i]);
+      }
+    }
+    return res;
   }
 
   function isWeakSet(val) {
@@ -582,21 +681,24 @@ var huntye1 = function () {
   }
 
   function isMatchWith(obj, src, customizer) {
-
-    for (let k in src) {
-      if (k in obj) {
-        let res = customizer(obj[k], src[k]);
-        if (res !== undefined) {
-          return res;
+    if (obj === src) {
+      return true;
+    }
+    if (obj == undefined) {
+      return false;
+    }
+    for (let key of Object.keys(src)) {
+      if (isObjectLike(src[key])) {
+        if (!isMatch(obj[key], src[key])) {
+          return false;
+        }
+      } else {
+        if (!customizer(obj[key], src[key], key, obj, src)) {
+          return false;
         }
       }
     }
-    for (let k in obj) {
-      if (isObjectLike(obj[k]) && isMatch(obj[k], src)) {
-        return true
-      }
-    }
-    return false;
+    return true;
   }
 
   /**
@@ -621,21 +723,26 @@ var huntye1 = function () {
    *
    * @return  {[type]}      Returns true if object is a match, else false.
    */
+
   function isMatch(obj, src) {
-    if (isEqual(obj, src)) {
+    if (obj === src) {
       return true;
     }
-    for (let k in src) {
-      if (k in obj) {
-        return isEqual(obj[k], src[k]);
+    if (obj == undefined) {
+      return false;
+    }
+    for (let key of Object.keys(src)) {
+      if (isObjectLike(src[key])) {
+        if (!isMatch(obj[key], src[key])) {
+          return false;
+        }
+      } else {
+        if (obj[key] != src[key]) {
+          return false;
+        }
       }
     }
-    for (let k in obj) {
-      if (isObjectLike(obj[k]) && isMatch(obj[k], src)) {
-        return true
-      }
-    }
-    return false;
+    return true;
   }
 
   /**
@@ -921,9 +1028,7 @@ var huntye1 = function () {
     return res;
   }
 
-  function difference(arr, ...ex) {
-    return arr.filter(item => ex.every(val => !val.includes(item)));
-  }
+
 
   function drop(arr, num = 1) {
     return arr.slice(num > 0 ? num : 0);
@@ -1004,8 +1109,6 @@ var huntye1 = function () {
   function curry(f) {
     if (f.length == 0) return f();
     return function (...arg) {
-      arg = arg.filter(it => !isFunction(it));
-      arg = arg.filter(it => it != "_");
       return curry(f.bind(null, ...arg));
     }
   }
