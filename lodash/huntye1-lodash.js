@@ -293,7 +293,7 @@ var huntye1 = function () {
     let start = 0;
     let end = arr.length - 1;
     predicate = iteratee(predicate);
-    let val = predicate(val);
+    val = predicate(val);
     while (start <= end) {
       if (val <= predicate(arr[start])) {
         return start;
