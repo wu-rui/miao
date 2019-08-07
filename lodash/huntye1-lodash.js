@@ -59,7 +59,7 @@ var huntye1 = function () {
       return property(val)
     }
     if (isArray(val)) {
-      return matchesProperty(val)
+      return matchesProperty(val[0],val[1])
     }
     if (isObjectLike(val)) {
       return matches(val)
@@ -571,7 +571,7 @@ var huntye1 = function () {
       if (!predicate(array[i], i, array)) {
         break;
       }
-      res.push();
+      res.pop();
     }
     return res;
   }
