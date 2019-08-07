@@ -21,7 +21,7 @@ var huntye1 = function () {
 
   function matches(val) {
     return function (obj) {
-      return isMatch(val, obj);
+      return isMatch(obj, val);
     }
   }
 
