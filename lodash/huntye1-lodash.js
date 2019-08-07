@@ -556,14 +556,6 @@ var huntye1 = function () {
     return res;
   }
 
-  function forEach(array, action) {
-    for (let i = 0; i < array.length; i++) {
-      if (action(array[i], i, array) === false) {
-        break;
-      }
-    }
-    return array;
-  }
 
   function dropRightWhile(array, predicate) {
     predicate = iteratee(predicate);
@@ -1098,6 +1090,7 @@ var huntye1 = function () {
         break;
       }
     }
+    return obj;
   }
 
   function countBy(obj, predicate) {
