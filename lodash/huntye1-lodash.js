@@ -1,6 +1,6 @@
 var huntye1 = function () {
   return {
-    compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
+    compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy,  forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
@@ -1191,10 +1191,5 @@ var huntye1 = function () {
     }
     return map;
   }
-  function property(propname) {
-    return function (obj) {
-      return obj[propname];
-    }
-  } // property => propname => obj => obj[propname];
 }();
 // var _ = huntye1;
