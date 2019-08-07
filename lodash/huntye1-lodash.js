@@ -1181,6 +1181,7 @@ var huntye1 = function () {
     predicate = iteratee(predicate);
     let map = {};
     for (let key in Object.keys(collec)) {
+    // for (let key of Object.keys(collec)) {
       let item = collec[key];
       let newkey = predicate(item, key, collec)
       map[newkey] = collec[key];
