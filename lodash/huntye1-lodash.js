@@ -8,7 +8,7 @@ var huntye1 = function () {
   }
 
 
-  // function compose(funcs) {
+  // function compose(funcs) {.
   //   return function (val) {
   //     for (let i = 0; i < funcs.length; i++) {
   //       val = funcs[i](val);
