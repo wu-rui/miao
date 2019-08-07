@@ -1,7 +1,7 @@
 var huntye1 = function () {
   return {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, property, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
-    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, forEach, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
+    isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
     property, matchesProperty, forOwnRight
@@ -999,7 +999,7 @@ var huntye1 = function () {
   function forOwn(obj, predicate = identity) {
     predicate = iteratee(predicate);
     for (let key of Object.keys(obj)) {
-      predicate(obj[key],key);
+      predicate(obj[key], key);
     }
   }
 
@@ -1074,48 +1074,51 @@ var huntye1 = function () {
     return arr.reduce((res, item) => res + item + symbol, "").slice(0, -1);
   }
 
-  function some(arr, predicate) {
-    redicate = iteratee(predicate);
+  function some(arr, predicate = identity) {
+    predicate = iteratee(predicate);
     return arr.reduce(function (res, item) {
       return res || predicate(item);
     }, false)
   }
 
-  function every(arr, predicate) {
+  function every(arr, predicate = identity) {
     predicate = iteratee(predicate);
     return arr.reduce((res, cur) => {
       return res && predicate(cur)
     }, true)
   }
 
-  function forEach(obj, action) {
-    for (let key in obj) {
-      if (action(obj[key], key, obj) == false) {
+  function forEach(obj, predicate = identity) {
+    predicate = iteratee(predicate);
+    for (let key of Object.keys(obj)) {
+      if (predicate(obj[key], key, obj) == false) {
         break;
       }
     }
   }
+
   function countBy(obj, predicate) {
     let map = {};
     predicate = iteratee(predicate);
-    forEach(obj, function (val) {
-      let key = predicate(val);
-      if (key in map) {
-        map[key]++;
+    for (let key of Object.keys(obj)) {
+      let ks = predicate(obj[key], key, obj);
+      if (ks in map) {
+        map[ks]++;
       } else {
-        map[key] = 1;
+        map[ks] = 1;
       }
-    })
+    }
     return map;
   }
   function filter(obj, predicate) {
     predicate = iteratee(predicate);
     let res = [];
-    forEach(obj, function (val, idx, arr) {
-      if (predicate(val, idx, arr)) {
-        res.push(val);
+    for (let key of Object.keys(obj)) {
+      if (predicate(obj[key], key, obj)) {
+        res.push(obj[key]);
       }
-    })
+    }
+
     return res;
   }
   function curry(f) {
