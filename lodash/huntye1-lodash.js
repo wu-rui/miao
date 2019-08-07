@@ -51,7 +51,7 @@ var huntye1 = function () {
   }
 
   function toPath(val) {
-    return val.split(/\.|\[|\]\./g)
+    return val.split(/\.|\[|\]\.|\]\[/g);
   }
 
   function iteratee(val) {
@@ -562,6 +562,7 @@ var huntye1 = function () {
         break;
       }
     }
+    return array;
   }
 
   function dropRightWhile(array, predicate) {
@@ -1001,6 +1002,7 @@ var huntye1 = function () {
     for (let key of Object.keys(obj)) {
       predicate(obj[key], key);
     }
+    return obj;
   }
 
   function forOwnRight(obj, predicate = identity) {
@@ -1009,6 +1011,7 @@ var huntye1 = function () {
     for (let key of keys) {
       predicate(obj[key], key);
     }
+    return obj;
   }
 
   function compact(arr) {
