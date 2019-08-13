@@ -34,12 +34,23 @@ var huntye1 = function () {
     if (!isArray(arrs[arrs.length - 1])) {
       comparator = arrs.pop();
     }
-    return differenceWith(flatten(arrs), intersectionWith(...arrs, comparator), comparator);
+    let res = [];
+    for (let i = 0; i < arrs.length; i++) {
+      let diff = arrs[i];
+      for (let j = 0; j < arrs.length; j++) {
+        if (i != j) {
+          diff = differenceWith(diff, arrs[j], comparator);
+        }
+      }
+      res[i] = diff;
+    }
+    res.push(comparator);
+    return unionWith(...res);
   }
 
   function xorBy(...arrs) {
     let predicate = identity;
-    if (isArray(arrs[arrs.length - 1])) {
+    if (!isArray(arrs[arrs.length - 1])) {
       predicate = arrs.pop();
     }
     predicate = iteratee(predicate);
