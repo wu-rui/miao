@@ -4,7 +4,7 @@ var huntye1 = function () {
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet
   }
 
 
@@ -95,6 +95,50 @@ var huntye1 = function () {
     return a + b;
   }
 
+  function zipObjectDeep(paths = [], vals = []) {
+    let obj = {};
+    paths.forEach((path, i) => {
+      if (isString(path)) {
+        path = toPath(path);
+      }
+      baseSet(obj, path)[path.slice(-1)] = vals[i];
+    });
+    return obj
+  }
+
+  function baseSet(obj, path) {
+    if (isString(path)) {
+      path = toPath(path);
+    }
+    let c = path[0];
+    for (let i = 1; i < path.length; i++) {
+      if (obj[c]) {
+        obj = obj[c];
+      } else {
+        if (isSingleNum(path[i])) {
+          obj[c] = [];
+          obj = obj[c];
+        } else {
+          obj[c] = {};
+          obj = obj[c];
+        }
+      }
+      c = path[i];
+    }
+    return obj;
+
+    function isSingleNum(s) {
+      return s.length == 1 && s <= 9 && s >= 0;
+    }
+  }
+
+
+  function zipObject(keys = [], vals = []) {
+    let obj = {};
+    keys.forEach((k, i) => obj[k] = vals[i]);
+    return obj;
+  }
+
   function unzipWith(arr, predicate = identity) {
     if (predicate == undefined) {
       return unzip(arr);
@@ -114,6 +158,15 @@ var huntye1 = function () {
     // return arr[0].map((it, idx) => arr.map(item => item[idx]));
   }
 
+  function zipWith(...arrs) {
+    let predicate = identity;
+    if (!isArray(arrs[arrs.length - 1])) {
+      predicate = arrs.pop();
+    }
+    predicate = iteratee(predicate);
+    return arrs[0].map((it, idx) => predicate(...arrs.map(item => item[idx])));
+  }
+
   function zip(...arrs) {
     let maxlen = arrs.reduce((max, arr) => Math.max(max, arr.length), 0);
     let res = Array(maxlen).fill(0).map(it => Array(arrs.length));
@@ -122,7 +175,9 @@ var huntye1 = function () {
         res[i][j] = arrs[j][i];
       }
     }
+
     return res;
+
   }
 
   function matches(val) {
