@@ -47,8 +47,19 @@ var huntye1 = function () {
   }
 
   function xor(...arrs) {
-    return difference(flatten(arrs), intersection(...arrs));
+    let res = [];
+    for (let i = 0; i < arrs.length; i++) {
+      let diff = arrs[i];
+      for (let j = 0; j < arrs.length; j++) {
+        if (i != j) {
+          diff = difference(diff, arrs[j]);
+        }
+      }
+      res[i] = diff;
+    }
+    return union(...res);
   }
+
 
   function without(arr, ...vals) {
     let res = [];
