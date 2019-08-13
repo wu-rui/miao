@@ -39,11 +39,22 @@ var huntye1 = function () {
 
   function xorBy(...arrs) {
     let predicate = identity;
-    if (!isArray(arrs[arrs.length - 1])) {
+    if (isArray(arrs[arrs.length - 1])) {
       predicate = arrs.pop();
     }
     predicate = iteratee(predicate);
-    return differenceBy(flatten(arrs), intersectionBy(...arrs, predicate), predicate);
+    let res = [];
+    for (let i = 0; i < arrs.length; i++) {
+      let diff = arrs[i];
+      for (let j = 0; j < arrs.length; j++) {
+        if (i != j) {
+          diff = differenceBy(diff, arrs[j], predicate);
+        }
+      }
+      res[i] = diff;
+    }
+    res.push(predicate);
+    return unionBy(...res);
   }
 
   function xor(...arrs) {
