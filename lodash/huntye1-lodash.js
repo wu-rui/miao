@@ -1,10 +1,10 @@
 var huntye1 = function () {
   return {
-    compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy,  forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
+    compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith
   }
 
 
@@ -17,7 +17,82 @@ var huntye1 = function () {
   //   }
   // }
 
+  function SameValue(a, b) {
+    return Object.is(a, b);//+0 -0 不相等 NaN相等
+  }
 
+  function SameValueZero(a, b) {
+    if (isNaN(a) && isNaN(b)) { // NaN相等
+      return true;
+    }
+    return a === b; // 不同类型不相等 
+  }
+
+
+  function xorWith(...arrs) {
+    let comparator;
+    if (!isArray(arrs[arrs.length - 1])) {
+      comparator = arrs.pop();
+    }
+    return differenceWith(flatten(arrs), intersectionWith(...arrs, comparator), comparator);
+  }
+
+  function xorBy(...arrs) {
+    let predicate = identity;
+    if (!isArray(arrs[arrs.length - 1])) {
+      predicate = arrs.pop();
+    }
+    predicate = iteratee(predicate);
+    return differenceBy(flatten(arrs), intersectionBy(...arrs, predicate), predicate);
+  }
+
+  function xor(...arrs) {
+    return difference(flatten(arrs), intersection(...arrs));
+  }
+
+  function without(arr, ...vals) {
+    let res = [];
+    arr.forEach(it => {
+      if (!vals.includes(it)) {
+        res.push(it);
+      }
+    })
+    return res;
+  }
+
+  function add(a, b) {
+    return a + b;
+  }
+
+  function unzipWith(arr, predicate = identity) {
+    if (predicate == undefined) {
+      return unzip(arr);
+    }
+    predicate = iteratee(predicate);
+    return arr[0].map((it, idx) => predicate(...arr.map(item => item[idx])));
+  }
+
+  function unzip(arr) {
+    let res = Array(arr[0].length).fill(0).map(it => Array(arr.length));
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[0].length; j++) {
+        res[j][i] = arr[i][j];
+      }
+    }
+    return res;
+    // return arr[0].map((it, idx) => arr.map(item => item[idx]));
+  }
+
+  function zip(...arrs) {
+    let maxlen = arrs.reduce((max, arr) => Math.max(max, arr.length), 0);
+    let res = Array(maxlen).fill(0).map(it => Array(arrs.length));
+    for (let i = 0; i < maxlen; i++) {
+      for (let j = 0; j < arrs.length; j++) {
+        res[i][j] = arrs[j][i];
+      }
+    }
+    return res;
+  }
 
   function matches(val) {
     return function (obj) {
@@ -68,14 +143,24 @@ var huntye1 = function () {
   }
 
 
+  function uniq(...arg) {
+    return union(...arg);
+  }
+  function uniqBy(...arg) {
+    return unionBy(...arg);
+  }
+  function uniqWith(...arg) {
+    return unionWith(...arg);
+  }
+
   function unionWith(...arrs) {
     let comparator;
     if (!isArray(arrs[arrs.length - 1])) {
       comparator = arrs[arrs.length - 1];
       arrs = arrs.slice(0, -1);
     }
-    let res = arrs[0];
-    arrs = flatten(arrs.slice(1));
+    let res = [];
+    arrs = flatten(arrs);
     for (let i = 0; i < arrs.length; i++) {
       let isFound = false;
       for (let j = 0; j < res.length; j++) {
@@ -97,8 +182,8 @@ var huntye1 = function () {
       predicate = arrs[arrs.length - 1];
       arrs = arrs.slice(0, -1);
     }
-    let res = arrs[0];
-    arrs = flatten(arrs.slice(1));
+    let res = [];
+    arrs = flatten(arrs);
     predicate = iteratee(predicate);
     for (let i = 0; i < arrs.length; i++) {
       let isFound = false;
@@ -419,7 +504,7 @@ var huntye1 = function () {
 
   function lastIndexOf(arr, val, from = arr.length - 1) {
     for (let i = from; i >= 0; i--) {
-      if (arr[i] == val) {
+      if (SameValueZero(arr[i], val)) {
         return i;
       }
     }
@@ -488,7 +573,7 @@ var huntye1 = function () {
   function indexOf(array, val, from = 0) {
     from = from >= 0 ? from : array.length + from;
     for (let i = from; i < array.length; i++) {
-      if (val === array[i]) {
+      if (SameValueZero(val, array[i])) {
         return i;
       }
     }
@@ -1181,7 +1266,7 @@ var huntye1 = function () {
     predicate = iteratee(predicate);
     let map = {};
     for (let key in Object.keys(collec)) {
-    // for (let key of Object.keys(collec)) {
+      // for (let key of Object.keys(collec)) {
       let item = collec[key];
       let newkey = predicate(item, key, collec)
       map[newkey] = collec[key];
