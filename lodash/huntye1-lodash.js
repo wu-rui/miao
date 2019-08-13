@@ -31,9 +31,7 @@ var huntye1 = function () {
 
   function xorWith(...arrs) {
     let comparator;
-    if (!isArray(arrs[arrs.length - 1])) {
-      comparator = arrs.pop();
-    }
+    comparator = arrs.pop();
     let res = [];
     for (let i = 0; i < arrs.length; i++) {
       let diff = arrs[i];
