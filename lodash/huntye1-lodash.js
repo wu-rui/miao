@@ -4,7 +4,7 @@ var huntye1 = function () {
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap
   }
 
 
@@ -16,6 +16,114 @@ var huntye1 = function () {
   //     return val;
   //   }
   // }
+
+  function invokeMap(collection, path, ...args) {
+    let vals = Object.values(collection);
+    return vals.map(obj => {
+      if (!isFunction(path)) { 
+        path = get(obj, path);
+      }
+      return path.call(obj, ...args)
+    })
+  }
+
+  function includes(collection, value, from = 0) {
+    if (isString(collection)) {
+      return collection.includes(value, from);
+    }
+    let idx = 0;
+    for (let val of Object.values(collection)) {
+      if (idx >= from) {
+        if (SameValueZero(val, value)) {
+          return true;
+        }
+      }
+      idx++;
+    }
+    return false;
+  }
+
+  function groupBy(collection, f = identity) {
+    f = iteratee(f);
+    let vals = Object.values(collection);
+    let res = {};
+    for (let val of vals) {
+      let k = f(val);
+      if (k in res) {
+        res[k].push(val);
+      } else {
+        res[k] = [val];
+      }
+    }
+    return res;
+  }
+
+  function forEachRight(collection, action = identity) {
+    action = iteratee(action);
+    let keys = Object.keys(collection).reverse();
+    for (let key of keys) {
+      if (action(collection[key]) === false) {
+        break;
+      };
+    }
+  }
+  function flatMapDepth(collection, f = identity, depth = 1) {
+    f = iteratee(f);
+    let res = [];
+    let keys = Object.keys(collection);
+    for (let key of keys) {
+      res.push(flattenDepth(f(collection[key]), depth));
+    }
+    return res;
+  }
+
+  function flatMapDeep(collection, f = identity) {
+    f = iteratee(f);
+    let res = [];
+    let keys = Object.keys(collection);
+    for (let key of keys) {
+      res.push(...flattenDeep(f(collection[key])));
+    }
+    return res;
+  }
+
+  function flatMap(collection, f = identity) {
+    f = iteratee(f);
+    let res = [];
+    let keys = Object.keys(collection);
+    for (let key of keys) {
+      res.push(...f(collection[key]));
+    }
+    return res;
+  }
+
+  function findLast(collection, predicate = identity, from = collection.length - 1) {
+    predicate = iteratee(predicate);
+    let idx = 0;
+    let keys = Object.keys(collection).reverse();
+    for (let key of keys) {
+      if (idx <= from) {
+        if (predicate(collection[key])) {
+          return collection[key]
+        }
+      }
+      idx--;
+    }
+  }
+
+  function find(collection, predicate = identity, from = 0) {
+    predicate = iteratee(predicate);
+    let idx = 0;
+    let keys = Object.keys(collection)
+    for (let key of keys) {
+      if (idx >= from) {
+        if (predicate(collection[key])) {
+          return collection[key]
+        }
+      }
+      idx++;
+    }
+  }
 
   function SameValue(a, b) {
     return Object.is(a, b);//+0 -0 不相等 NaN相等
