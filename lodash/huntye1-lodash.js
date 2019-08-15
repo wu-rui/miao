@@ -20,8 +20,8 @@ var huntye1 = function () {
   function map(collection, f = identity) {
     f = iteratee(f);
     let res = [];
-    for (let v of Object.values(collection)) {
-      res.push(f(v));
+    for (let [k, v] of Object.entries(collection)) {
+      res.push(f(v, k, collection));
     }
     return res;
   }
