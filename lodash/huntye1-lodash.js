@@ -4,7 +4,7 @@ var huntye1 = function () {
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map
   }
 
 
@@ -17,10 +17,19 @@ var huntye1 = function () {
   //   }
   // }
 
+  function map(collection, f = identity) {
+    f = iteratee(f);
+    let res = [];
+    for (let v of Object.values(collection)) {
+      res.push(f(v));
+    }
+    return res;
+  }
+
   function invokeMap(collection, path, ...args) {
     let vals = Object.values(collection);
     return vals.map(obj => {
-      if (!isFunction(path)) { 
+      if (!isFunction(path)) {
         path = get(obj, path);
       }
       return path.call(obj, ...args)
@@ -1460,11 +1469,8 @@ var huntye1 = function () {
   function keyBy(collec, predicate = identity) {
     predicate = iteratee(predicate);
     let map = {};
-    for (let key in Object.keys(collec)) {
-      // for (let key of Object.keys(collec)) {
-      let item = collec[key];
-      let newkey = predicate(item, key, collec)
-      map[newkey] = collec[key];
+    for (let [k, v] of Object.entries(collec)) {
+      map[predicate(v)] = collec[k];
     }
     return map;
   }
