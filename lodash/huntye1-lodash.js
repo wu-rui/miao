@@ -4,7 +4,7 @@ var huntye1 = function () {
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy
   }
 
 
@@ -17,10 +17,85 @@ var huntye1 = function () {
   //   }
   // }
 
+  function sortBy(collection, funcs) {
+    return orderBy(collection, funcs);
+  }
+
+
+
+
+  function orderBy(collections, funcs, orders = []) {
+    let compare = toCompareFunc(funcs, orders);
+    return mergeSort(collections, compare);
+  }
+
+  function toCompareFunc(funcs, orders) {
+    return function compare(obj1, obj2) {
+      for (let i = 0; i < funcs.length; i++) {
+        let f = iteratee(funcs[i]);
+        let res1 = f(obj1);
+        let res2 = f(obj2);
+        let flag = orders[i] === "desc" ? -1 : 1;
+        if (res1 > res2) {
+          return flag * 1;
+        } else if (res1 < res2) {
+          return flag * -1;
+        }
+      }
+      return 0;
+    }
+  }
+
+
+  function mergeSort(arr, compare) {
+    if (compare == undefined) {
+      compare = function (a, b) {
+        if (a > b) {
+          return 1;
+        } else if (a < b) {
+          return 0;
+        } else {
+          return -1;
+        }
+      }
+    }
+    if (arr.length < 2) {
+      return [...arr];
+    }
+    let mid = arr.length >> 1;
+    let left = mergeSort(arr.slice(0, mid), compare);
+    let right = mergeSort(arr.slice(mid), compare);
+    return merge(left, right, compare);
+
+    function merge(arr1, arr2, compare) {
+      let res = []
+      let i = 0, j = 0;
+      while (i < arr1.length && j < arr2.length) {
+        let compared = compare(arr1[i], arr2[j]);
+        if (compared <= 0) {
+          res.push(arr1[i++]); // 需要等于0 保持稳定性；
+        } else{
+          res.push(arr2[j++]);
+        } 
+      }
+      while (i < arr1.length) {
+        res.push(arr1[i++]);
+      }
+      while (j < arr2.length) {
+        res.push(arr2[j++]);
+      }
+      return res;
+    }
+  }
+
+
   function map(collection, f = identity) {
     f = iteratee(f);
     let res = [];
     for (let [k, v] of Object.entries(collection)) {
+      if (!isNaN(k)) {
+        k = Number(k);
+      }
       res.push(f(v, k, collection));
     }
     return res;
