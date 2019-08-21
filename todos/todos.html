@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .todo {
+      width: 550px;
+      margin: 20px auto;
+      position: relative;
+      text-align: center;
+    }
+
+    .head {
+      position: relative;
+      outline: 1px solid red;
+      line-height: 40px;
+    }
+
+    #markAll {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      display: none;
+    }
+
+    #input {
+      width: 450px;
+      margin: auto;
+      font-size: 22px;
+    }
+
+    .body {
+      position: relative;
+    }
+
+    .item {
+      outline: 1px solid green;
+      position: relative;
+      line-height: 40px;
+      text-align: left;
+    }
+
+    .item .done {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    .item .content {
+      text-align: left;
+      padding: 0 50px;
+    }
+
+    .delContent {
+      text-decoration: line-through;
+    }
+
+    .item .del {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+
+    .foot {
+      line-height: 40px;
+      outline: 1px solid blue;
+      position: relative;
+      display: none;
+    }
+
+    .foot .state {
+      position: absolute;
+      line-height: 40px;
+      left: 10px;
+    }
+
+    .clear {
+      position: absolute;
+      right: 3px;
+      top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="todo">
+    <h1>todos</h3>
+    <div class="head">
+      <input type="checkbox" id="markAll">
+      <input type="text" id="input" placeholder="input what you want to do">
+    </div>
+    <div class="body">
+      <!-- <div class="item">
+        <input type="checkbox" class="done">
+        <div class="content">content</div>
+        <input type="checkbox" class="del">
+      </div> -->
+    </div>
+    <div class="foot">
+      <span class="state"> 0 item left</span>
+      <span class="option">
+        <input type="radio" name="showoption" value="1" checked>All</input>
+        <input type="radio" name="showoption" value="2">Active</input>
+        <input type="radio" name="showoption" value="3">Complete</input>
+      </span>
+      <button class="clear">clear done</button>
+    </div>
+  </div>
+
+  <script src="./todos.js"></script>
+  <script>
+  //1.input输入文字 按【回车】添加到todo list里面 增加一条todo item；
+  //2.点击todo item【删除按钮】， 【删除】该条todo item。
+  //3.点击todo item【标记按钮】，【标记】该条为【已做】。
+  //4.点击全部标记已做，【全部】item状态更该为【已做】。
+  //5.点击可以切换分别显示 【全部】、【未做】、【已做】的对应item。
+  //6.总是显示还有多少条没有做。
+
+  //程序设计思想。维护一个数组。每个单元储存state和data。当改变状态事件发生时，改变对应的单元的state。当有改变发生时，总是重新生成dom。（对应2,3,4）
+  // 显示函数，两个参数，需要显示的数组，以及显示选项（对应切换状态）。
+
+    //dom设计 由三部分组成 head body foot 
+
+    //1.head 由 【输入】input + 【全部标记】 radio 组成
+
+    //2.body由每个item组成
+    //    每个item 有两个checkbox对应 【已做】 和 【删除】，还有一个span表示需要做的【内容】。
+
+    //3.foot由两部分组成  【未做状态】 + 【切换显示】
+
+  </script>
+</body>
+
+</html>

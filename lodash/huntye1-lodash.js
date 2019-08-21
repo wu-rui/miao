@@ -73,7 +73,7 @@ var huntye1 = function () {
       while (i < arr1.length && j < arr2.length) {
         let compared = compare(arr1[i], arr2[j]);
         if (compared <= 0) {
-          res.push(arr1[i++]); // 需要等于0 保持稳定性；
+          res.push(arr1[i++]); // 需要等于0 保持顺序
         } else{
           res.push(arr2[j++]);
         } 
