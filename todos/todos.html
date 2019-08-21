@@ -8,8 +8,8 @@
   <title>Document</title>
   <style>
     .todo {
-      max-width: 550px;
-      width: 100%;
+      min-width: 400px;
+      max-width: 800px;
       margin: 20px auto;
       position: relative;
       text-align: center;
@@ -54,6 +54,7 @@
     .item .content {
       text-align: left;
       padding: 0 50px;
+      word-break: break-word;
     }
 
     .delContent {
@@ -90,26 +91,26 @@
 <body>
   <div class="todo">
     <h1>todos</h3>
-    <div class="head">
-      <input type="checkbox" id="markAll">
-      <input type="text" id="input" placeholder="input what you want to do">
-    </div>
-    <div class="body">
-      <!-- <div class="item">
+      <div class="head">
+        <input type="checkbox" id="markAll">
+        <input type="text" id="input" placeholder="input what you want to do">
+      </div>
+      <div class="body">
+        <!-- <div class="item">
         <input type="checkbox" class="done">
         <div class="content">content</div>
         <input type="checkbox" class="del">
       </div> -->
-    </div>
-    <div class="foot">
-      <span class="state"> 0 item left</span>
-      <span class="option">
-        <input type="radio" name="showoption" value="1" checked>All</input>
-        <input type="radio" name="showoption" value="2">Active</input>
-        <input type="radio" name="showoption" value="3">Complete</input>
-      </span>
-      <button class="clear">clear done</button>
-    </div>
+      </div>
+      <div class="foot">
+        <span class="state"> 0 item left</span>
+        <span class="option">
+          <input type="radio" name="showoption" value="1" checked>All</input>
+          <input type="radio" name="showoption" value="2">Active</input>
+          <input type="radio" name="showoption" value="3">Complete</input>
+        </span>
+        <button class="clear">clear done</button>
+      </div>
   </div>
 
   <script src="./todos.js"></script>
