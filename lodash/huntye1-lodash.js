@@ -4,7 +4,7 @@ var huntye1 = function () {
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size
   }
 
 
@@ -17,12 +17,86 @@ var huntye1 = function () {
   //   }
   // }
 
-  function sortBy(collection, funcs) {
-    return orderBy(collection, funcs);
+  function size(collec) {
+    return collec.length || Object.keys(collec).length;
+  }
+
+  function shuffle(collec) {
+    return sampleSize(collec, n = Object.keys(collec).length);
+  }
+
+  function sampleSize(collec, n = 1) {
+    let keys = Object.keys(collec);
+    let idxs = new Set();
+    n = Math.min(keys.length, n);
+    for (let i = 0; i < n; i++) {
+      while (true) {
+        let randomIdx = Math.floor(keys.length * Math.random());
+        if (!idxs.has(randomIdx)) {
+          idxs.add(randomIdx);
+          break;
+        }
+      }
+    }
+    idxs = [...idxs];
+    let res = [];
+    for (let idx of idxs) {
+      res.push(collec[keys[idx]])
+    }
+    return res;
+  }
+
+  function sample(collec) {
+    let keys = Object.keys(collec);
+    let randomIdx = Math.floor(keys.length * Math.random());
+    return collec[keys[randomIdx]];
+  }
+
+  function reject(collec, predicate = identity) {
+    return filter(collec, negate(iteratee(predicate)));
+  }
+
+  function reduceRight(collec, action = identity, accumulator) {
+    let entries = Object.entries(collec).reverse();
+    for (let [k, v] of entries) {
+      if (accumulator === undefined) {
+        accumulator = v;
+      } else {
+        accumulator = action(accumulator, v, k, collec);
+      }
+    }
+    return accumulator;
   }
 
 
+  function reduce(collec, action = identity, accumulator) {
+    for (let [k, v] of Object.entries(collec)) {
+      if (accumulator === undefined) {
+        accumulator = v;
+      } else {
+        accumulator = action(accumulator, v, k, collec);
+      }
+    }
+    return accumulator;
+  }
 
+  function partition(collection, predicate) {
+    predicate = iteratee(predicate);
+    let trueArr = [];
+    let falseArr = [];
+    for (let val of Object.values(collection)) {
+      if (predicate(val)) {
+        trueArr.push(val);
+      } else {
+        falseArr.push(val);
+      }
+    }
+    return [trueArr, falseArr];
+  }
+
+  function sortBy(collection, funcs) {
+    return orderBy(collection, funcs);
+  }
 
   function orderBy(collections, funcs, orders = []) {
     let compare = toCompareFunc(funcs, orders);
@@ -74,9 +148,9 @@ var huntye1 = function () {
         let compared = compare(arr1[i], arr2[j]);
         if (compared <= 0) {
           res.push(arr1[i++]); // 需要等于0 保持顺序
-        } else{
+        } else {
           res.push(arr2[j++]);
-        } 
+        }
       }
       while (i < arr1.length) {
         res.push(arr1[i++]);
@@ -1433,17 +1507,19 @@ var huntye1 = function () {
     return arr.reduce((res, item) => res + item + symbol, "").slice(0, -1);
   }
 
-  function some(arr, predicate = identity) {
+  function some(collec, predicate = identity) {
     predicate = iteratee(predicate);
-    return arr.reduce(function (res, item) {
-      return res || predicate(item);
+    let entries = Object.entries(collec);
+    return entries.reduce(function (res, entry) {
+      return res || predicate(entry[1], entry[0], collec);
     }, false)
   }
 
-  function every(arr, predicate = identity) {
+  function every(collec, predicate = identity) {
     predicate = iteratee(predicate);
-    return arr.reduce((res, cur) => {
-      return res && predicate(cur)
+    let entries = Object.entries(collec);
+    return entries.reduce(function (res, entry) {
+      return res && predicate(entry[1], entry[0], collec);
     }, true)
   }
 
