@@ -5,7 +5,7 @@ var huntye1 = function () {
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
     property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
-    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round
+    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random
   }
 
 
@@ -18,17 +18,88 @@ var huntye1 = function () {
   //   }
   // }
 
+  
 
-  function multiply(a,b) {
+  function random(lower, upper, floating) { 
+    if (arguments.length == 0) { 
+      lower = 0;
+      upper = 1;
+    }
+    if (arguments.length == 1) { 
+      upper = lower;
+      lower = 0;
+    }
+    if (arguments.length == 2) { 
+      if (isBoolean(upper)) { 
+        floating = upper;
+        upper = lower
+        lower = 0;
+      }
+    }
+    if (floating == undefined) { 
+      if (isInteger(upper) && isInteger(lower)) {
+        floating = false;
+      } else { 
+        floating = true;
+      }
+    }
+    if (lower > upper) { 
+      let t = start;
+      start = end;
+      end = t;
+    }
+    if (!floating) {
+      return Math.floor(Math.random() * (upper - lower + 1) + lower);
+    } else { 
+      return Math.random() * (upper - lower) + lower;
+    }
+  }
+
+  function inRange(number, start = 0, end) {
+    if (arguments.length == 2) {
+      end = start;
+      start = 0;
+    }
+
+    if (start > end) { 
+      let t = start;
+      start = end;
+      end = t;
+    }
+
+    if (number >= start && number < end) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  function clamp(num, lower, upper) {
+    if (arguments.length == 2) {
+      upper = lower;
+      return num < upper ? num : upper;
+    } else {
+      if (num < lower) {
+        return lower;
+      }
+      if (num > upper) {
+        return upper;
+      }
+      return num;
+    }
+  }
+
+  function multiply(a, b) {
     return a * b;
   }
 
-  function sumBy(arr,fn = identity) { 
+  function sumBy(arr, fn = identity) {
     fn = iteratee(fn);
     return arr.reduce((pre, cur) => pre + fn(cur));
   }
 
-  function sum(arr) { 
+  function sum(arr) {
     return arr.reduce((pre, cur) => pre + cur);
   }
 
