@@ -4,7 +4,7 @@ var huntye1 = function () {
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
-    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte
+    property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
   }
 
 
@@ -16,6 +16,47 @@ var huntye1 = function () {
   //     return val;
   //   }
   // }
+
+  function floor(val, precision = 0) {
+    val *= 10 ** precision;
+    val = Math.floor(val);
+    val /= 10 ** precision;
+    return val;
+  }
+
+  function divide(divide, divisor) { 
+    return divide / divisor;
+  }
+
+  function ceil(val, precision = 0) {
+    val *= 10 ** precision;
+    val =  Math.ceil(val);
+    val /= 10 ** precision;
+    return val;
+  }
+
+  function toArray(value) {
+    let res = [];
+    if (isNil(value)) return res;
+    if (value.length !== undefined) {
+      for (let i = 0; i < value.length; i++) {
+        res.push(value[i]);
+      }
+    } else if (isObject(value)) {
+      for (let v of Object.values(value)) {
+        res.push(v);
+      }
+    }
+    return res;
+  }
+
+  function lte(a, b) {
+    return lt(a, b) || eq(a, b);
+  }
+
+  function lt(a, b) {
+    return a < b;
+  }
 
   function gte(a, b) {
     return gt(a, b) || eq(a, b);
@@ -1449,6 +1490,10 @@ var huntye1 = function () {
 
   function isNull(val) {
     return val === null;
+  }
+
+  function isNative(val) {
+    return isFunction(val) && (/\{ \[native code\] \}$/).test(val.toString());
   }
 
   function isString(val) {
