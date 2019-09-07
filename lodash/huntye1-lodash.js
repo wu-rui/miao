@@ -5,6 +5,7 @@ var huntye1 = function () {
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
     property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
+    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round
   }
 
 
@@ -17,6 +18,97 @@ var huntye1 = function () {
   //   }
   // }
 
+
+  function multiply(a,b) {
+    return a * b;
+  }
+
+  function sumBy(arr,fn = identity) { 
+    fn = iteratee(fn);
+    return arr.reduce((pre, cur) => pre + fn(cur));
+  }
+
+  function sum(arr) { 
+    return arr.reduce((pre, cur) => pre + cur);
+  }
+
+  function meanBy(arr) {
+    let sum = 0;
+    return sumBy(arr) / arr.length;
+  }
+
+  function mean(arr) {
+    return sum(arr) / arr.length;
+  }
+
+  function minBy(arr, fn = identity) {
+    fn = iteratee(fn);
+    if (isNil(arr) || isNaN(arr) || arr.length == 0) {
+      return undefined;
+    }
+    let min = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      if (fn(arr[i]) < fn(min)) {
+        min = arr[i];
+      }
+    }
+    return min;
+  }
+
+  function min(arr) {
+    if (isNil(arr) || isNaN(arr) || arr.length == 0) {
+      return undefined;
+    }
+    let min = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] < min) {
+        min = arr[i];
+      }
+    }
+    return min;
+  }
+
+
+  function maxBy(arr, fn = identity) {
+    fn = iteratee(fn);
+    if (isNil(arr) || isNaN(arr) || arr.length == 0) {
+      return undefined;
+    }
+    let max = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      if (fn(arr[i]) > fn(max)) {
+        max = arr[i];
+      }
+    }
+    return max;
+  }
+
+  function max(arr) {
+    if (isNil(arr) || isNaN(arr) || arr.length == 0) {
+      return undefined;
+    }
+    let max = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] > max) {
+        max = arr[i];
+      }
+    }
+    return max;
+  }
+
+
+  function assign(obj, ...src) {
+    return Object.assign(obj, ...src);
+  }
+
+
+  function round(val, precision = 0) {
+    val *= 10 ** precision;
+    val = Math.round(val);
+    val /= 10 ** precision;
+    return val;
+  }
+
   function floor(val, precision = 0) {
     val *= 10 ** precision;
     val = Math.floor(val);
@@ -24,13 +116,13 @@ var huntye1 = function () {
     return val;
   }
 
-  function divide(divide, divisor) { 
+  function divide(divide, divisor) {
     return divide / divisor;
   }
 
   function ceil(val, precision = 0) {
     val *= 10 ** precision;
-    val =  Math.ceil(val);
+    val = Math.ceil(val);
     val /= 10 ** precision;
     return val;
   }
