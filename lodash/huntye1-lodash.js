@@ -5,7 +5,7 @@ var huntye1 = function () {
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
     property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
-    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random
+    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn
   }
 
 
@@ -18,39 +18,122 @@ var huntye1 = function () {
   //   }
   // }
 
-  
+  function create(prototype, property = {}) { 
+    let F = function () { };
+    F.prototype = prototype;
+    f = new F();
+    assign(f, property);
+    return f;
+  }
 
-  function random(lower, upper, floating) { 
-    if (arguments.length == 0) { 
+  function constant(val) { 
+    return function () { 
+      return val;
+    }
+  }
+
+  function functionsIn(obj) {
+    let res = [];
+    forIn(obj, (v, k) => {
+      if (isFunction(v)) {
+        res.push(k);
+      }
+    })
+    return res;
+  }
+
+  function functions(obj) { 
+    let res = [];
+    forOwn(obj, (v, k) => { 
+      if (isFunction(v)) { 
+        res.push(k);
+      }
+    })
+    return res;
+  }
+
+  function forInRight(obj, fn = identity) {
+    let keys = [];
+    forIn(obj, (v,k) => {
+      keys.push(k);
+    });
+    console.log(keys);
+    keys.reverse();
+    forEach(keys, k => { 
+      fn(obj[k], k, obj);
+    })
+   }
+
+  function forIn(obj,fn = identity) { 
+    fn = iteratee(fn);
+    for (let k in obj) { 
+      if (fn(obj[k], k,obj) == false){ 
+        break;
+      }
+    }
+  }
+
+  function findLastKey(obj, fn = identity) {
+    fn = iteratee(fn);
+    let keys = Object.keys(obj).reverse();
+    for (let key of keys) {
+      if (fn(obj[key])) {
+        return key
+      }
+    }
+  }
+
+  function findKey(obj, fn = identity) {
+    fn = iteratee(fn);
+    for (let key of Object.keys(obj)) {
+      if (fn(obj[key])) {
+        return key
+      }
+    }
+  }
+
+  function defaults(obj, ...src) {
+    src.forEach(s => {
+      for (let [k, v] of Object.entries(s)) {
+        if (!obj.hasOwnProperty(k)) {
+          obj[k] = v;
+        }
+      }
+    })
+    return obj;
+  }
+
+  function random(lower, upper, floating) {
+    if (arguments.length == 0) {
       lower = 0;
       upper = 1;
     }
-    if (arguments.length == 1) { 
+    if (arguments.length == 1) {
       upper = lower;
       lower = 0;
     }
-    if (arguments.length == 2) { 
-      if (isBoolean(upper)) { 
+    if (arguments.length == 2) {
+      if (isBoolean(upper)) {
         floating = upper;
         upper = lower
         lower = 0;
       }
     }
-    if (floating == undefined) { 
+    if (floating == undefined) {
       if (isInteger(upper) && isInteger(lower)) {
         floating = false;
-      } else { 
+      } else {
         floating = true;
       }
     }
-    if (lower > upper) { 
+    if (lower > upper) {
       let t = start;
       start = end;
       end = t;
     }
     if (!floating) {
       return Math.floor(Math.random() * (upper - lower + 1) + lower);
-    } else { 
+    } else {
       return Math.random() * (upper - lower) + lower;
     }
   }
@@ -61,7 +144,7 @@ var huntye1 = function () {
       start = 0;
     }
 
-    if (start > end) { 
+    if (start > end) {
       let t = start;
       start = end;
       end = t;
@@ -728,6 +811,33 @@ var huntye1 = function () {
       return get(obj, path);
     }
   }
+
+  function hasIn(obj,path) { 
+    if (isString(path)) { 
+      path = toPath(path);
+    }
+    for (let i = 0; i < path.length; i++) { 
+      if (obj[path[i]] == undefined) { 
+        return false;
+      }
+      obj = obj[path[i]];
+    }
+    return true;
+  }
+
+  function has(obj,path) { 
+    if (isString(path)) { 
+      path = toPath(path);
+    }
+    for (let i = 0; i < path.length; i++) { 
+      if (!obj.hasOwnProperty(path[i])) { 
+        return false;
+      }
+      obj = obj[path[i]];
+    }
+    return true;
+  }
+
 
   function get(obj, path, defaultVal) {
     if (isString(path)) {
