@@ -5,7 +5,7 @@ var huntye1 = function () {
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
     property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
-    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn
+    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues
   }
 
 
@@ -18,7 +18,78 @@ var huntye1 = function () {
   //   }
   // }
 
-  function create(prototype, property = {}) { 
+  function merge() { 
+    
+  }
+
+  function mapValues(obj, fn = identity) { 
+    fn = iteratee(fn);
+    let res = {};
+    let entries = Object.entries(obj);
+    for (let [k, v] of entries) { 
+      res[k] = fn(v, k, obj)
+    }
+    return res;
+  }
+  function mapKeys(obj, fn) { 
+    fn = iteratee(fn);
+    let res = {};
+    let entries = Object.entries(obj);
+    for (let [k, v] of entries) { 
+      res[fn(v, k,obj)] = v;
+    }
+    return res;
+  }
+
+  function keysIn(obj) { 
+    let res = [];
+    for (let k in obj) { 
+      res.push(k);
+    }
+    return res;
+  }
+
+  function keys(obj) { 
+    return Object.keys(obj);
+  }
+
+  function invoke(obj, path, ...args) {
+    if (isString(path)) {
+      path = toPath(path);
+    }
+    let that = obj;
+    for (let i = 0; i < path.length; i++) {
+      that = obj;
+      obj = obj[path[i]];
+    }
+    return obj.call(that, ...args);
+  }
+
+  function invertBy(obj, fn = identity) {
+    fn = iteratee(fn);
+    let entries = Object.entries(obj);
+    let res = {};
+    forEach(entries, (entry) => {
+      let k = fn(entry[1]);
+      if (res.hasOwnProperty(k)) {
+        res[k].push(entry[0]);
+      } else {
+        res[k] = [entry[0]];
+      }
+    })
+    return res;
+  }
+
+  function invert(obj) {
+    let entries = Object.entries(obj);
+    let res = {};
+    forEach(entries, (entry) => {
+      res[entry[1]] = entry[0];
+    })
+    return res;
+  }
+
+  function create(prototype, property = {}) {
     let F = function () { };
     F.prototype = prototype;
     f = new F();
@@ -26,8 +97,8 @@ var huntye1 = function () {
     return f;
   }
 
-  function constant(val) { 
-    return function () { 
+  function constant(val) {
+    return function () {
       return val;
     }
   }
@@ -42,10 +113,10 @@ var huntye1 = function () {
     return res;
   }
 
-  function functions(obj) { 
+  function functions(obj) {
     let res = [];
-    forOwn(obj, (v, k) => { 
-      if (isFunction(v)) { 
+    forOwn(obj, (v, k) => {
+      if (isFunction(v)) {
         res.push(k);
       }
     })
@@ -54,23 +125,25 @@ var huntye1 = function () {
 
   function forInRight(obj, fn = identity) {
     let keys = [];
-    forIn(obj, (v,k) => {
+    forIn(obj, (v, k) => {
       keys.push(k);
     });
     console.log(keys);
     keys.reverse();
-    forEach(keys, k => { 
+    forEach(keys, k => {
       fn(obj[k], k, obj);
     })
-   }
+    return obj;
+  }
 
-  function forIn(obj,fn = identity) { 
+  function forIn(obj, fn = identity) {
     fn = iteratee(fn);
-    for (let k in obj) { 
-      if (fn(obj[k], k,obj) == false){ 
+    for (let k in obj) {
+      if (fn(obj[k], k, obj) == false) {
         break;
       }
     }
+    return obj;
   }
 
   function findLastKey(obj, fn = identity) {
@@ -179,16 +252,15 @@ var huntye1 = function () {
 
   function sumBy(arr, fn = identity) {
     fn = iteratee(fn);
-    return arr.reduce((pre, cur) => pre + fn(cur));
+    return arr.reduce((pre, cur) => pre + fn(cur), 0);
   }
 
   function sum(arr) {
     return arr.reduce((pre, cur) => pre + cur);
   }
 
-  function meanBy(arr) {
-    let sum = 0;
-    return sumBy(arr) / arr.length;
+  function meanBy(arr, fn = identity) {
+    return sumBy(arr, fn) / arr.length;
   }
 
   function mean(arr) {
@@ -812,12 +884,12 @@ var huntye1 = function () {
     }
   }
 
-  function hasIn(obj,path) { 
-    if (isString(path)) { 
+  function hasIn(obj, path) {
+    if (isString(path)) {
       path = toPath(path);
     }
-    for (let i = 0; i < path.length; i++) { 
-      if (obj[path[i]] == undefined) { 
+    for (let i = 0; i < path.length; i++) {
+      if (obj[path[i]] == undefined) {
         return false;
       }
       obj = obj[path[i]];
@@ -825,12 +897,12 @@ var huntye1 = function () {
     return true;
   }
 
-  function has(obj,path) { 
-    if (isString(path)) { 
+  function has(obj, path) {
+    if (isString(path)) {
       path = toPath(path);
     }
-    for (let i = 0; i < path.length; i++) { 
-      if (!obj.hasOwnProperty(path[i])) { 
+    for (let i = 0; i < path.length; i++) {
+      if (!obj.hasOwnProperty(path[i])) {
         return false;
       }
       obj = obj[path[i]];
