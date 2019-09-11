@@ -5,7 +5,7 @@ var huntye1 = function () {
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
     property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
-    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues
+    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times
   }
 
 
@@ -18,38 +18,222 @@ var huntye1 = function () {
   //   }
   // }
 
-  function merge() { 
-    
+  
+  function cloneDeep(val) {
+    if (typeof val == "object") {
+      let res = {};
+
+    } else { 
+      return val;
+    }
   }
 
-  function mapValues(obj, fn = identity) { 
+  function times(n,fn = identity) { 
+    fn = iteratee(fn);
+    let res = [];
+    for (let i = 0; i < n; i++) { 
+      res.push(fn(i));
+    }
+    return res;
+  }
+
+  function repeat(str, n = 1) { 
+    let res = ""
+    for (let i = 0; i < n; i++) { 
+      res += str;
+    }
+    return res;
+  }
+
+  function padStart(str = "", length = 0, char = " ") {
+    if (str.length >= length) {
+      return str;
+    }
+    let left = "";
+    while (left.length + str.length < length) {
+      left += char;
+    }
+    let dif = left.length + str.length - length;
+
+    left = left.slice(0, left.length - dif);
+
+    return left + str;
+  }
+
+  function padEnd(str = "", length = 0, char = " ") { 
+    if (str.length >= length) {
+      return str;
+    }
+    let right = "";
+    while (  right.length + str.length < length) {
+      right += char;
+    }
+    let dif = right.length + str.length - length;
+
+    right = right.slice(0, right.length - dif);
+
+    return  str + right;
+  }
+
+  function pad(str = "", length = 0, char = " ") { 
+    if (str.length >= length) { 
+      return str;
+    }
+    let left = "";
+    let right = "";
+    while (left.length + right.length + str.length < length) { 
+      left += char;
+      right += char;
+    }
+    let dif = left.length + right.length + str.length - length;
+    if (dif % 2 == 0) {
+      left = left.slice(0, left.length - (dif / 2));
+      right = right.slice(0, right.length - (dif / 2));
+    } else { 
+      left = left.slice(0, left.length - ((dif + 1) / 2));
+      right = right.slice(0, right.length - ((dif - 1) / 2));
+    }
+    return left + str + right;
+  }
+
+  function unescape(str) { 
+    return str.replace(/&lt;|&gt;|&amp;|&quot;|&#39;/g, function (s) { 
+      if (s == `&lt;` ) {
+        return `<`
+      }
+      if (s == `&gt;` ) {
+        return `>`
+      }
+      if (s == `&amp;` ) {
+        return `&`
+      }
+      if (s == `&quot;` ) {
+        return `"`
+      }
+      if (s == `&#39;` ) {
+        return `'`
+      }
+    })
+  }
+
+  function escape(str) {
+    return str.replace(/[<>&"']/g, function (s) {
+      if (s == `<`) {
+        return `&lt;`
+      }
+      if (s == `>`) {
+        return `&gt;`
+      }
+      if (s == `&`) {
+        return `&amp`
+      }
+      if (s == `"`) {
+        return `&quot`
+      }
+      if (s == `'`) {
+        return `&#39`
+      }
+    })
+  }
+
+  function values(obj) {
+    return Object.values(obj);
+  }
+
+
+  function set(obj, path, val) {
+    if (isString(path)) {
+      path = toPath(path);
+    }
+    let i;
+    for (i = 0; i < path.length - 1; i++) {
+      if (obj[path[i]] == undefined) {
+        let next = path[i + 1];
+        if (window.isNaN(next)) {
+          obj[path[i]] = {};
+        } else {
+          obj[path[i]] = [];
+        }
+      }
+      obj = obj[path[i]];
+    }
+    obj[path[i]] = val;
+  }
+
+  function result(obj, path, defaultVal) {
+    if (isString(path)) {
+      path = toPath(path);
+    }
+    let p;
+    for (let i = 0; i < path.length; i++) {
+      if (obj == undefined) {
+        obj = defaultVal;
+        break;
+      }
+      p = obj;
+      obj = obj[path[i]];
+    }
+    if (obj == undefined) {
+      obj = defaultVal;
+    }
+    if (isFunction(obj)) {
+      return obj.call(p);
+    }
+    return obj;
+  }
+
+  function pick(obj, paths) {
+    let res = {};
+    for (let i = 0; i < paths.length; i++) {
+      if (paths[i] in obj) {
+        res[paths[i]] = obj[paths[i]];
+      }
+    }
+    return res;
+  }
+
+  function omit(obj, paths) {
+    let res = {};
+    for (let k in obj) {
+      res[k] = obj[k];
+    }
+    for (let i = 0; i < paths.length; i++) {
+      if (paths[i] in res) {
+        delete res[paths[i]];
+      }
+    }
+    return res;
+  }
+
+
+  function mapValues(obj, fn = identity) {
     fn = iteratee(fn);
     let res = {};
     let entries = Object.entries(obj);
-    for (let [k, v] of entries) { 
+    for (let [k, v] of entries) {
       res[k] = fn(v, k, obj)
     }
     return res;
   }
-  function mapKeys(obj, fn) { 
+  function mapKeys(obj, fn) {
     fn = iteratee(fn);
     let res = {};
     let entries = Object.entries(obj);
-    for (let [k, v] of entries) { 
-      res[fn(v, k,obj)] = v;
+    for (let [k, v] of entries) {
+      res[fn(v, k, obj)] = v;
     }
     return res;
   }
 
-  function keysIn(obj) { 
+  function keysIn(obj) {
     let res = [];
-    for (let k in obj) { 
+    for (let k in obj) {
       res.push(k);
     }
     return res;
   }
 
-  function keys(obj) { 
+  function keys(obj) {
     return Object.keys(obj);
   }
 
@@ -920,6 +1104,9 @@ var huntye1 = function () {
         return defaultVal;
       }
       obj = obj[path[i]];
+    }
+    if (obj == undefined) {
+      return defaultVal;
     }
     return obj;
   }
