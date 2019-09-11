@@ -1,11 +1,12 @@
 var huntye1 = function () {
+  uniqueId.idx = 0;
   return {
     compact, chunk, difference, drop, dropRight, flattenDepth, flatten, flattenDeep, reverse, join, some, every, forEach, countBy, filter, curry, spread, negate, flip, before, after, ary, unary, memerize, keyBy, forOwn, isArray, isFunction, isFinite, isNaN, isNumber, isNull, isNil, isObject, isUndefined,
     isString, isBoolean, isObjectLike, isArguments, isArrayBuffer, isArrayLike, isArrayLikeObject, isDate, isPlainObject, isElement, isEmpty, isEqual, isEqualWith, isError, isInteger, nativeToString, isSet, isMap, isMatch, isMatchWith, isLength, isRegExp, isSafeInteger, isSymbol, isWeakSet, isWeakMap, differenceBy, differenceWith, bindAll, range, dropWhile, dropRightWhile, fill, findIndex, identity, findLastIndex, toPairs, fromPairs, head, indexOf, initial, intersection, intersectionBy, intersectionWith, last, lastIndexOf
     , nth, pull, pullAll, pullAllBy, pullAllWith, pullAt, remove, slice, sortedIndex, sortedIndexBy, sortedIndexOf
     , sortedLastIndex, sortedLastIndexBy, sortedLastIndexOf, sortedUniq, sortedUniqBy, tail, take, takeRight, takeWhile, takeRightWhile, union, unionBy, unionWith, iteratee, toPath, get,
     property, matchesProperty, forOwnRight, uniq, uniqWith, uniqBy, zip, unzip, unzipWith, add, without, xor, xorBy, xorWith, zipObject, zipObjectDeep, zipWith, baseSet, find, findLast, flatMap, flatMapDeep, flatMapDepth, forEachRight, groupBy, invokeMap, includes, map, toCompareFunc, orderBy, sortBy, partition, reduce, reduceRight, reject, sample, sampleSize, shuffle, size, defer, delay, castArray, conforms, conformsTo, eq, gte, gt, isNative, lt, lte, toArray, ceil, divide, floor
-    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times
+    , assign, max, maxBy, min, minBy, mean, meanBy, sum, sumBy, multiply, round, clamp, inRange, random, defaults, findKey, findLastKey, forIn, forInRight, functions, constant, functionsIn, has, create, hasIn, invert, invertBy, invoke, keys, keysIn, mapKeys, mapValues, omit, pick, result, set, values, escape, pad, padEnd, padStart, repeat, unescape, times, propertyOf, memoize, once, matches, uniqueId, cloneDeep
   }
 
 
@@ -18,28 +19,75 @@ var huntye1 = function () {
   //   }
   // }
 
-  
-  function cloneDeep(val) {
-    if (typeof val == "object") {
-      let res = {};
-
-    } else { 
+  function cloneDeep(value, cloneCache = new Set()) {
+    if (typeof value == "object") {
+      if (value == null) {
+        return null;
+      } else {
+        let res = {};
+        for (let [k, v] of Object.entries(value)) {
+          if (v && typeof v == "object") {
+            if (cloneCache.has(v)) {
+              res[k] = v;
+            } else {
+              cloneCache.add(v);
+              res[k] = cloneDeep(v, cloneCache);
+            }
+          } else {
+            res[k] = v;
+          }
+        }
+        return res;
+      }
+    } else {
       return val;
     }
   }
 
-  function times(n,fn = identity) { 
+  function uniqueId(prefix = "") {
+    return prefix + uniqueId.idx++;
+  }
+
+  function once(fn) {
+    let called = false;
+    return function () {
+      if (!called) {
+        fn();
+        called = true;
+      }
+    }
+  }
+
+  function memoize(fn, resolver) {
+    func.cache = new Map();
+    resolver = resolver || function (...args) {
+      return args[0];
+    }
+    function func(...args) {
+      let k = resolver(...args);
+      if (func.cache.has(k)) {
+        return func.cache.get(k);
+      } else {
+        let res = fn.call(this, ...args);
+        func.cache.set(k, res);
+        return res;
+      }
+    }
+    return func;
+  }
+
+  function times(n, fn = identity) {
     fn = iteratee(fn);
     let res = [];
-    for (let i = 0; i < n; i++) { 
+    for (let i = 0; i < n; i++) {
       res.push(fn(i));
     }
     return res;
   }
 
-  function repeat(str, n = 1) { 
+  function repeat(str, n = 1) {
     let res = ""
-    for (let i = 0; i < n; i++) { 
+    for (let i = 0; i < n; i++) {
       res += str;
     }
     return res;
@@ -60,28 +108,28 @@ var huntye1 = function () {
     return left + str;
   }
 
-  function padEnd(str = "", length = 0, char = " ") { 
+  function padEnd(str = "", length = 0, char = " ") {
     if (str.length >= length) {
       return str;
     }
     let right = "";
-    while (  right.length + str.length < length) {
+    while (right.length + str.length < length) {
       right += char;
     }
     let dif = right.length + str.length - length;
 
     right = right.slice(0, right.length - dif);
 
-    return  str + right;
+    return str + right;
   }
 
-  function pad(str = "", length = 0, char = " ") { 
-    if (str.length >= length) { 
+  function pad(str = "", length = 0, char = " ") {
+    if (str.length >= length) {
       return str;
     }
     let left = "";
     let right = "";
-    while (left.length + right.length + str.length < length) { 
+    while (left.length + right.length + str.length < length) {
       left += char;
       right += char;
     }
@@ -89,28 +137,28 @@ var huntye1 = function () {
     if (dif % 2 == 0) {
       left = left.slice(0, left.length - (dif / 2));
       right = right.slice(0, right.length - (dif / 2));
-    } else { 
+    } else {
       left = left.slice(0, left.length - ((dif + 1) / 2));
       right = right.slice(0, right.length - ((dif - 1) / 2));
     }
     return left + str + right;
   }
 
-  function unescape(str) { 
-    return str.replace(/&lt;|&gt;|&amp;|&quot;|&#39;/g, function (s) { 
-      if (s == `&lt;` ) {
+  function unescape(str) {
+    return str.replace(/&lt;|&gt;|&amp;|&quot;|&#39;/g, function (s) {
+      if (s == `&lt;`) {
         return `<`
       }
-      if (s == `&gt;` ) {
+      if (s == `&gt;`) {
         return `>`
       }
-      if (s == `&amp;` ) {
+      if (s == `&amp;`) {
         return `&`
       }
-      if (s == `&quot;` ) {
+      if (s == `&quot;`) {
         return `"`
       }
-      if (s == `&#39;` ) {
+      if (s == `&#39;`) {
         return `'`
       }
     })
@@ -1059,6 +1107,12 @@ var huntye1 = function () {
   function matchesProperty(path, val) {
     return function (obj) {
       return isEqual(get(obj, path), val);
+    }
+  }
+
+  function propertyOf(obj) {
+    return function (path) {
+      return get(obj, path);
     }
   }
 
